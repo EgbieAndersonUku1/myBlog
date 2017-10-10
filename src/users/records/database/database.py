@@ -69,7 +69,7 @@ class Database(object):
 
         parameters:
            - collections: A table name from the database
-           - query      : The information to query from the database
+           - data      : The information to delete from the database
         """
         Database.DATABASE[collection].find_one_and_delete(data)
         return False if cls.find_one(collection, data) else True
@@ -88,4 +88,4 @@ class Database(object):
                         that will be updated.
            - data       : The information used to update to the database
         """
-        Database.DATABASE[collection].update({field_name:field_id}, {'$set': data}) 
+        Database.DATABASE[collection].update({field_name:field_id}, {'$set': data})
