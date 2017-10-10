@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 
 admin_app = Blueprint('admin_app', __name__)
 
+__author__ = 'Egbie Uku'
 
 @admin_app.route('/admin')
 def admin():
