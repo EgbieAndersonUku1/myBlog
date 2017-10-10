@@ -4,7 +4,7 @@ __author__ = 'Egbie Uku'
 
 
 class Database(object):
-    """Database(class): Will store all the user in the blog"""
+    """Database(class): Will store all the users in the blog"""
 
     DATABASE = None
     URI = 'mongodb://127.0.0.1:27017'
