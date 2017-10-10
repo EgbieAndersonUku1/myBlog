@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+
+    <title> {% block title %} {% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- Dashboard -->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"></a>
+        </div>
+        <div id="navbar_title" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#">Welcome,  Name to be placed here</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active main-color-bg">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
+                    </a>
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  My Blogs <span class="badge">12</span></a>
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-bitcoin"aria-hidden="true"></span> Create new blog</a>
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-book"aria-hidden="true"></span> Create new post</a>
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-book"aria-hidden="true"></span> View all posts</a>
+
+
+                </div>
+
+                <div class="well well-sm">
+                    <img class='img-thumbnail' src="//placehold.it/300x400" width="350" heigh="400" alt="pictur">
+                </div>
+            </div>
+
+            {% block content %} {% endblock %}
+
+        </div>
+    </div>
+
+</section>
+
+<footer id="footer">
+    <p> Built by EgbieAndersonUku1 &Copyright 2017 all rights reserved <a href="http://github.com/egbieandersonuku1">my github</a></p>
+</footer>
+
+<script>CKEDITOR.replace( 'editor1' );</script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+
+</body>
+</html>
