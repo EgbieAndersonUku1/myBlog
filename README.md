@@ -21,6 +21,7 @@ Technologies that will be used:
  
  I will also be using a combination of testing. This will include  
  automatic testing, unit tests, manual testing, regression testing, exploration testing, 
- black box testing, white box testing, etc.
+ black box testing, white box testing, etc. After all an application without any
+ tests is not worth writing.
   
  
