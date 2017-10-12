@@ -28,7 +28,7 @@ Technologies that will be used:
  tests is not worth writing.
   
  
- Installing and running (run the commands on the command line)
+ Installing and running (run the commands on the command line.)
  --------------------------------------------------------------------------------
  
  1) To run the blog you can either create a virtual environment on your computer or not. Note this is optional.
