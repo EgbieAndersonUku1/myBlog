@@ -87,6 +87,24 @@ body {
   margin: 0 0.25em;
 }
 
+#password {
+    width:580px;
+}
+
+
+#username {
+    width:580px;
+}
+
+#email {
+    width:580px;
+}
+
+#profile {
+    width:580px;
+}
+
+
 .navbar .navbar-nav .nav-link:not(.disabled):hover,
 .navbar .navbar-nav .nav-link:not(.disabled):focus {
   color: #ffdbf8;

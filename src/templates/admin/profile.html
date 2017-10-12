@@ -8,11 +8,24 @@
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">
-            <h3 class="panel-title">Change Password</h3>
+            <h1 class="panel-title">Change Password</h1>
         </div>
         <div class="panel-body">
             <!--Add the ability to change password using flask -->
-            The password to be changed
+
+            {% from "__formhelpers.html" import render_field %}
+            <form method="POST" action="{{ url_for('admin_app.admin_profile') }}" role="form">
+                {{ password_form.hidden_tag() }}
+
+                <div id="password">
+                    {{ render_field(password_form.old_password, class='form-control') }}
+                    {{ render_field(password_form.new_password, class='form-control') }}
+                    {{ render_field(password_form.confirm, class='form-control') }}
+                </div>
+
+                <hr>
+                <button type="submit"class="btn btn-warning">Update password</button>
+            </form>
         </div>
     </div>
 </div>
@@ -24,7 +37,16 @@
             <h3 class="panel-title">Change Username</h3>
         </div>
         <div class="panel-body">
-            The username to be changed
+            <form method="POST" action="{{ url_for('admin_app.admin_profile') }}" role="form">
+                {{ username_form.hidden_tag() }}
+
+                <div id="username">
+                    {{ render_field(username_form.username, class='form-control') }}
+                </div>
+
+                <hr>
+                <button type="submit"class="btn btn-warning">Update username</button>
+            </form>
         </div>
     </div>
 </div>
@@ -34,27 +56,51 @@
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">
-            <h3 class="panel-title">Delete account</h3>
+            <h3 class="panel-title">Change Email</h3>
         </div>
         <div class="panel-body">
-            <!-- Delete a blog-->
-            The main ability to delete the main account will be added here.
+             <form method="POST" action="{{ url_for('admin_app.admin_profile') }}" role="form">
+                {{ email_form.hidden_tag() }}
+
+                <div id="email">
+                    {{ render_field(email_form.email, class='form-control') }}
+                </div>
+
+                <hr>
+                <button type="submit"class="btn btn-warning">Update email</button>
+            </form>
+
         </div>
     </div>
 </div>
 
 
+
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">
-            <h3 class="panel-title">Edit profile</h3>
+            <h1 class="panel-title">Edit profile</h1>
         </div>
         <div class="panel-body">
             <!--Edit the profile information -->
-            <h3>Public profile</h3>
+            <h2>Public profile</h2>
             <hr>
 
-             Profile information that will be edited
+              <form method="POST" action="{{ url_for('admin_app.admin_profile') }}" role="form">
+                {{ profile_form.hidden_tag() }}
+
+                <div id="profile">
+                    {{ render_field(profile_form.first_name, class='form-control') }}
+                    {{ render_field(profile_form.last_name, class='form-control') }}
+                    {{ render_field(profile_form.author_name, class='form-control') }}
+                    {{ render_field(profile_form.profile_image, class='form-control') }}
+                    {{ render_field(profile_form.bio, maxlength=260, rows="6", class='form-control') }}
+                </div>
+
+                <hr>
+                <button type="submit"class="btn btn-warning">Update profile</button>
+            </form>
+
         </div>
 
     </div>
