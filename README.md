@@ -39,7 +39,7 @@ Technologies that will be used:
  
  2) If you have installed the virtual environment on your computer activate it by use this command below or skip to step 3:
  
-    **source 'The name of your virtual environment'/bin/activate**
+    **source 'The name of your virtual environment without quotes'/bin/activate**
  
 3) Change into myBlog folder by running the command **cd myBlog**
 
