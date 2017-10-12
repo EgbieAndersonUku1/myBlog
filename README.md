@@ -28,7 +28,7 @@ Technologies that will be used:
  tests is not worth writing.
   
  
- Installing and running (run the commands on the command line.)
+ Installing and running (run the commands on the command line)
  --------------------------------------------------------------------------------
  
  1) To run the blog you can either create a virtual environment on your computer or not. Note this is optional.
@@ -38,11 +38,12 @@ Technologies that will be used:
         You must already have virtualenv stored on your computer. If virtualenv is not installed in your computer run the command **pip install virtualenv**. 
         This will install the virtualenv on your computer.
  
-    This will create a virtual environment.
- 
+     
  2) If you have installed the virtual environment on your computer activate it by use this command below or skip to step 3:
  
     **source 'The name of your virtual environment without quotes'/bin/activate**
+    
+    This will create a virtual environment.
  
 3) Change into myBlog folder by running the command **cd myBlog**
 
