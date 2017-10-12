@@ -44,7 +44,7 @@ Technologies that will be used:
  
     **source 'The name of your virtual environment without quotes'/bin/activate**
  
-3) Change into myBlog folder by running the command **cd myBlog**
+3) Change into source folder by running the command **cd myBlog/src**
 
 4) Next run the command: **pip install -r requirement.txt**.
     This will download all the depencides needed to run the blog and store it in on your computer or your virtual environment if you have created one. 
