@@ -28,7 +28,7 @@ Technologies that will be used:
  tests is not worth writing.
   
  
- Installing and running
+ Installing and running (run the commands on the command line)
  --------------------------------------------------------------------------------
  
  1) To run the blog you can either create a virtual environment on your computer or not. Note this is optional.
@@ -46,7 +46,7 @@ Technologies that will be used:
  
 3) Change into myBlog folder by running the command **cd myBlog**
 
-4) Next run the command on the command line: **pip install -r requirement.txt**.
+4) Next run the command: **pip install -r requirement.txt**.
     This will download all the depencides needed to run the blog and store it in on your computer or your virtual environment if you have created one. 
  
  4) Change into the src folder by typing the command: **cd src**
