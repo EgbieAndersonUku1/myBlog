@@ -25,10 +25,10 @@ Technologies that will be used:
  tests is not worth writing.
   
  
- Installing
+ Installing and running
  --------------------------------------------------------------------------------
  
- 1) To run the blog either create a virtual environment on your computer. Note this is optional.
+ 1) To run the blog you can either create a virtual environment on your computer or not. Note this is optional.
  
        To create a virtual environment on **Linux** go to folder you like to create the virtual environment in
         and run the command:  **virtualenv 'type what name you like to call your virtual environment here without quotes' -p python3**
@@ -39,8 +39,10 @@ Technologies that will be used:
  
     **source 'The name of your virtual environment'/bin/activate**
  
-3) Next run the command: **pip install -r requirement.txt**.
- This will download all the depencides needed to run the blog.
+3) Change into myBlog folder by running the command **cd myBlog**
+
+4) Next run the command on the command line: **pip install -r requirement.txt**.
+    This will download all the depencides needed to run the blog and store it in on your computer. 
  
  4) Change into the src folder by typing the command: **cd src**
  5) Run the command **python run.py runserver**. This will start the web server.
