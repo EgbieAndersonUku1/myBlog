@@ -30,19 +30,21 @@ Technologies that will be used:
  
  1) To run the blog you can either create a virtual environment on your computer or not. Note this is optional.
  
-       To create a virtual environment on **Linux** go to folder you like to create the virtual environment in
+       To create a virtual environment on **Linux** go to the folder you like to create the virtual environment in
         and run the command:  **virtualenv 'type what name you like to call your virtual environment here without quotes' -p python3**
+        You must already have virtualenv stored on your computer. If virtualenv is not installed in your computer run the command **pip install virtualenv**. 
+        This will install the virtualenv on your computer.
  
     This will create a virtual environment.
  
- 2) If you have installed virtual environment activate it by use this command below or skip to step 3:
+ 2) If you have installed the virtual environment on your computer activate it by use this command below or skip to step 3:
  
     **source 'The name of your virtual environment'/bin/activate**
  
 3) Change into myBlog folder by running the command **cd myBlog**
 
 4) Next run the command on the command line: **pip install -r requirement.txt**.
-    This will download all the depencides needed to run the blog and store it in on your computer. 
+    This will download all the depencides needed to run the blog and store it in on your computer or your virtual environment if you have created one. 
  
  4) Change into the src folder by typing the command: **cd src**
  5) Run the command **python run.py runserver**. This will start the web server.
