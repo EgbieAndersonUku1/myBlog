@@ -12,5 +12,5 @@ def create_shell():
       return dict(app=create_app)
 
 if  __name__ == '__main__':
-    manager.run()
+    manager.run() # start the flask web server by running the command: 'python run.py runserver' in the command line
 
