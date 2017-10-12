@@ -1,5 +1,8 @@
-Project: Blog with a commenting and reply section. Also includes an admin section.
+Blog
+--------------------------------------------------------------------------------------------
 
+
+Project: Blog with a commenting and reply section. Also includes an admin section.
 Project: Pending
 
 Technologies that will be used:
