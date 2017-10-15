@@ -3,13 +3,15 @@ from users.util.id_generator import gen_id
 
 
 class Post(object):
-    """ """
+    """The post allows the blog to create, save and delete a post. The
+        class should not be accessed directly.
+     """
     def __init__(self, user_id, blog_id, post_id):
         self._user_id = user_id
         self._blog_id = blog_id
         self._post_id = gen_id() if  post_id is None else post_id
 
-    def get_post(self):
+    def get_post_by_id(self, post_id):
         """get_post_by_id(str, str) -> returns post obj
 
         Returns a post from .
@@ -40,7 +42,15 @@ class Post(object):
         json_data = self._to_json(post_form, author)
         self.save(json_data)
 
-    def save(self, data):
+    def update_post(post_form):
+        """"""
+        pass
+
+    def delete_post(self, post_id):
+        """"""
+        pass
+
+    def _save_to_blog(self, data):
 
         # Save to the records will add it here
         pass

@@ -36,19 +36,20 @@ class _ChildBlog(object):
         self._user_id = user_id
         self._parent_blog_id = parent_blog_id
         self._child_blog_id = gen_id() if _id is None else _id
+        self._post = Post(self._user_id, self._parent_blog_id,  self._child_blog_id)
 
     def get_post_by_id(self,  post_id):
         """Takes an id associated with a post and returns the post object for that ID"""
-        return Post(self._user_id, self._parent_blog_id, post_id, self._child_blog_id)
+        return self._post.get_post_by_id(post_id)
 
-    def new_post(self, title, post):
+    def new_post(self, post_form, author_id):
         """Creates a new post"""
-        post = Post(self._user_id, self._parent_blog_id, title, post, self._child_blog_id)
-        post.save()
+        self._post.create_new_post(post_form, author_id)
 
-    def save_post(self, post_form):
-        pass
+    def update_post(self, post_form):
+        """ """
+        self._post.update_post(post_form)
 
     def delete_post(self, post_id):
         """Deletes a post from the blog"""
-        pass
+        self._post.delete_post(post_id)
