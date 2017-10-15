@@ -15,12 +15,13 @@ class ParentBlog(object):
         self._user_id = user_id
 
     def create_blog(self):
-        return _ChildBlog(self._blog_id, self._user_id)
+        return _ChildBlog(self._user_id, self._blog_id)
 
     def find_child_blog(self, blog_id, user_id):
         pass
 
     def find_all_child_blogs(self):
+        """Returns all child blog created by this parent blog"""
         pass
 
 
@@ -30,13 +31,13 @@ class _ChildBlog(object):
     def __init__(self, user_id, parent_blog_id,  _id=None):
         self._user_id = user_id
         self._parent_blog_id = parent_blog_id
-        self._blog_id = gen_id if _id is None else _id
+        self._child_blog_id = gen_id() if _id is None else _id
 
     def new_post(self, title, post):
-        """Creates"""
-        post = Post(self._user_id, self._parent_blog_id, title, post,  self._blog_id)
+        """Creates a new post"""
+        post = Post(self._user_id, self._parent_blog_id, title, post, self._child_blog_id)
         post.save()
 
     def get_post_by_id(self,  post_id):
         """Takes an id associated with a post and returns the post object for that ID"""
-        return Post(self._user_id, self._parent_blog_id, post_id, self._blog_id)
+        return Post(self._user_id, self._parent_blog_id, post_id, self._child_blog_id)
