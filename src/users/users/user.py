@@ -48,7 +48,7 @@ class User(object):
      """
 
     def find_blog(self, child_blog_id):
-        """Using the ID returns the child blog that is associated with that ID"""
+        """Using the ID returns the child blog object that is associated with that ID"""
 
         user = self._retreive_user_info()
         parent_blog = ParentBlog(user.user_id, user.blog_id)
