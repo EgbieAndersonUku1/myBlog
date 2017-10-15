@@ -65,3 +65,8 @@ class User(object):
 
         user_name = session.get('user')
         return _UsersDetails.get_by_username(user_name)
+
+    def save_post_to_blog(self, post):
+        """"""
+        blog = self.find_blog(post.get('blog_id'))
+        blog.save_post(post)

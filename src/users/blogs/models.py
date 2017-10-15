@@ -46,6 +46,10 @@ class _ChildBlog(object):
         post = Post(self._user_id, self._parent_blog_id, title, post, self._child_blog_id)
         post.save()
 
+    def save_post(self, post_form):
+        pass
+
     def delete_post(self, post_id):
         """Deletes a post from the blog"""
         pass
+

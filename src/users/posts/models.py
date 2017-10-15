@@ -6,7 +6,7 @@ class Post(object):
     """ """
     def __init__(self, user_id, blog_id, post_id):
         self._user_id = user_id
-        self._blog_id = blog_id
+        self.blog_id = blog_id
         post_id = gen_id() if  post_id is None else post_id
 
     @staticmethod
@@ -29,20 +29,20 @@ class Post(object):
         # Add a function that calls the records to find the posts
         pass
 
-    def create_new_post(self, title, description, author_id):
+    def create_new_post(self, post_form, author_id):
         """ """
 
         author = Author.get_author_by_id(author_id)
 
-        json_data = self._to_json(title, description, author)
-        self._save(json_data)
+        json_data = self._to_json(post_form, author)
+        self.save(json_data)
 
-    def _save(self, data):
+    def save(self, data):
 
         # Save to the records will add it here
         pass
 
-    def _to_json(self, title, description, author):
+    def _to_json(self, post_form, author):
         """_to_json(str, str, str) -> return dict
 
         Returns the data for post model object as json object
@@ -56,7 +56,7 @@ class Post(object):
                 Returns a json object
         """
         return {
-            "title": title,
-            "description": description
-            "author_id": author.id
+            "title": post_form.title.title(),
+            "description": post_form.description,
+            "author_id": author.name
         }
