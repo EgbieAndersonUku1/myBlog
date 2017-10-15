@@ -26,7 +26,7 @@ class _UsersDetails(object):
     def save(self):
         data = self._to_json()
 
-        # add a record object that will save the data to database
+        # add a record object that will save the data to database HERE
 
     def _to_json(self):
         """ """
@@ -42,21 +42,28 @@ class _UsersDetails(object):
 
 
 class User(object):
-    """ """
+    """The user class is the class allows the user to created a single blog
+         or create multiple blogs, delete blogs, create, save and deletes
+        all through the blog object.
+     """
 
     def find_blog(self, child_blog_id):
-        """ """
+        """Using the ID returns the child blog that is associated with that ID"""
+
         user = self._retreive_user_info()
         parent_blog = ParentBlog(user.user_id, user.blog_id)
         return parent_blog.find_child_blog(child_blog_id)
 
     def get_all_blogs(self):
+        """Return a list containing all the blogs created by the user"""
+
         user = self._retreive_user_info()
         blog = ParentBlog(user.user_id, user.blog_id)
         return blog.find_all_child_blogs(user.user_id, user.blog_id)
 
     def get_author(self):
-        """"""
+        """Returns the an author of the post as an object"""
+
         user = self._retreive_user_info()
         return _UsersDetails.get_by_author_by_id(user.author_id)
 
@@ -65,4 +72,3 @@ class User(object):
 
         user_name = session.get('user')
         return _UsersDetails.get_by_username(user_name)
-
