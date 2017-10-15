@@ -30,7 +30,7 @@ class ParentBlog(object):
 
 
 class _ChildBlog(object):
-    """The Child blog is a child of the Parent blog """
+    """The Child blog is a child of the Parent blog"""
 
     def __init__(self, user_id, parent_blog_id,  _id=None):
         self._user_id = user_id
