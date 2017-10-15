@@ -6,11 +6,10 @@ class Post(object):
     """ """
     def __init__(self, user_id, blog_id, post_id):
         self._user_id = user_id
-        self.blog_id = blog_id
-        post_id = gen_id() if  post_id is None else post_id
+        self._blog_id = blog_id
+        self._post_id = gen_id() if  post_id is None else post_id
 
-    @staticmethod
-    def get_post_by_id(blog_id, post_id):
+    def get_post(self):
         """get_post_by_id(str, str) -> returns post obj
 
         Returns a post from .
@@ -27,6 +26,10 @@ class Post(object):
         >>> post_object([.....])
         """
         # Add a function that calls the records to find the posts
+        pass
+
+    def get_all_posts(self):
+        """"""
         pass
 
     def create_new_post(self, post_form, author_id):
@@ -56,7 +59,11 @@ class Post(object):
                 Returns a json object
         """
         return {
+            "blog_id": self._blog_id,
+            "post_id": self._post_id,
+            "author_id": author.id,
             "title": post_form.title.title(),
             "description": post_form.description,
-            "author_id": author.name
+            "author_name": author.name,
+            "post_live": True
         }
