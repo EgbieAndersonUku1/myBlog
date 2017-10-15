@@ -1,0 +1,42 @@
+from users.util.id_generator import gen_id
+from users.util.date_generator import time_now
+from src.users.authors.model import Author
+from users.posts.models import Post
+
+
+class ParentBlog(object):
+    """ ParentBlog: class
+    Each user on the application has a parent blog and from the parent blog
+    many child blogs can be generated.
+    """
+
+    def  __init__(self, user_id,  blog_id):
+        self._blog_id = blog_id
+        self._user_id = user_id
+
+    def create_blog(self):
+        return _ChildBlog(self._blog_id, self._user_id)
+
+    def find_child_blog(self, blog_id, user_id):
+        pass
+
+    def find_all_child_blogs(self):
+        pass
+
+
+class _ChildBlog(object):
+    """The Child blog is a child of the Parent blog """
+
+    def __init__(self, user_id, parent_blog_id,  _id=None):
+        self._user_id = user_id
+        self._parent_blog_id = parent_blog_id
+        self._blog_id = gen_id if _id is None else _id
+
+    def new_post(self, title, post):
+        """Creates"""
+        post = Post(self._user_id, self._parent_blog_id, title, post,  self._blog_id)
+        post.save()
+
+    def get_post_by_id(self,  post_id):
+        """Takes an id associated with a post and returns the post object for that ID"""
+        return Post(self._user_id, self._parent_blog_id, post_id, self._blog_id)
