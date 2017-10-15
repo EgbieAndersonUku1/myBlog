@@ -1,6 +1,4 @@
 from users.util.id_generator import gen_id
-from users.util.date_generator import time_now
-from src.users.authors.model import Author
 from users.posts.models import Post
 
 
@@ -17,11 +15,17 @@ class ParentBlog(object):
     def create_blog(self):
         return _ChildBlog(self._user_id, self._blog_id)
 
-    def find_child_blog(self, blog_id, user_id):
+    def find_child_blog(self, child_blog_id, user_id):
         pass
 
     def find_all_child_blogs(self):
         """Returns all child blog created by this parent blog"""
+        pass
+
+    def delete_child_blog(self, child_blog_id):
+        pass
+
+    def delete_all_child_blogs(self):
         pass
 
 
@@ -33,11 +37,15 @@ class _ChildBlog(object):
         self._parent_blog_id = parent_blog_id
         self._child_blog_id = gen_id() if _id is None else _id
 
+    def get_post_by_id(self,  post_id):
+        """Takes an id associated with a post and returns the post object for that ID"""
+        return Post(self._user_id, self._parent_blog_id, post_id, self._child_blog_id)
+
     def new_post(self, title, post):
         """Creates a new post"""
         post = Post(self._user_id, self._parent_blog_id, title, post, self._child_blog_id)
         post.save()
 
-    def get_post_by_id(self,  post_id):
-        """Takes an id associated with a post and returns the post object for that ID"""
-        return Post(self._user_id, self._parent_blog_id, post_id, self._child_blog_id)
+    def delete_post(self, post_id):
+        """Deletes a post from the blog"""
+        pass
