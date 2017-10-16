@@ -1,6 +1,8 @@
 from users.authors.model import Author
 from users.util.id_generator import gen_id
 
+from src.users.util.date_generator import time_now
+
 
 class Post(object):
     """The post allows the blog to create, save and delete a post. The
@@ -75,5 +77,6 @@ class Post(object):
             "title": post_form.title.title(),
             "description": post_form.description,
             "author_name": author.name,
-            "post_live": True
+            "post_live": True,
+            "created" : time_now()
         }
