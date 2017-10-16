@@ -26,7 +26,12 @@ class Database(object):
     def _create_indexes(cls, client):
         """Create the indexes in the database for faster lookup"""
         blog = client['blog']['blog']
-        blog.create_index([('user_name', pymongo.ASCENDING)])
+        blog.create_index([('user_id', pymongo.ASCENDING)])
+        blog.create_index([('author_id', pymongo.ASCENDING)])
+        blog.create_index([('parent_blog_id', pymongo.ASCENDING)])
+        blog.create_index([('child_blog_id', pymongo.ASCENDING)])
+        blog.create_index([('blog_live', pymongo.ASCENDING)])
+        blog.create_index([('post_live', pymongo.ASCENDING)])
         blog.create_index([('email', pymongo.ASCENDING)])
         blog.create_index([('time_created', pymongo.ASCENDING)])
 

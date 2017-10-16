@@ -4,7 +4,7 @@ from src.users.util.id_generator import gen_id
 from users.blogs.models import ParentBlog
 
 
-class _UsersDetails(object):
+class UsersDetails(object):
     """ """
     def __init__(self, first_name, last_name, username, email, _id=None, blog_id=None, author_id=None):
         self._id = gen_id() if _id else _id
@@ -34,7 +34,7 @@ class _UsersDetails(object):
 
         return {
             "_id": self._id,
-            "blog_id": self.blog_id,
+            "parent_blog_id": self.blog_id,
             "author_id": self.author_id,
             "first_name": self.first_name,
             "last_name": self.last_name,
@@ -47,8 +47,11 @@ class User(object):
          or create multiple blogs, delete blogs, create, save and deletes
         all through the blog object.
      """
-    @staticmethod
-    def create_blog(blog_form):
+    def __init__(self):
+        self._user = self._retreive_user_info()
+        self._parent_blog = ParentBlog(self._user.user_id, self._user.blog_id)
+
+    def create_blog(self, blog_form):
         """create_blog(obj) -> return blog object
         Takes a blog form and creates a child blog object.
 
@@ -57,28 +60,20 @@ class User(object):
         :returns
                 A child blog containing the new details.
         """
-        return ParentBlog.create_blog(blog_form)
+        return self._parent_blog.create_blog(blog_form)
 
-    def find_blog(self, child_blog_id):
+    def get_blog(self, child_blog_id):
         """Using the ID returns the child blog object that is associated with that ID"""
-
-        user = self._retreive_user_info()
-        parent_blog = ParentBlog(user.user_id, user.blog_id)
-        return parent_blog.find_child_blog(child_blog_id)
+        return self._parent_blog.find_child_blog(child_blog_id)
 
     def get_all_blogs(self):
         """Return a list containing all the blogs created by the user"""
+        return self._parent_blog.find_all_child_blogs()
 
-        user = self._retreive_user_info()
-        parent_blog = ParentBlog(user.user_id, user.blog_id)
-        return parent_blog.find_all_child_blogs()
-
-    def get_author(self):
+    def get_blog_author(self):
         """Returns the an author of the post as an object"""
-
-        user = self._retreive_user_info()
-        return _UsersDetails.get_by_author_by_id(user.author_id)
+        return UsersDetails.get_by_author_by_id(self._user.author_id)
 
     def _retreive_user_info(self):
         """A helper function that returns the user object"""
-        return _UsersDetails.get_by_email(session.get('email'))
+        return UsersDetails.get_by_email(session.get('email'))

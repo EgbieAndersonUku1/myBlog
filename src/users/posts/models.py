@@ -44,8 +44,11 @@ class Post(object):
         json_data = self._to_json(post_form, author)
         self.save(json_data)
 
-    def update_post(post_form):
+    def update_post(self, post_form, post_id):
         """"""
+        post = self.get_post_by_id(post_id)
+
+        # Add the functionality to update posts here
         pass
 
     def delete_post(self, post_id):
