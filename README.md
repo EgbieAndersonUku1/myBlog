@@ -53,3 +53,9 @@ Technologies that will be used:
  6) Open a new browser and type in the url box: **http://127.0.0.1:5000**.
  To access any page just add a slash behind the link followed by the page.
  
+ 
+ Things needed to run the blog
+ ----------------------------------------------------------------------
+ 
+ 1) Any operating system 
+ 2) A working internet connection 
