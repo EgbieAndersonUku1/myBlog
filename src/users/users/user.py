@@ -47,6 +47,17 @@ class User(object):
          or create multiple blogs, delete blogs, create, save and deletes
         all through the blog object.
      """
+    @staticmethod
+    def create_blog(blog_form):
+        """create_blog(obj) -> return blog object
+        Takes a blog form and creates a child blog object.
+
+        :param
+                `blog_form`: Contains the details that will be used to create the blog i.e title, description
+        :returns
+                A child blog containing the new details.
+        """
+        return ParentBlog.create_blog(blog_form)
 
     def find_blog(self, child_blog_id):
         """Using the ID returns the child blog object that is associated with that ID"""

@@ -13,8 +13,13 @@ class ParentBlog(object):
         self._blog_id = blog_id
         self._user_id = user_id
 
-    def create_blog(self):
-        return _ChildBlog(self._user_id, self._blog_id)
+    def create_blog(self, blog_form):
+        child_blog_id = gen_id()
+        blog_json = self._to_json(blog_form, child_blog_id)
+
+        # Add a function/method that will save the newly created child blog's details stored in blog_json to the database
+        return _ChildBlog(self._user_id, self._blog_id, child_blog_id,
+                                            blog_form.name, blog_form.description)
 
     def find_child_blog(self, child_blog_id):
         pass
@@ -29,15 +34,33 @@ class ParentBlog(object):
     def delete_all_child_blogs(self):
         pass
 
+    def _to_json(self, blog_form, child_blog_id):
+        """"""
+        return {
+
+            "parent_blog_id": self._blog_id,
+            "child_blog_id": child_blog_id,
+            "blog_title": blog_form.title(),
+            "blog_description": blog_form.description,
+            "blog_live": True
+        }
+
 
 class _ChildBlog(object):
     """The Child blog is a child of the Parent blog"""
 
-    def __init__(self, user_id, parent_blog_id, _id=None):
-        self._user_id = user_id
-        self._parent_blog_id = parent_blog_id
-        self._child_blog_id = gen_id() if _id is None else _id
-        self._post = Post(self._user_id, self._parent_blog_id, self._child_blog_id)
+    def __init__(self, user_id, parent_blog_id, child_blog_id, blog_name, blog_descr):
+        self._blog_name = blog_name
+        self._blog_descr = blog_descr
+        self._post = Post(user_id, parent_blog_id, child_blog_id)
+
+    @property
+    def blog_name(self):
+        return self._blog_name
+
+    @property
+    def blog_description(self):
+        return self._blog_descr
 
     def get_post_by_id(self, post_id):
         """Takes an ID associated and returns the post object for that ID"""
