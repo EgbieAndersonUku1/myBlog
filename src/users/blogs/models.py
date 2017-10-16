@@ -5,7 +5,7 @@ from users.posts.models import Post
 class ParentBlog(object):
     """ ParentBlog: class
     Each user on the application has a parent blog and from the parent blog
-    many child blogs can be generated. This class should only be accessed
+    many child blogs can be generated. This class SHOULD only be accessed
     from the user class and not directly.
     """
 
