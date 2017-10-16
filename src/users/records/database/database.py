@@ -17,7 +17,7 @@ class Database(object):
     
     @classmethod
     def _setup(cls):
-        """Setups the databases"""
+        """Setups the databases """
         client = pymongo.MongoClient(Database.URI)
         Database.DATABASE = client['blog']
         return client
@@ -25,6 +25,7 @@ class Database(object):
     @classmethod
     def _create_indexes(cls, client):
         """Create the indexes in the database for faster lookup"""
+
         blog = client['blog']['blog']
         blog.create_index([('user_id', pymongo.ASCENDING)])
         blog.create_index([('author_id', pymongo.ASCENDING)])
