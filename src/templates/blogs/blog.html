@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 
-{% block title %} New post {% endblock %}
+{% block title %} New Blog {% endblock %}
 
 {% block content %}
 
@@ -10,16 +10,14 @@
         <div class="col-md-9">
                 <div class="panel panel-default">
                         <div class="panel-heading main-color-bg">
-                                <h3 class="panel-title">Create A New Post</h3>
+                                <h3 class="panel-title">Create A New Blog</h3>
                         </div>
                         <div class="panel-body">
                                 {{ form.hidden_tag() }}
                                 {{ render_field(form.title, class='form-control') }}
-                                {{ render_field(form.body, rows="10", class='form-control') }}
-                                {{ render_field(form.image, class='form-control') }}
-                                {{ render_field(form.category, class='form-control') }}
+                                {{ render_field(form.body, rows="16", class='form-control') }}
                                 <br>
-                                <button type="submit" class="btn btn-primary">Create post</button>
+                                <button type="submit" class="btn btn-primary">Create blog</button>
                         </div>
                 </div>
         </div>

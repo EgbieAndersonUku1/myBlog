@@ -48,7 +48,7 @@
                         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
                     </a>
                     <a href="#" class="list-group-item"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  My Blogs <span class="badge">12</span></a>
-                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-bitcoin"aria-hidden="true"></span> Create new blog</a>
+                    <a href="{{ url_for('blogs_app.blog') }}" class="list-group-item"><span class="glyphicon glyphicon-bitcoin"aria-hidden="true"></span> Create new blog</a>
                     <a href="{{ url_for('posts_app.new_post') }}" class="list-group-item"><span class="glyphicon glyphicon-book"aria-hidden="true"></span> Create new post</a>
                     <a href="#" class="list-group-item"><span class="glyphicon glyphicon-book"aria-hidden="true"></span> View all posts</a>
 

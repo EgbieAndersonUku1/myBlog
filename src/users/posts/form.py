@@ -1,11 +1,10 @@
-from flask_wtf import Form
-from flask_ckeditor import CKEditorField
-from wtforms import SelectField, StringField, validators
+from users.base_ckeditor import BaseCKEditorForm
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import SelectField
 
 
-class PostForm(Form):
-    """The post form"""
+class PostForm(BaseCKEditorForm):
 
-    title = StringField('Title', validators=[validators.DataRequired()])
-    post = CKEditorField('Post', validators=[ validators.DataRequired()])
+    image = FileField('Post image', validators=[FileAllowed(['png', 'jpeg', 'jpg', 'gif'],
+                                                               'Only the file extension jpg, png, gif and jpeg are allowed')])
     category = SelectField('Choose blog to save post to', coerce=str)
