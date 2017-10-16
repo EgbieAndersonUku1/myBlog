@@ -6,16 +6,17 @@ from users.blogs.models import ParentBlog
 
 class _UsersDetails(object):
     """ """
-    def __init__(self, first_name, last_name, email, _id=None, blog_id=None, author_id=None):
+    def __init__(self, first_name, last_name, username, email, _id=None, blog_id=None, author_id=None):
         self._id = gen_id() if _id else _id
         self.blog_id = gen_id() if blog_id is None else blog_id
         self.author_id = gen_id() if author_id is None else author_id
         self.first_name = first_name
         self.last_name = last_name
+        self.username  = username
         self.email = email
 
     @staticmethod
-    def get_by_username(first_name):
+    def get_by_email(email):
         # search the records and return the first name of the user
         pass
 
@@ -58,8 +59,8 @@ class User(object):
         """Return a list containing all the blogs created by the user"""
 
         user = self._retreive_user_info()
-        blog = ParentBlog(user.user_id, user.blog_id)
-        return blog.find_all_child_blogs(user.user_id, user.blog_id)
+        parent_blog = ParentBlog(user.user_id, user.blog_id)
+        return parent_blog.find_all_child_blogs()
 
     def get_author(self):
         """Returns the an author of the post as an object"""
@@ -69,6 +70,4 @@ class User(object):
 
     def _retreive_user_info(self):
         """A helper function that returns the user object"""
-
-        user_name = session.get('user')
-        return _UsersDetails.get_by_username(user_name)
+        return _UsersDetails.get_by_email(session.get('email'))
