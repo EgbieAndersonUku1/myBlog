@@ -14,6 +14,14 @@ class ParentBlog(object):
         self._user_id = user_id
 
     def create_blog(self, blog_form):
+        """create_blog(blog form object) -> returns child blog object
+        Creates a child blog that allows the user to create or delete a post
+
+        :param
+                `blog_form`: The post details which include the title, post content
+        :returns
+                Returns a blog object
+        """
         child_blog_id = gen_id()
         blog_json = self._to_json(blog_form, child_blog_id)
 
