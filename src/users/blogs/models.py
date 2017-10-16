@@ -37,7 +37,7 @@ class ParentBlog(object):
     def _to_json(self, blog_form, child_blog_id):
         """"""
         return {
-
+            "user_id": self._user_id,
             "parent_blog_id": self._blog_id,
             "child_blog_id": child_blog_id,
             "blog_title": blog_form.title(),
