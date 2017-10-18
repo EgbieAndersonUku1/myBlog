@@ -1,7 +1,7 @@
 from users.authors.model import Author
 from users.util.id_generator import gen_id
 
-from src.users.util.date_generator import time_now
+from users.util.date_generator import time_now
 
 
 class Post(object):

@@ -1,4 +1,4 @@
-from src.users.util.id_generator import gen_id
+from users.util.id_generator import gen_id
 
 
 class Author(object):

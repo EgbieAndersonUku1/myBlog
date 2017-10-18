@@ -1,5 +1,6 @@
 from users.util.id_generator import gen_id
 from users.posts.models import Post
+from users.drafts.model import Draft
 
 
 class ParentBlog(object):
@@ -60,6 +61,8 @@ class _ChildBlog(object):
     def __init__(self, user_id, parent_blog_id, child_blog_id, blog_name, blog_descr):
         self._blog_name = blog_name
         self._blog_descr = blog_descr
+        self._child_blog = child_blog_id
+        self._user_id = user_id
         self._post = Post(user_id, parent_blog_id, child_blog_id)
 
     @property
@@ -92,3 +95,4 @@ class _ChildBlog(object):
     def delete_post(self, post_id):
         """Deletes a post from the blog"""
         self._post.delete_post(post_id)
+
