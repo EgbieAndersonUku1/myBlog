@@ -105,6 +105,10 @@ body {
 }
 
 
+#login_password {
+  width:580px;
+}
+
 .navbar .navbar-nav .nav-link:not(.disabled):hover,
 .navbar .navbar-nav .nav-link:not(.disabled):focus {
   color: #ffdbf8;

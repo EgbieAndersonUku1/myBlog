@@ -19,14 +19,14 @@ class Database(object):
     def _setup(cls):
         """Setups the databases """
         client = pymongo.MongoClient(Database.URI)
-        Database.DATABASE = client['blog']
+        Database.DATABASE = client['blogs']
         return client
     
     @classmethod
     def _create_indexes(cls, client):
         """Create the indexes in the database for faster lookup"""
 
-        blog = client['blog']['blog']
+        blog = client['blogs']['blog']
         blog.create_index([('user_id', pymongo.ASCENDING)])
         blog.create_index([('author_id', pymongo.ASCENDING)])
         blog.create_index([('parent_blog_id', pymongo.ASCENDING)])
@@ -37,15 +37,17 @@ class Database(object):
         blog.create_index([('time_created', pymongo.ASCENDING)])
 
     @staticmethod
-    def insert_one(collection, data):
-        """insert_one(str) -> return(none)
-        Inserts data into a collection(table) for a given database.
+    def insert_one(data, collection="blogs"):
+        """insert_one(str) -> return(boolean)
+        Inserts data into a given collection(table) for a given database.
 
-        :parameters
-            - collection: The table name for the data to be inserted into.
-            - data: The data will be inserted into the collection.
+        :parameter
+           `collection`: The table name for the data to be inserted into.
+           `data`: The data will be inserted into the collection.
+        :returns
+            Returns True if the data was successful saved to database else False
         """
-        Database.DATABASE[collection].insert(data)
+        return True if Database.DATABASE[collection].insert(data) else False
 
     @staticmethod
     def find_all(collection):
@@ -55,7 +57,7 @@ class Database(object):
         return Database.DATABASE[collection].find()
 
     @staticmethod
-    def find_one(collection, query):
+    def find_one(query, collection='blog'):
         """find_one(str, dict) -> return(dict)
 
         Return a json object from from the database.

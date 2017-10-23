@@ -1,6 +1,7 @@
 from users.util.id_generator import gen_id
 from users.posts.models import Post
 from users.drafts.model import Draft
+from users.records.record import Record
 
 
 class ParentBlog(object):
@@ -19,16 +20,18 @@ class ParentBlog(object):
         Creates a child blog that allows the user to create or delete a post
 
         :param
-                `blog_form`: The post details which include the title, post content
+            `blog_form`: The post details which include the title, post content
         :returns
-                Returns a blog object
+            Returns a blog object
         """
         child_blog_id = gen_id()
-        blog_json = self._to_json(blog_form, child_blog_id)
+        blog_data = self._to_json(blog_form, child_blog_id)
 
-        # Add a function/method that will save the newly created child blog's details stored in blog_json to the database
+        if not Record.save(blog_data):
+           # will create a base exception here
+           pass
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id,
-                                            blog_form.name, blog_form.description)
+                          blog_form.name, blog_form.description)
 
     def find_child_blog(self, child_blog_id):
         pass
