@@ -1,4 +1,4 @@
-from users.util.id_generator import gen_id
+from users.utils.generator.id_generator import gen_id
 
 
 class Draft(object):

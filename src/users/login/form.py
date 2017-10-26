@@ -1,4 +1,4 @@
-from users.base_login_form import BaseLoginForm
+from users.base.base_login_form import BaseLoginForm
 
 
 class LoginForm(BaseLoginForm):

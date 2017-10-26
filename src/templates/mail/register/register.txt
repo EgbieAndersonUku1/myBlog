@@ -1,0 +1,13 @@
+{% extends "mail/base.html" %}
+
+{% block body %}
+
+    Hi {{ user.first_name.title() }},
+
+    Welcome to Social Network application. In order to use to application please confirm by clicking
+    on the registration link located in your email.
+
+     {{ config.get('HOSTNAME') }}/confirm/{{ form.username.data.title() }}/{{ user.codes['email_code'] }}
+
+
+{% endblock %}

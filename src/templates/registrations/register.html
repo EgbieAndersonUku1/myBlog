@@ -31,7 +31,7 @@
                     <div class="form-bottom">
 
                         {% from "__formhelpers.html" import render_field %}
-                        <form role="form" action="" method="post" class="registration-form">
+                        <form role="form" action="POST" method="post" class="registration-form">
                             {{ form.hidden_tag() }}
                             {{ render_field(form.first_name, class="form-control") }}
                             {{ render_field(form.last_name, class="form-control") }}
@@ -40,6 +40,8 @@
                             {{ render_field(form.password, class="form-control") }}
                             {{ render_field(form.confirm, class="form-control") }}
 
+                            <hr>
+                            {{ recaptcha }}
                             <hr>
                             <button type="submit" class="btn btn-primary">Sign me up!</button>
                         </form>

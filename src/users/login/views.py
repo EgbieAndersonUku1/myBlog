@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session
 
 from users.login.form import LoginForm
-from users.util.password_implementer import PasswordImplementer
+from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.user import UsersDetails
 
 login_app = Blueprint('login_app', __name__)

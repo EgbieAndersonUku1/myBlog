@@ -1,0 +1,13 @@
+{% extends "mail/base.html" %}
+
+{% block body %}
+
+    Hi {{ user.first_name.title() }},
+
+    In order to use to application please confirm by clicking on the registration link located in your email.
+
+
+   {{ config.HOSTNAME }}/confirm/{{ form.username }}/{{ user.codes['email_code'] }}
+    -------------------------------------------
+
+{% endblock %}

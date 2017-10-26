@@ -1,4 +1,4 @@
-from users.base_password_form import BasePasswordForm
+from users.base.base_password_form import BasePasswordForm
 from wtforms import validators, PasswordField
 
 __author__ = 'Egbie Uku'

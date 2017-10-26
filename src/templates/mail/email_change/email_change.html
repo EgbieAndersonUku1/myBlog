@@ -1,0 +1,22 @@
+{% extends "mail/base.html" %}
+
+{% block body %}
+    <p>
+
+        <div>Hi {{ user.first_name.title() }},</div>
+
+        <br>
+
+        We received your request to change your email address. In order to complete the changes
+        click on the link below.
+
+        <br>
+        <br>
+
+        <a href="{{ config.get('HOSTNAME') }}/confirm/{{ form.username.data.title() }}/{{ user.codes['email_code'] }}">
+                 {{ config.get('HOSTNAME') }}/confirm/{{ form.username.data.title() }}/{{ user.codes['email_code'] }}
+        </a>
+
+    </p>
+
+{% endblock %}

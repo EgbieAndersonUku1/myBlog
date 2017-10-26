@@ -4,14 +4,17 @@
 
 {% block content %}
 
+<div class="col-md-9">
+    <div class="panel panel-default">
+        <div class="panel-heading main-color-bg">
+            <h3 class="panel-title">Create A New Post</h3>
+        </div>
+
 {% from "__formhelpers.html" import render_field %}
+
 <form method="POST" action="{{ url_for('posts_app.new_post') }}" role="form">
 
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-heading main-color-bg">
-                <h3 class="panel-title">Create A New Post</h3>
-            </div>
+
             <div class="panel-body">
                 {{ form.hidden_tag() }}
                 {{ render_field(form.title, class='form-control') }}

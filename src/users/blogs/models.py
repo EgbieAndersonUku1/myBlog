@@ -1,4 +1,4 @@
-from users.util.id_generator import gen_id
+from users.utils.generator.id_generator import gen_id
 from users.posts.models import Post
 from users.drafts.model import Draft
 from users.records.record import Record

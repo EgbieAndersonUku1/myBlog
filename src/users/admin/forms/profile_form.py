@@ -2,7 +2,7 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms.widgets import TextArea
 from wtforms import validators, StringField
 
-from users.base_profile_form import BaseProfileForm
+from users.base.base_profile_form import BaseProfileForm
 
 __author__ = 'Egbie Uku'
 

@@ -1,16 +1,15 @@
 from flask import session
 
-from users.util.id_generator import gen_id
+from users.utils.generator.id_generator import gen_id
 from users.blogs.models import ParentBlog
 from users.records.record import Record
-
 
 
 class UsersDetails(object):
     """ """
     def __init__(self, first_name, last_name, username, email, author_name,
-                 password, _id=None, blog_id=None, author_id=None,
-                 parent_blog_created=False):
+                 password, configuration_codes={}, _id=None,
+                 blog_id=None, author_id=None,parent_blog_created=False):
 
         self._id = gen_id() if _id else _id
         self.blog_id = gen_id() if blog_id is None else blog_id
@@ -21,6 +20,7 @@ class UsersDetails(object):
         self.email = email
         self.author_name = author_name
         self.password = password
+        self.configuration_codes = configuration_codes
         self.parent_blog_created = parent_blog_created
 
     @staticmethod

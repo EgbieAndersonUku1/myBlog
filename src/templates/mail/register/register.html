@@ -1,0 +1,26 @@
+{% extends "mail/base.html" %}
+
+{% block body %}
+    <p>
+
+        <div>Hi {{ user.first_name.title() }},</div>
+
+        </br>
+
+
+        Welcome to myBlog the non-stop shop for creating blogs.
+
+        </br>
+        Please verify your email in order to use the application.
+
+        <br>
+
+         </br>
+            <a href="{{ config.get('HOSTNAME') }}/confirm/{{ user.username.data.title() }}/{{ user.codes['verification_code'] }}">
+                 {{ config.get('HOSTNAME') }}/confirm/{{ user.username.data.title() }}/{{ user.codes['verification_code'] }}</a>
+         </br>
+
+
+    </p>
+
+{% endblock %}

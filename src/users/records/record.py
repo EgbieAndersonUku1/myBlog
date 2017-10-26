@@ -5,7 +5,8 @@ class Record(object):
 
     @staticmethod
     def save(data):
-        return Database.insert_one(data)
+        pass
+        #return Database.insert_one(data)
 
     class Update(object):
 

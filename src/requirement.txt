@@ -7,4 +7,5 @@ Flask-WTF==0.12
 py-bcrypt==0.4
 python-dotenv
 flask_ckeditor==0.2
+flask-recaptcha==0.4.2
 
