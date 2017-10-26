@@ -3,7 +3,6 @@ from flask import Blueprint, render_template
 from users.registration.form import RegistrationForm
 from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.users import User
-from users.utils.generator.id_generator import gen_id as gen_code
 
 registration_app = Blueprint('registration_app', __name__)
 
@@ -17,10 +16,10 @@ def register_user():
     if form.validate_on_submit():
 
         user = _extract_user_details_from_web_form(form)
-        user.configuration_codes['verification_code'] = gen_code()
+        user.gen_user_verification_code()
         user.email_user_account_verification_code()
         user.save()
-        # Redirect user to blog creation togo here
+        # Redirect user to blog creation to go here
 
     return render_template('registrations/register.html', form=form)
 

@@ -4,6 +4,7 @@ from users.utils.generator.id_generator import gen_id
 from users.utils.email.sender import email_user_verification_code
 from users.blogs.models import ParentBlog
 from users.records.record import Record
+from users.utils.generator.id_generator import gen_id as gen_code
 
 
 class User(object):
@@ -23,6 +24,16 @@ class User(object):
         self.password = password
         self.configuration_codes = configuration_codes
         self.parent_blog_created = parent_blog_created
+
+    def _gen_user_verification_code(self):
+        self.configuration_codes['verification_code'] = self._gen_code()
+
+    def _gen_email_change_verification_code(self):
+        self.configuration_codes['email_code'] = self._gen_code()
+
+    def _gen_code(self):
+        """"""
+        return gen_code()
 
     def email_user_account_verification_code(self):
         """ """
