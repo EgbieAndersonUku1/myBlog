@@ -12,9 +12,9 @@ def login():
 
     form = LoginForm()
     if form.validate_on_submit():
-        user = Users.get_by_email(session.email)
+        user = User.get_by_email(session.email)
         if user and PasswordImplementer.check_password(form.password, user.password):
-            # redirect the user somewhere
+            # redirect the user to go here
             pass
 
     return render_template("login/login.html", form=form)

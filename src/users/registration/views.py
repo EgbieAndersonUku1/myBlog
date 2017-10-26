@@ -20,7 +20,7 @@ def register_user():
         user.configuration_codes['verification_code'] = gen_code()
         user.email_user_account_verification_code()
         user.save()
-        # will add a page re-direct here after I the details built the database saver
+        # Redirect user to blog creation togo here
 
     return render_template('registrations/register.html', form=form)
 
