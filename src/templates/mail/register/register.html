@@ -3,7 +3,7 @@
 {% block body %}
     <p>
 
-        <div>Hi {{ user.first_name.title() }},</div>
+        <div>Hi {{ username }},</div>
 
         </br>
 
@@ -16,8 +16,8 @@
         <br>
 
          </br>
-            <a href="{{ config.get('HOSTNAME') }}/confirm/{{ user.username.data.title() }}/{{ user.codes['verification_code'] }}">
-                 {{ config.get('HOSTNAME') }}/confirm/{{ user.username.data.title() }}/{{ user.codes['verification_code'] }}</a>
+            <a href="{{ config.get('HOSTNAME') }}/confirm/{{ username }}/{{ verification_code }}">
+                 {{ config.get('HOSTNAME') }}/confirm/{{ username }}/{{ verification_code }}</a>
          </br>
 
 

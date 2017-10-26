@@ -7,7 +7,7 @@ from users.utils.email.email_model import EmailGmail
 __author__ = 'Egbie Uku'
 
 
-def email_user_verification_code(receipent_addr, user):
+def email_user_verification_code(receipent_addr, username, verification_code):
     """_send_email_verification_code(str, obj, obj) -> returns None
 
        Sends a verification code to the user's email address.
@@ -15,6 +15,8 @@ def email_user_verification_code(receipent_addr, user):
        :param
            `recipient_addr`: The email address of the recipient
            `user`: The object model containing all the user's information
+           `username`: The username belonging to the user
+           `verification_code`: The verification code that to be verified by the user
        """
     email = _FlaskEmailer(receipent_addr,
                          subject="Re: Please verify your email address",
@@ -29,13 +31,12 @@ class _FlaskEmailer(object):
        before finally been sent to its destination.
     """
 
-    def __init__(self, receiptant_addr, subject, body_html_path, body_text_path, user, form):
+    def __init__(self, receiptant_addr, subject, body_html_path, body_text_path, username, verification_code):
 
         self._receiptant_addr = receiptant_addr
         self._subject = subject
-        self._body_html = render_template(body_html_path, user=user, form=form)
-        self._body_text = render_template(body_text_path, user=user, form=form)
-        self._user = user
+        self._body_html = render_template(body_html_path, username=username, verification_code=verification_code)
+        self._body_text = render_template(body_text_path, username=username, verification_code=verification_code)
 
     def send_email(self):
         """Sends the email message to the receiver"""

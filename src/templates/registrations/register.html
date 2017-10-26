@@ -32,6 +32,7 @@
 
                         {% from "__formhelpers.html" import render_field %}
                         <form role="form" action="POST" method="post" class="registration-form">
+
                             {{ form.hidden_tag() }}
                             {{ render_field(form.first_name, class="form-control") }}
                             {{ render_field(form.last_name, class="form-control") }}

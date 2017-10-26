@@ -2,12 +2,12 @@
 
 {% block body %}
 
-    Hi {{ user.first_name.title() }},
+    Hi {{ username }},
 
     Welcome to Social Network application. In order to use to application please confirm by clicking
     on the registration link located in your email.
 
-     {{ config.get('HOSTNAME') }}/confirm/{{ form.username.data.title() }}/{{ user.codes['email_code'] }}
+     {{ config.get('HOSTNAME') }}/confirm/{{ username.data }}/{{ verification_code }}
 
 
 {% endblock %}

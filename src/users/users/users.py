@@ -1,11 +1,12 @@
 from flask import session
 
 from users.utils.generator.id_generator import gen_id
+from users.utils.email.sender import email_user_verification_code
 from users.blogs.models import ParentBlog
 from users.records.record import Record
 
 
-class UsersDetails(object):
+class User(object):
     """ """
     def __init__(self, first_name, last_name, username, email, author_name,
                  password, configuration_codes={}, _id=None,
@@ -22,6 +23,10 @@ class UsersDetails(object):
         self.password = password
         self.configuration_codes = configuration_codes
         self.parent_blog_created = parent_blog_created
+
+    def email_user_account_verification_code(self):
+        """ """
+        return email_user_verification_code(self.username, self.configuration_codes['verification_code'])
 
     @staticmethod
     def get_by_email(email):
@@ -54,7 +59,7 @@ class UsersDetails(object):
         }
 
 
-class User(object):
+class UserBlog(object):
     """The user class is the class allows the user to created a single blog
          or create multiple blogs, delete blogs, create, save and deletes
         all through the blog object.
@@ -84,8 +89,8 @@ class User(object):
 
     def get_blog_author(self):
         """Returns the an author of the post as an object"""
-        return UsersDetails.get_by_author_by_id(self._user.author_id)
+        return User.get_by_author_by_id(self._user.author_id)
 
     def _retreive_user_info(self):
         """A helper function that returns the user object"""
-        return UsersDetails.get_by_email(session.get('email'))
+        return User.get_by_email(session.get('email'))

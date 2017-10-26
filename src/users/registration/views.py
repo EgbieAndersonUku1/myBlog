@@ -1,9 +1,8 @@
 from flask import Blueprint, render_template
 
 from users.registration.form import RegistrationForm
-from users.utils.email.sender import email_user_verification_code
 from users.utils.implementer.password_implementer import PasswordImplementer
-from users.users.user import UsersDetails
+from users.users.users import User
 from users.utils.generator.id_generator import gen_id as gen_code
 
 registration_app = Blueprint('registration_app', __name__)
@@ -19,9 +18,9 @@ def register_user():
 
         user = _extract_user_details_from_web_form(form)
         user.configuration_codes['verification_code'] = gen_code()
-        email_user_verification_code(user)
+        user.email_user_account_verification_code()
         user.save()
-        # will add a page re-direct here after I the details has been saved
+        # will add a page re-direct here after I the details built the database saver
 
     return render_template('registrations/register.html', form=form)
 
@@ -37,10 +36,10 @@ def _extract_user_details_from_web_form(form):
     :returns
         `user`: Returns a user object
     """
-    return UsersDetails(
-                        form.first_name.data, form.last_name.data,
-                        form.username.data, form.email.data,
-                        form.author_name.data,
-                        PasswordImplementer.hash_password(form.password.data)
-                        )
+    return User(
+                form.first_name.data, form.last_name.data,
+                form.username.data, form.email.data,
+                form.author_name.data,
+                PasswordImplementer.hash_password(form.password.data)
+                )
 
