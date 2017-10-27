@@ -5,6 +5,7 @@ class Record(object):
 
     @staticmethod
     def save(data):
+
         pass
         #return Database.insert_one(data)
 

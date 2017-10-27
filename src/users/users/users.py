@@ -5,6 +5,7 @@ from users.utils.email.sender import email_user_verification_code
 from users.blogs.models import ParentBlog
 from users.records.record import Record
 from users.utils.generator.id_generator import gen_id as gen_code
+from users.utils.implementer.password_implementer import PasswordImplementer
 
 
 class User(object):
@@ -38,6 +39,15 @@ class User(object):
     def email_user_account_verification_code(self):
         """ """
         return email_user_verification_code(self.username, self.configuration_codes['verification_code'])
+
+    @classmethod
+    def extract_web_form(cls, form):
+        """"""
+        return cls(form.first_name.data, form.last_name.data,
+                    form.username.data, form.email.data,
+                    form.author_name.data,
+                    PasswordImplementer.hash_password(form.password.data)
+                    )
 
     @staticmethod
     def get_by_email(email):
