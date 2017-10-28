@@ -15,6 +15,7 @@ from users.blogs.views import blogs_app
 from users.posts.views import posts_app
 from users.login.views import login_app
 
+
 # @app.before_first_request
 # def init_db():
 #     Database.db_init()
