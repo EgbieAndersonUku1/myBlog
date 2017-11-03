@@ -14,7 +14,7 @@ class User(object):
                  password, configuration_codes={}, _id=None,
                  blog_id=None, author_id=None,parent_blog_created=False):
 
-        self._id = gen_id() if _id else _id
+        self._id = gen_id() if _id is None else _id
         self.blog_id = gen_id() if blog_id is None else blog_id
         self.author_id = gen_id() if author_id is None else author_id
         self.first_name = first_name
@@ -26,10 +26,10 @@ class User(object):
         self.configuration_codes = configuration_codes
         self.parent_blog_created = parent_blog_created
 
-    def _gen_user_verification_code(self):
+    def gen_user_verification_code(self):
         self.configuration_codes['verification_code'] = self._gen_code()
 
-    def _gen_email_change_verification_code(self):
+    def gen_email_change_verification_code(self):
         self.configuration_codes['email_code'] = self._gen_code()
 
     def _gen_code(self):
@@ -38,7 +38,7 @@ class User(object):
 
     def email_user_account_verification_code(self):
         """ """
-        return email_user_verification_code(self.username, self.configuration_codes['verification_code'])
+        return email_user_verification_code(self.email, self.username, self.configuration_codes['verification_code'])
 
     @classmethod
     def extract_web_form(cls, form):
@@ -76,7 +76,8 @@ class User(object):
             "password": self.password,
             "email": self.email,
             "author_name": self.author_name,
-            "parent_blog_created": self.parent_blog_created
+            "parent_blog_created": self.parent_blog_created,
+            "configuration_codes":self.configuration_codes
         }
 
 

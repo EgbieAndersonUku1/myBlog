@@ -52,8 +52,9 @@ class EmailGmail(BaseEmail):
 
         conn = self._secure_and_connect()
         try:
+            assert False, self.passwd
             conn.login(self.source_addr, self.passwd)
-        except:
+        except ValueError:
             raise Exception('Failed to login, check username, password or the internet connection.')
         return conn
 

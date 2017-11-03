@@ -8,6 +8,7 @@ class RegistrationForm(Form):
 
     first_name = StringField('First Name', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
     last_name  = StringField('Last Name', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
+    username = StringField('Username', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
     email = EmailField('Email', validators=[validators.DataRequired()])
     password = PasswordField('Password', validators=[validators.DataRequired(),
                                                      validators.EqualTo('confirm'),
