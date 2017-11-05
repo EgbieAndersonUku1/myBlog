@@ -52,7 +52,6 @@ class EmailGmail(BaseEmail):
 
         conn = self._secure_and_connect()
         try:
-            assert False, self.passwd
             conn.login(self.source_addr, self.passwd)
         except ValueError:
             raise Exception('Failed to login, check username, password or the internet connection.')
@@ -88,8 +87,8 @@ class EmailGmail(BaseEmail):
         >>> body_html = '<html> <p>Thanks, for register to the network</p></html>'
         >>> body_text = "Thanks for registering to the network"
         >>> email = Email(source_addr, receiver_addr, subject, body_html, body_text)
-        >>> print(email.send_email())
-        '{}'
+        >>> email.send_email()
+        'True'
         """
         conn = self._login()
         res = conn.sendmail(self.source_addr, self.receiver_addr, self._msg.as_string())

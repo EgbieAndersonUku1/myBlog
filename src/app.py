@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_wtf.recaptcha import Recaptcha
 from flask_ckeditor import CKEditor
 from users.records.database.database import Database
 
@@ -8,7 +7,6 @@ __author__ = 'Egbie Uku'
 
 app = Flask(__name__)
 ckeditor  = CKEditor(app)
-recaptcha = Recaptcha(app)
 
 from users.admin.views import admin_app
 from users.blogs.views import blogs_app

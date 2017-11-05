@@ -36,9 +36,9 @@ class User(object):
         """"""
         return gen_code()
 
-    def email_user_account_verification_code(self):
+    def email_user_account_verification_code(self, code_type='verification_code'):
         """ """
-        return email_user_verification_code(self.email, self.username, self.configuration_codes['verification_code'])
+        return email_user_verification_code(self.email, self.username, self.configuration_codes.get(code_type))
 
     @classmethod
     def extract_web_form(cls, form):
@@ -48,6 +48,10 @@ class User(object):
                     form.author_name.data,
                     PasswordImplementer.hash_password(form.password.data)
                     )
+
+    @staticmethod
+    def get_by_username(username):
+        pass
 
     @staticmethod
     def get_by_email(email):

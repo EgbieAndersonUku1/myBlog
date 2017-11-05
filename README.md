@@ -33,24 +33,23 @@ Technologies that will be used:
  
  1) To run the blog you can either create a virtual environment on your computer or not. Note this is optional.
  
-       To create a virtual environment on **Linux** go to the folder you like to create the virtual environment in
+       To create a virtual environment on **Linux** go to the folder you would like to create the virtual environment in
         and run the command:  **virtualenv 'type what name you like to call your virtual environment here without quotes' -p python3**
-        You must already have virtualenv stored on your computer. If virtualenv is not installed in your computer run the command **pip install virtualenv**. 
-        This will install the virtualenv on your computer.
- 
-    This will create a virtual environment.
- 
- 2) If you have installed the virtual environment on your computer activate it by use this command below or skip to step 3:
+        You must already have virtualenv stored on your computer. In the case virtualenv is not installed in your computer
+        run the following command on your computer **pip install virtualenv**. This act will install virtualenv on your computer.
+
+ 2) If you chosen to installed the virtual environment on your computer activate it by use this command below or skip to step 3:
  
     **source 'The name of your virtual environment without quotes'/bin/activate**
  
 3) Change into myBlog folder by running the command **cd myBlog/src**
 
 4) Next run the command: **pip install -r requirement.txt**.
-    This will download all the depencides needed to run the blog and store it in on your computer or your virtual environment if you have created one. 
+    This will download all the dependencises needed to run the blog and store it in on your computer or your virtual environment if you have created one.
  
  5) Run the command **python run.py runserver**. This will start the web server.
- 6) Open a new browser and type in the url box: **http://127.0.0.1:5000**.
+ 6) Open a new terminal and run the command sudo mongod. This will start the database.
+ 7) Open a new browser and type in the url box: **http://127.0.0.1:5000**.
  To access any page just add a slash behind the link followed by the page.
  
  
