@@ -12,10 +12,10 @@ class User(object):
     """ """
     def __init__(self, first_name, last_name, username, email, author_name,
                  password, configuration_codes={}, _id=None,
-                 blog_id=None, author_id=None,parent_blog_created=False):
+                 parent_blog_id=None, author_id=None,parent_blog_created=False):
 
         self._id = gen_id() if _id is None else _id
-        self.blog_id = gen_id() if blog_id is None else blog_id
+        self.parent_blog_id = gen_id() if parent_blog_id is None else parent_blog_id
         self.author_id = gen_id() if author_id is None else author_id
         self.first_name = first_name
         self.last_name = last_name
@@ -49,14 +49,19 @@ class User(object):
                     PasswordImplementer.hash_password(form.password.data)
                     )
 
-    @staticmethod
-    def get_by_username(username):
-        pass
+    @classmethod
+    def get_by_username(cls, username):
+        """"""
+        return cls._to_class(Record.Query.Filter.filter_user_by_username(username))
 
-    @staticmethod
-    def get_by_email(email):
-        # search the records and return the first name of the user
-        pass
+    @classmethod
+    def get_by_email(cls, email):
+        """Searches the records by email address"""
+        return cls._to_class(Record.Query.Filter.filter_user_by_email(email))
+
+    @classmethod
+    def _to_class(cls, query):
+        return User(**query) if query else None
 
     @staticmethod
     def get_by_author_by_id(author_id):
@@ -73,10 +78,11 @@ class User(object):
 
         return {
             "_id": self._id,
-            "parent_blog_id": self.blog_id,
+            "parent_blog_id": self.parent_blog_id,
             "author_id": self.author_id,
             "first_name": self.first_name,
             "last_name": self.last_name,
+            "username": self.username,
             "password": self.password,
             "email": self.email,
             "author_name": self.author_name,

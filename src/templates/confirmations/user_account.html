@@ -1,0 +1,9 @@
+{% extends "base_template2.html" %}
+{% block title %} Confirmation {% endblock %}
+{% block content %}
+
+    <div class="jumbotron">
+        Your account has been confirmed. Click the link below to create your <a href="{{ url_for('registration_app.register_parent_blog') }}">parent blog</a>
+    </div>
+
+{% endblock %}

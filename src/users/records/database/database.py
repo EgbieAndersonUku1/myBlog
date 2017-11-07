@@ -50,14 +50,14 @@ class Database(object):
         return True if Database.DATABASE[collection].insert(data) else False
 
     @staticmethod
-    def find_all(collection):
+    def find_all(collection="blogs"):
         """find_all(str) -> return(cursor)
         Returns all users in the collection.
         """
         return Database.DATABASE[collection].find()
 
     @staticmethod
-    def find_one(query, collection='blog'):
+    def find_one(query, collection="blogs"):
         """find_one(str, dict) -> return(dict)
 
         Return a json object from from the database.
@@ -69,7 +69,7 @@ class Database(object):
         return Database.DATABASE[collection].find_one(query)
 
     @classmethod
-    def delete_one(cls, collection, data):
+    def delete_one(cls, collection="blogs", data=None):
         """delete_row(str, dict) -> return(None)
 
         Deletes and entry from the row. Returns True
@@ -83,7 +83,7 @@ class Database(object):
         return False if cls.find_one(collection, data) else True
 
     @staticmethod
-    def update(collection, field_name, field_id , data):
+    def update(field_name, field_id , data, collection="blogs"):
         """update_row(str, str, dict) -> return(None)
 
         Updates a single row in the table.
