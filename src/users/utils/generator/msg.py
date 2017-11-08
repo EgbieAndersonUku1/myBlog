@@ -1,5 +1,6 @@
 from flask import flash
 
+
 class Message(object):
 
     @staticmethod

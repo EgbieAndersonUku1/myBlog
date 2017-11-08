@@ -49,6 +49,7 @@ Technologies that will be used:
  
  5) Run the command **python run.py runserver**. This will start the web server.
  6) Open a new terminal and run the command sudo mongod. This will start the database.
+ 7) In the file gmail_credentials.env enter your gmail username and password in the appropriate variables
  7) Open a new browser and type in the url box: **http://127.0.0.1:5000**.
  To access any page just add a slash behind the link followed by the page.
  
