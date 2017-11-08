@@ -30,6 +30,19 @@
                     </div>
                     <div class="form-bottom">
 
+                        {% if registered %}
+                            <div class="alert alert-success">
+                                {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        <ul class=flashes>
+                                            {% for message in messages %}
+                                                <li>{{ message }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        {% endif %}
                         {% from "__formhelpers.html" import render_field %}
                         <form role="form" method="post" action="{{ url_for('registration_app.register_user') }}" class="registration-form">
 
