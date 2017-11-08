@@ -53,7 +53,7 @@ Technologies that will be used:
  7) Turn **ON** the **less secure app** setting located in your gmail setting account. This allows gmail to use scripts in order
  to send emails. If this is not turned on and error would occur if application tries to send an email.
  7) Open a new browser and type in the url box: **http://127.0.0.1:5000**.
- To access any page just add a slash behind the link followed by the page.
+ To access any page just add a slash behind the link followed by the page..
  
  
  Things needed to run the blog
