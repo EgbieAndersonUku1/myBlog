@@ -13,8 +13,9 @@ Technologies that will be used:
 4) Pymongo (ORM)
 5) Bootstrap, CSS, HTML, JavaScript for the admin panel interface
 6) Selenium -> for automatic testing
- 7) Microsoft word (Manual testing)
- 8) Excel (Manual testing)
+6) Unit tests
+ 7) Microsoft word and Excel (Manual testing)
+
  
  In this section I am going to build a complete blog from the ground up.
  The blog will contain a section where users can comment as well as 
@@ -38,14 +39,14 @@ Technologies that will be used:
         You must already have virtualenv stored on your computer. In the case virtualenv is not installed in your computer
         run the following command on your computer **pip install virtualenv**. This act will install virtualenv on your computer.
 
- 2) If you chosen to installed the virtual environment on your computer activate it by use this command below or skip to step 3:
+ 2) If you chosen to install the virtual environment on your computer then activate it by use this command below or **skip to step three**.
  
     **source 'The name of your virtual environment without quotes'/bin/activate**
  
 3) Change into myBlog folder by running the command **cd myBlog/src**
 
 4) Next run the command: **pip install -r requirement.txt**.
-    This will download all the dependencises needed to run the blog and store it in on your computer or your virtual environment if you have created one.
+    This will download all the dependencies needed to run the blog and store it in on your computer or your virtual environment if you have created one.
  
  5) Run the command **python run.py runserver**. This will start the web server.
  6) Open a new terminal and run the command sudo mongod. This will start the database.
@@ -53,7 +54,7 @@ Technologies that will be used:
  7) Turn **ON** the **less secure app** setting located in your gmail setting account. This allows gmail to use scripts in order
  to send emails. If this is not turned on and error would occur if application tries to send an email.
  7) Open a new browser and type in the url box: **http://127.0.0.1:5000**.
- To access any page just add a slash behind the link followed by the page..
+ To access any page just add a slash behind the URL followed by the page name
  
  
  Things needed to run the blog
