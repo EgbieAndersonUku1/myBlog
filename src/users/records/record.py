@@ -42,7 +42,13 @@ class Record(object):
 
             @classmethod
             def _filter_query(cls, query, collection='blogs'):
-                return Database.find_one(query, collection)
+                return Database.find_one(query, collection) # Cache system to go here.
+                # ToDo
+                # First, the cache will be searched
+                # If the data is found in the cache then return it from the cache.
+                # If the data is not found then query the database, cache the results and then return the results
+
+
 
 
 

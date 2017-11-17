@@ -12,7 +12,7 @@ class User(object):
     """ """
     def __init__(self, first_name, last_name, username, email, author_name,
                  password, configuration_codes={}, _id=None,
-                 parent_blog_id=None, author_id=None,parent_blog_created=False):
+                 parent_blog_id=None, author_id=None, parent_blog_created=False):
 
         self._id = gen_id() if _id is None else _id
         self.parent_blog_id = gen_id() if parent_blog_id is None else parent_blog_id
@@ -25,6 +25,7 @@ class User(object):
         self.password = password
         self.configuration_codes = configuration_codes
         self.parent_blog_created = parent_blog_created
+        self.account_confirmed = False
 
     def gen_user_verification_code(self):
         self.configuration_codes['verification_code'] = self._gen_code()
