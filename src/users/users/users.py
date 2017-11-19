@@ -91,6 +91,8 @@ class User(object):
             "configuration_codes":self.configuration_codes
         }
 
+    def __repr__(self):
+        return "First name: <'{}'>, Last name <'{}'>".format(self.first_name, self.last_name)
 
 class UserBlog(object):
     """The user class is the class allows the user to created a single blog

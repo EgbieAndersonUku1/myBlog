@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, abort, flash, s
 from users.registration.form import RegistrationForm
 from users.login.views import login_app
 from users.users.users import User
-from src.users.utils.generator.msg import Message
+from users.utils.generator.msg import Message
 
 from users.utils.session.user_session import UserSession
 
@@ -45,11 +45,4 @@ def confirm_registration(username, code):
         # Save user object to Flask-Cache to go here
         return render_template('/confirmations/user_account.html')
     return abort(404)
-
-
-@registration_app.route('/create/parent/blog')
-def register_parent_blog():
-    """The main parent blog will be registered here. From the parent blog all blogs can be created"""
-    return render_template('/blogs/blog_creation.html')
-
 
