@@ -30,11 +30,11 @@ class DataBaseTest(TestCase):
     def test_if_a_user_data_can_be_retreived_from_the_database_using_a_correct_username__Should_retreive_all_data_belonging_to_the_user(self):
         pass
 
-    def test_if_user_data_can_retreived_from_the_database_with_an_invalid_username_is_entered__Should_raise_an_error(self):
+    def test_if_user_data_can_retreived_from_the_database_with_an_invalid_username_is_entered__Should_return_none(self):
         pass
 
     def test_if_user_data_can_be_retrieived_from_database_with_a_correct_email_address__Should_return_all_data_belonging_to_the_user(self):
         pass
 
-    def test_if_user_data_can_retreived_from_the_database_with_an_invalid_email_is_entered__Should_raise_an_error(self):
+    def test_if_user_data_can_retreived_from_the_database_with_an_invalid_email_is_entered__Should_return_none(self):
         pass
