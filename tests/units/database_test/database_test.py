@@ -67,7 +67,7 @@ class DatabaseTest(TestCase):
         self.assertIsNotNone(query_data1, msg='The data for user1 was not returned')
         self.assertIsNotNone(query_data2, msg='The data for user2 was not returned')
 
-    def test_can_the_user_data_be_retreived_from_the_database_using_a_correct_username__Should_retreive_all_data_belonging_to_the_user(self):
+    def test_can_the_user_data_be_retreived_from_the_database_using_a_correct_username__Should_retreive_all_user_data(self):
         """A test to see whether the database can retrieve the user using the correct username"""
         self.assertIsNotNone(Database.find_one({'username': 'abby'}, 'test_db'))
 
