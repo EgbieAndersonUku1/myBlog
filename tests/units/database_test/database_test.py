@@ -13,11 +13,11 @@ from src.users.utils.generator.id_generator import gen_id
 ######################################################################################
 
 
-def _update_data(orig_data, field_to_update_name, new_data, _id=None):
+def _update_data(orig_data, field_to_update, new_data, _id=None):
     """"""
 
     user_data = orig_data
-    user_data[field_to_update_name] = new_data
+    user_data[field_to_update] = new_data
     user_data['_id'] = _id or gen_id()
     return user_data
 
@@ -59,7 +59,7 @@ class DatabaseTest(TestCase):
     def test_can_two_user_details_be_saved_to_the_database__Should_save_two_the_user_details_to_database(self):
         """Test whether the database can save two user data"""
 
-        user_data = _update_data(_get_test_data(), 'first_name', 'Egbie1')
+        user_data = _update_data(_get_test_data(), field_to_update='first_name', new_data='Egbie1')
         Database.insert_one(user_data, 'test_db')
 
         query_data1 = Database.find_one({'first_name':'Egbie'}, 'test_db')
@@ -96,7 +96,7 @@ class DatabaseTest(TestCase):
         """Test whether the database can be used to update the user's details"""
 
         data = Database.find_one({'first_name': 'Egbie'}, 'test_db')
-        _update_data(data, 'last_name', 'Ullu', data.get('_id'))
+        _update_data(data, field_to_update='last_name', new_data='Ullu', _id=data.get('_id'))
         Database.update('_id', data.get('_id'), data, 'test_db')
 
         self.assertIsNotNone(Database.find_one({'last_name': 'Ullu'}, 'test_db'))
