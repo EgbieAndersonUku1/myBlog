@@ -7,17 +7,18 @@ from src.users.utils.generator.id_generator import gen_id
 ######################################################################################
 # Running the Test.
 #
-# To begin running the tests first start the mongod server on a terminal window
-#
+# To begin running the tests first start the mongod server on a terminal window whether
+# that is Windows or Linux
 #
 ######################################################################################
 
 
-def _update_data(data):
+def _update_data(orig_data, field_to_update_name, new_data, _id=None):
+    """"""
 
-    user_data = data
-    user_data['first_name'] = 'Egbie1'
-    user_data['_id'] = '246810'
+    user_data = orig_data
+    user_data[field_to_update_name] = new_data
+    user_data['_id'] = _id or gen_id()
     return user_data
 
 def _get_test_data():
@@ -58,7 +59,7 @@ class DatabaseTest(TestCase):
     def test_can_two_user_details_be_saved_to_the_database__Should_save_two_the_user_details_to_database(self):
         """Test whether the database can save two user data"""
 
-        user_data = _update_data(_get_test_data())
+        user_data = _update_data(_get_test_data(), 'first_name', 'Egbie1')
         Database.insert_one(user_data, 'test_db')
 
         query_data1 = Database.find_one({'first_name':'Egbie'}, 'test_db')
@@ -95,6 +96,7 @@ class DatabaseTest(TestCase):
         """Test whether the database can be used to update the user's details """
 
         data = Database.find_one({'first_name': 'Egbie'}, 'test_db')
-        data['last_name'] = 'Ullu'
-        Database.update('_id', '123456789', data, 'test_db')
+        _update_data(data, 'last_name', 'Ullu', data.get('_id'))
+        Database.update('_id', data.get('_id'), data, 'test_db')
+        
         self.assertIsNotNone(Database.find_one({'last_name': 'Ullu'}, 'test_db'))
