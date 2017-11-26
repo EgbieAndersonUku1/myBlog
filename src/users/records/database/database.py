@@ -8,25 +8,33 @@ class Database(object):
 
     DATABASE = None
     URI = 'mongodb://127.0.0.1:27017'
+    client = None
 
     @classmethod
-    def db_init(cls):
+    def db_init(cls, database_name='blogs'):
         """Initalize the database"""
-        client = cls._setup()
-        cls._create_indexes(client)
-    
+
+        client = cls.setup(database_name)
+        cls._create_indexes()
+
     @classmethod
-    def _setup(cls):
-        """Setups the databases """
+    def setup(cls, database_name):
+        """For maual setup the database"""
+
         client = pymongo.MongoClient(Database.URI)
-        Database.DATABASE = client['blogs']
-        return client
-    
+        Database.DATABASE = client[database_name]
+        Database.client = client
+
     @classmethod
-    def _create_indexes(cls, client):
+    def remove_db(cls, db_name):
+        """"""
+        Database.client.drop_database(db_name)
+
+    @classmethod
+    def _create_indexes(cls):
         """Create the indexes in the database for faster lookup"""
 
-        blog = client['blogs']['blog']
+        blog = Database.client['blogs']['blog']
         blog.create_index([('user_id', pymongo.ASCENDING)])
         blog.create_index([('author_id', pymongo.ASCENDING)])
         blog.create_index([('parent_blog_id', pymongo.ASCENDING)])
@@ -97,3 +105,5 @@ class Database(object):
            - data       : The information used to update to the database
         """
         Database.DATABASE[collection].update({field_name:field_id}, {'$set': data})
+
+
