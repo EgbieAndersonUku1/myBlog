@@ -91,19 +91,19 @@ class Database(object):
         return False if cls.find_one(db_name, data) else True
 
     @staticmethod
-    def update(field_name, field_id, data, db_name="blogs"):
+    def update(field_name, field_value, data, db_name="blogs"):
         """update_row(str, str, dict) -> return(None)
 
         Updates a single row in the table.
 
         parameters:
            - collections: A table name from the database.
-           - field_name & field_id :
-                        The field_name and field_id work as a pair.
+           - field_name & field_value :
+                        The field_name and field_value work as a pair.
                         They are both used to identify the document
                         that will be updated.
            - data       : The information used to update to the database
         """
-        Database.DATABASE[db_name].update({field_name:field_id}, {'$set': data})
+        Database.DATABASE[db_name].update({field_name:field_value}, {'$set': data})
 
 
