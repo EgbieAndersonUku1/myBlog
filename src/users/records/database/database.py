@@ -45,27 +45,27 @@ class Database(object):
         blog.create_index([('time_created', pymongo.ASCENDING)])
 
     @staticmethod
-    def insert_one(data, collection="blogs"):
+    def insert_one(data, db_name="blogs"):
         """insert_one(str) -> return(boolean)
-        Inserts data into a given collection(table) for a given database.
+        Inserts data into a given db_name(table) for a given database.
 
         :parameter
-           `collection`: The table name for the data to be inserted into.
-           `data`: The data will be inserted into the collection.
+           `db_name`: The table name for the data to be inserted into.
+           `data`: The data will be inserted into the db_name.
         :returns
             Returns True if the data was successful saved to database else False
         """
-        return True if Database.DATABASE[collection].insert(data) else False
+        return True if Database.DATABASE[db_name].insert(data) else False
 
     @staticmethod
-    def find_all(collection="blogs"):
+    def find_all(db_name="blogs"):
         """find_all(str) -> return(cursor)
-        Returns all users in the collection.
+        Returns all users in the db_name.
         """
-        return Database.DATABASE[collection].find()
+        return Database.DATABASE[db_name].find()
 
     @staticmethod
-    def find_one(query, collection="blogs"):
+    def find_one(query, db_name="blogs"):
         """find_one(str, dict) -> return(dict)
 
         Return a json object from from the database.
@@ -74,10 +74,10 @@ class Database(object):
            - collections: A table name from the database
            - query      : The information to query from the database
         """
-        return Database.DATABASE[collection].find_one(query)
+        return Database.DATABASE[db_name].find_one(query)
 
     @classmethod
-    def delete_one(cls, collection="blogs", data=None):
+    def delete_one(cls, db_name="blogs", data=None):
         """delete_row(str, dict) -> return(None)
 
         Deletes and entry from the row. Returns True
@@ -87,11 +87,11 @@ class Database(object):
            - collections: A table name from the database
            - data      : The information to delete from the database
         """
-        Database.DATABASE[collection].find_one_and_delete(data)
-        return False if cls.find_one(collection, data) else True
+        Database.DATABASE[db_name].find_one_and_delete(data)
+        return False if cls.find_one(db_name, data) else True
 
     @staticmethod
-    def update(field_name, field_id , data, collection="blogs"):
+    def update(field_name, field_id, data, db_name="blogs"):
         """update_row(str, str, dict) -> return(None)
 
         Updates a single row in the table.
@@ -104,6 +104,6 @@ class Database(object):
                         that will be updated.
            - data       : The information used to update to the database
         """
-        Database.DATABASE[collection].update({field_name:field_id}, {'$set': data})
+        Database.DATABASE[db_name].update({field_name:field_id}, {'$set': data})
 
 

@@ -62,41 +62,41 @@ class DatabaseTest(TestCase):
         user_data = _update_data(_get_test_data(), field_to_update='first_name', new_data='Egbie1')
         Database.insert_one(user_data, 'test_db')
 
-        query_data1 = Database.find_one({'first_name':'Egbie'}, 'test_db')
-        query_data2 = Database.find_one({'first_name':'Egbie1'}, 'test_db')
+        query_data1 = Database.find_one({'first_name':'Egbie'}, db_name='test_db')
+        query_data2 = Database.find_one({'first_name':'Egbie1'}, db_name='test_db')
 
         self.assertIsNotNone(query_data1, msg='The data for user1 was not returned')
         self.assertIsNotNone(query_data2, msg='The data for user2 was not returned')
 
     def test_can_the_user_data_be_retreived_from_the_database_using_a_correct_username__Should_retreive_all_user_data(self):
         """A test to see whether the database can retrieve the user using the correct username"""
-        self.assertIsNotNone(Database.find_one({'username': 'abby'}, 'test_db'))
+        self.assertIsNotNone(Database.find_one({'username': 'abby'}, db_name='test_db'))
 
     def test_can_the_user_data_be_retreived_from_the_database_when_an_invalid_username_is_entered__Should_return_none(self):
         """A test to see whether the database retrieves the user's data using an incorrect username"""
-        self.assertIsNone(Database.find_one({'username': 'name_does_not_exist_in_db'}, 'test_db'))
+        self.assertIsNone(Database.find_one({'username': 'name_does_not_exist_in_db'}, db_name='test_db'))
 
     def test_can_the_user_data_be_retrieived_from_the_database_with_a_correct_email_address__Should_return_all_user_data(self):
         """A test to see whether the database can retrieve data using the correct email address"""
-        self.assertIsNotNone(Database.find_one({'email': 'egbie@example.com'}, 'test_db'))
+        self.assertIsNotNone(Database.find_one({'email': 'egbie@example.com'}, db_name='test_db'))
 
     def test_can_the_user_data_be_retreived_from_the_database_when_an_invalid_email_is_entered__Should_return_none(self):
         """A test to see whether the database retrieves the user's data using an incorrect email"""
-        self.assertIsNone(Database.find_one({'email': 'email_does_not_exist@example.com'}, 'test_db'))
+        self.assertIsNone(Database.find_one({'email': 'email_does_not_exist@example.com'}, db_name='test_db'))
 
     def test_can_the_user_data_be_retrieived_from_the_database_using_the_author_name__Should_return_all_user_data(self):
         """A test to see whether the database can retrieve data using the correct author name"""
-        self.assertIsNotNone(Database.find_one({'author_name': 'egbies'}, 'test_db'))
+        self.assertIsNotNone(Database.find_one({'author_name': 'egbies'}, db_name='test_db'))
 
     def test_can_the_user_data_be_retrieived_from_the_database_using_an_incorrect_author_name__Should_return_none(self):
         """A test to see whether the database retrieves the user's data using an incorrect author name"""
-        self.assertIsNone(Database.find_one({'author_name': 'fake_name'}, 'test_db'))
+        self.assertIsNone(Database.find_one({'author_name': 'fake_name'}, db_name='test_db'))
 
     def test_can_the_user_update_the_data_in_the_database__Should_update_the_user_details(self):
         """Test whether the database can be used to update the user's details"""
 
         data = Database.find_one({'first_name': 'Egbie'}, 'test_db')
         _update_data(data, field_to_update='last_name', new_data='Ullu', _id=data.get('_id'))
-        Database.update('_id', data.get('_id'), data, 'test_db')
+        Database.update('_id', data.get('_id'), data, db_name='test_db')
 
         self.assertIsNotNone(Database.find_one({'last_name': 'Ullu'}, 'test_db'))
