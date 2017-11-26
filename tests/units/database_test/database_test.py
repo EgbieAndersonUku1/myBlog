@@ -93,10 +93,10 @@ class DatabaseTest(TestCase):
         self.assertIsNone(Database.find_one({'author_name': 'fake_name'}, 'test_db'))
 
     def test_can_the_user_update_the_data_in_the_database__Should_update_the_user_details(self):
-        """Test whether the database can be used to update the user's details """
+        """Test whether the database can be used to update the user's details"""
 
         data = Database.find_one({'first_name': 'Egbie'}, 'test_db')
         _update_data(data, 'last_name', 'Ullu', data.get('_id'))
         Database.update('_id', data.get('_id'), data, 'test_db')
-        
+
         self.assertIsNotNone(Database.find_one({'last_name': 'Ullu'}, 'test_db'))
