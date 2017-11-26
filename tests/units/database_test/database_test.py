@@ -75,7 +75,7 @@ class DatabaseTest(TestCase):
         """A test to see whether the database retrieves the user's data using an incorrect username"""
         self.assertIsNone(Database.find_one({'username': 'name_does_not_exist_in_db'}, 'test_db'))
 
-    def test_can_the_user_data_be_retrieived_from_the_database_with_a_correct_email_address__Should_return_all_data_belonging_to_the_user(self):
+    def test_can_the_user_data_be_retrieived_from_the_database_with_a_correct_email_address__Should_return_all_user_data(self):
         """A test to see whether the database can retrieve data using the correct email address"""
         self.assertIsNotNone(Database.find_one({'email': 'egbie@example.com'}, 'test_db'))
 
@@ -83,7 +83,7 @@ class DatabaseTest(TestCase):
         """A test to see whether the database retrieves the user's data using an incorrect email"""
         self.assertIsNone(Database.find_one({'email': 'email_does_not_exist@example.com'}, 'test_db'))
 
-    def test_can_the_user_data_be_retrieived_from_the_database_using_the_author_name__Should_return_all_data_belonging_to_the_user(self):
+    def test_can_the_user_data_be_retrieived_from_the_database_using_the_author_name__Should_return_all_user_data(self):
         """A test to see whether the database can retrieve data using the correct author name"""
         self.assertIsNotNone(Database.find_one({'author_name': 'egbies'}, 'test_db'))
 
