@@ -74,6 +74,10 @@ class User(object):
 
         # add a record object that will save the data to database HERE
 
+    def update(self):
+        """"""
+        Record.Update.update('_id', self._id, self._to_json())
+
     def _to_json(self):
         """ """
 
@@ -93,6 +97,7 @@ class User(object):
 
     def __repr__(self):
         return "First name: <'{}'>, Last name <'{}'>".format(self.first_name, self.last_name)
+
 
 class UserBlog(object):
     """The user class is the class allows the user to created a single blog

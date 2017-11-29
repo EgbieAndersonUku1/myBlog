@@ -24,6 +24,7 @@ def register_user():
         registered = True
         Message.display_to_gui_screen('You have successful registered your account. '
                                       'Please confirm your account using the link sent to your email')
+
     return render_template('registrations/register.html', form=form, registered=registered)
 
 
@@ -37,7 +38,7 @@ def confirm_registration(username, code):
         user.parent_blog_created = True
         user.configuration_codes.pop('verification_code')
         user.account_confirmed = True
-        user.save()
+        user.update()
         UserSession.add_username(user.username.title())
 
         #Todo

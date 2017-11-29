@@ -10,8 +10,8 @@ class Record(object):
     class Update(object):
 
         @staticmethod
-        def update(rec):
-            pass
+        def update(row_name, row_id, data):
+            Database.update(row_name, row_id, data)
 
     class Delete(object):
 
