@@ -18,9 +18,8 @@ def login():
 
     if UserSession.get_username():  # if user is already logged in redirect them to blog/post creation page
         return _redirect_user_to_blog_creation_page()
-    if form.validate_on_submit():
+    elif form.validate_on_submit():
         if _has_user_be_confirmed():
-
             user = User.get_by_username(form.username.data)
 
             if user and PasswordImplementer.check_password(form.password.data, user.password):
