@@ -36,11 +36,12 @@ def _get_test_data():
 
 
 class DatabaseTest(TestCase):
-    """The class is designed to test whether the database. It does so by testing a few things
+    """The class is designed to test the database. It does so by testing a few things
 
        1) whether the database can successful store any user detail to the the database.
        2) whether it can successful retrieve those stored details. This is done by calling
        the database on its attributes e.g.their email, username or author name.
+       3) Whether it can retreived stored data by using an incorrect key
     """
     @classmethod
     def setUpClass(cls):
@@ -57,7 +58,7 @@ class DatabaseTest(TestCase):
         """Test whether the database can save a single user data"""
         self.assertIsNotNone(Database.find_one({'first_name':'Egbie'}, db_name=_DB_NAME))
 
-    def test_can_two_user_details_be_saved_to_the_database__Should_save_two_the_user_details_to_database(self):
+    def test_can_two_user_details_be_saved_to_the_database__Should_save_the_two_user_details_to_database(self):
         """Test whether the database can save two user data"""
 
         user_data = _update_data(_get_test_data(), field_to_update='first_name', new_data='Egbie1')

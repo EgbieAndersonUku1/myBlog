@@ -1,11 +1,13 @@
 from flask import Blueprint, render_template
 
 from users.posts.form import PostForm
+from users.decorators import login_required
 
 posts_app = Blueprint('posts_app', __name__)
 
 
 @posts_app.route('/post/new', methods=('GET', 'POST'))
+@login_required
 def new_post():
 
     form = PostForm()

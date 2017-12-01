@@ -4,6 +4,8 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import ValidationError
 import re
 
+from users.users.users import User
+
 _match = re.compile(r'^[A-Za-z0-9_]+$')
 
 class RegistrationForm(Form):
@@ -21,13 +23,6 @@ class RegistrationForm(Form):
     confirm = PasswordField('Repeat password')
     author_name = StringField('Author name', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
 
-    @staticmethod
-    def _check_name_value(name):
-        found = _match.search(name)
-        if not found:
-            raise ValidationError("The name can contain an uppercase, a lowercase, digits(0-9) or an underscore"
-                                  " but must not contain any special characters!")
-
     def validate_first_name(form, field):
         RegistrationForm._check_name_value(form.first_name.data)
 
@@ -35,4 +30,18 @@ class RegistrationForm(Form):
         RegistrationForm._check_name_value(form.last_name.data)
 
     def validate_username(form, field):
-        RegistrationForm._check_name_value(form.username.data)
+
+        username = form.username.data
+
+        RegistrationForm._check_name_value(username)
+        if User.get_by_username(username):
+            raise ValidationError('The username is already in use')
+
+    @staticmethod
+    def _check_name_value(name):
+        """"""
+        found = _match.search(name)
+        if not found:
+            raise ValidationError("The name can contain an uppercase, a lowercase, digits(0-9) or an underscore"
+                                  " but must not contain any special characters!")
+

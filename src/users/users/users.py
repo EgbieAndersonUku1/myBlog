@@ -69,10 +69,8 @@ class User(object):
         pass
 
     def save(self):
-
+        """"""
         return Record.save(self._to_json())
-
-        # add a record object that will save the data to database HERE
 
     def update(self):
         """"""
@@ -87,9 +85,9 @@ class User(object):
             "author_id": self.author_id,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "username": self.username,
+            "username": self.username.lower(),
             "password": self.password,
-            "email": self.email,
+            "email": self.email.lower(),
             "author_name": self.author_name,
             "parent_blog_created": self.parent_blog_created,
             "configuration_codes":self.configuration_codes

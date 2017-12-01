@@ -32,8 +32,8 @@
         </div>
         <div id="navbar_title" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">Welcome,  Name to be placed here</a></li>
-                <li><a href="login.html">Logout</a></li>
+                <li class="active"><a href="#">Welcome, {{ session['username'] }}</a></li>
+                <li><a href="{{ url_for('logout_app.logout') }}">Logout</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

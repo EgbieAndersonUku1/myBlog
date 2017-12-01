@@ -24,6 +24,8 @@
                             <p>Fill in the form below or click the <a href="{{ url_for('login_app.login') }}"> login</a>
                                 button to login</p>
                         </div>
+
+
                         <div class="form-top-right">
                             <i class="fa fa-pencil"></i>
                         </div>
@@ -43,10 +45,16 @@
                                 {% endwith %}
                             </div>
                         {% endif %}
+
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endif %}
                         {% from "__formhelpers.html" import render_field %}
                         <form role="form" method="post" action="{{ url_for('registration_app.register_user') }}" class="registration-form">
 
-                            {{ form.hidden_tag() }}
+                            {{ form.hidden_tag() }} <!-- prevents cross site scripting  -->
                             {{ render_field(form.first_name, class="form-control") }}
                             {{ render_field(form.last_name, class="form-control") }}
                             {{ render_field(form.username, class="form-control") }}

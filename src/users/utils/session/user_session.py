@@ -7,6 +7,11 @@ class UserSession(object):
     """Stores or removes values from within the user's session"""
 
     @staticmethod
+    def add_value_to_session(key, value):
+        """"""
+        session[key] = value
+
+    @staticmethod
     def add_username(username):
         """Add a username to the register's session"""
         session['username'] = username
@@ -36,14 +41,23 @@ class UserSession(object):
         return session.get('username')
 
     @staticmethod
+    def get_value_by_key(key):
+        return session.get(key)
+
+    @staticmethod
+    def remove_value_by_key(key):
+        """"""
+        return UserSession._remove_from_session(key)
+
+    @staticmethod
     def remove_username():
         """Removes the username from the register's session"""
         UserSession._remove_from_session('username')
 
     @staticmethod
-    def remove_next_url(url):
+    def remove_next_url():
         """Removes the url from the user's session"""
-        return UserSession._remove_from_session(url)
+        return UserSession._remove_from_session('next')
 
     @staticmethod
     def _remove_from_session(val):

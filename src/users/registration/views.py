@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, abort, flash, session
 
 from users.registration.form import RegistrationForm
-from users.login.views import login_app
 from users.users.users import User
 from users.utils.generator.msg import Message
 
@@ -14,22 +13,27 @@ registration_app = Blueprint('registration_app', __name__)
 def register_user():
     """Allows the user to register to the application from the GUI register page"""
 
-    form, registered = RegistrationForm(), False
+    form, registered, error = RegistrationForm(), False, None
 
     if form.validate_on_submit():
         user = User.extract_web_form(form)
-        user.gen_user_verification_code()
-        user.email_user_account_verification_code()
-        user.save()
-        registered = True
-        Message.display_to_gui_screen('You have successful registered your account. '
-                                      'Please confirm your account using the link sent to your email')
 
-    return render_template('registrations/register.html', form=form, registered=registered)
+        if not user.get_by_email(form.email.data):
+            user.gen_user_verification_code()
+            user.email_user_account_verification_code()
+            user.save()
+            registered = True
+            Message.display_to_gui_screen('You have successful registered your account. '
+                                          'Please confirm your account using the link sent to your email')
+        else:
+            error = 'The email address used is already in use'
+
+    return render_template('registrations/register.html', form=form, registered=registered, error=error)
 
 
 @registration_app.route('/confirm/<username>/<code>')
 def confirm_registration(username, code):
+    """"""
 
     user = User.get_by_username(username)
 

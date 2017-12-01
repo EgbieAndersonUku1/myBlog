@@ -4,17 +4,24 @@ from users.admin.forms.email_form import EmailForm
 from users.admin.forms.password_form import PasswordForm
 from users.admin.forms.username_form import UsernameForm
 from users.admin.forms.profile_form import ProfileForm
+from users.decorators import admin_required, login_required
 
 admin_app = Blueprint('admin_app', __name__)
 
 __author__ = 'Egbie Uku'
 
+
 @admin_app.route('/admin')
+@admin_required
+@login_required
 def admin():
     return render_template('admin/overview.html')
 
 
+
 @admin_app.route('/admin/profile', methods=('GET', 'POST'))
+@admin_required
+@login_required
 def admin_profile():
 
     password_form = PasswordForm()
@@ -32,15 +39,21 @@ def admin_profile():
 
 
 @admin_app.route('/admin/page/blogs')
+@admin_required
+@login_required
 def admin_blogs():
     return render_template('admin/blogs.html')
 
 
 @admin_app.route('/admin/page/posts')
+@admin_required
+@login_required
 def admin_posts():
     return render_template('admin/posts.html')
 
 
 @admin_app.route('/admin/history')
+@admin_required
+@login_required
 def admin_history():
     return render_template('admin/history.html')
