@@ -4,6 +4,7 @@ from users.login.form import LoginForm
 from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.users import User
 from users.utils.session.user_session import UserSession
+from users.utils.generator.msg import Message
 
 
 login_app = Blueprint('login_app', __name__)
@@ -13,7 +14,7 @@ login_app = Blueprint('login_app', __name__)
 def login():
     """Allows the user to login to the application using the GUI"""
 
-    form, error = LoginForm(), ''
+    form = LoginForm()
 
     _is_next_in_url()
 
@@ -32,11 +33,11 @@ def login():
                 UserSession.add_value_to_session('admin', True)
                 return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
 
-            error = 'Incorrect username and password!'
+            Message.display_to_gui_screen('Incorrect username and password!')
         else:
-            error = _get_error_msg(account_confirmed)
+            Message.display_to_gui_screen(_get_error_msg(account_confirmed))
 
-    return render_template("login/login.html", form=form, error=error)
+    return render_template("login/login.html", form=form)
 
 
 def _is_next_in_url():
