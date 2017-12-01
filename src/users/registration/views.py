@@ -38,16 +38,14 @@ def confirm_registration(username, code):
     user = User.get_by_username(username)
 
     if user and user.configuration_codes.get('verification_code') == code:
-
         user.parent_blog_created = True
         user.configuration_codes.pop('verification_code')
         user.account_confirmed = True
         user.update()
         UserSession.add_username(user.username.title())
 
-        #Todo
+        # Todo
         user.password = None
         # Save user object to Flask-Cache to go here
         return render_template('/confirmations/user_account.html')
     return abort(404)
-

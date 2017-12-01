@@ -11,7 +11,7 @@ from users.utils.implementer.password_implementer import PasswordImplementer
 class User(object):
     """ """
     def __init__(self, first_name, last_name, username, email, author_name,
-                 password, configuration_codes={}, _id=None,
+                 password, configuration_codes={}, account_confirmed=False, _id=None,
                  parent_blog_id=None, author_id=None, parent_blog_created=False):
 
         self._id = gen_id() if _id is None else _id
@@ -25,7 +25,7 @@ class User(object):
         self.password = password
         self.configuration_codes = configuration_codes
         self.parent_blog_created = parent_blog_created
-        self.account_confirmed = False
+        self.account_confirmed = account_confirmed
 
     def gen_user_verification_code(self):
         self.configuration_codes['verification_code'] = self._gen_code()
@@ -90,7 +90,8 @@ class User(object):
             "email": self.email.lower(),
             "author_name": self.author_name,
             "parent_blog_created": self.parent_blog_created,
-            "configuration_codes":self.configuration_codes
+            "configuration_codes":self.configuration_codes,
+            "account_confirmed": self.account_confirmed
         }
 
     def __repr__(self):

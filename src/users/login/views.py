@@ -5,6 +5,7 @@ from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.users import User
 from users.utils.session.user_session import UserSession
 
+
 login_app = Blueprint('login_app', __name__)
 
 
@@ -19,14 +20,21 @@ def login():
     if UserSession.get_username():  # if user is already logged in redirect them to blog/post creation page
         return _redirect_user_to_blog_creation_page()
     elif form.validate_on_submit():
-        if _has_user_be_confirmed():
+
+        account_confirmed = _has_user_be_confirmed(form.username.data)
+
+        if account_confirmed == 'ACCOUNT_CONFIRMED':
+
             user = User.get_by_username(form.username.data)
 
             if user and PasswordImplementer.check_password(form.password.data, user.password):
                 UserSession.add_username(user.username)
                 UserSession.add_value_to_session('admin', True)
                 return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
+
             error = 'Incorrect username and password!'
+        else:
+            error = _get_error_msg(account_confirmed)
 
     return render_template("login/login.html", form=form, error=error)
 
@@ -53,7 +61,32 @@ def _redirect_user_to_blog_creation_page():
     return redirect(url_for('blogs_app.blog'))
 
 
-def _has_user_be_confirmed():
-    """"""
-    # Check the flask-cache to see whether the user has confirmed
-    return True  # This will be replaced with an actually flask-cache function
+def _has_user_be_confirmed(username):
+    """Checks whether the user has confirmed their email account and returns the appropriate action.
+
+    Returns the appropriate status based on the user's account status:
+
+    If the user has registered but not confirmed their email address returns a 'NOT_CONFIRMED' message.
+    If the user has registered but not confirmed their email address Returns True.
+    if the user is not registered or is using an incorrect username or password returns False.
+    """
+
+    #Todo
+    # The line will be replaced by a flash-cache.For pull from the database
+    user = User.get_by_username(username)
+
+    if user and not user.account_confirmed:
+       confirmation = 'NOT_CONFIRMED'
+    elif user and user.account_confirmed:
+       confirmation = 'ACCOUNT_CONFIRMED'
+    else:
+       confirmation = 'ACCOUNT_NOT_FOUND'
+    return confirmation
+
+
+def _get_error_msg(confirmation):
+    """Returns the appropriate error msg"""
+    return {
+        'NOT_CONFIRMED': 'You need to confirm your email address before you can login',
+        'ACCOUNT_NOT_FOUND': 'Incorrect password and username'
+    }.get(confirmation)
