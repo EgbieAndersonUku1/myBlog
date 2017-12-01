@@ -10,7 +10,7 @@ login_app = Blueprint('login_app', __name__)
 
 @login_app.route('/login', methods=('GET', 'POST'))
 def login():
-    """"""
+    """Allows the user to login to the application using the GUI"""
 
     form, error = LoginForm(), ''
 
@@ -18,7 +18,6 @@ def login():
 
     if UserSession.get_username():  # if user is already logged in redirect them to blog/post creation page
         return _redirect_user_to_blog_creation_page()
-
     if form.validate_on_submit():
         if _has_user_be_confirmed():
 
