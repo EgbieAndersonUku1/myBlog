@@ -5,7 +5,6 @@ from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.users import User
 from users.utils.session.user_session import UserSession
 
-
 login_app = Blueprint('login_app', __name__)
 
 
@@ -13,9 +12,12 @@ login_app = Blueprint('login_app', __name__)
 def login():
     """"""
 
-    form, error = LoginForm(),''
+    form, error = LoginForm(), ''
 
     _is_next_in_url()
+
+    if UserSession.get_username():  # if user is already logged in redirect them to blog/post creation page
+        return _redirect_user_to_blog_creation_page()
 
     if form.validate_on_submit():
         if _has_user_be_confirmed():
@@ -56,4 +58,4 @@ def _redirect_user_to_blog_creation_page():
 def _has_user_be_confirmed():
     """"""
     # Check the flask-cache to see whether the user has confirmed
-    return True # This will be replaced with an actually flask-cache function
+    return True  # This will be replaced with an actually flask-cache function
