@@ -31,21 +31,6 @@
                         </div>
                     </div>
                     <div class="form-bottom">
-
-                        {% if registered %}
-                        <div class="alert alert-success">
-                            {% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                            <ul class=flashes>
-                                {% for message in messages %}
-                                <li>{{ message }}</li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        {% endif %}
-
                         {% if error %}
                         <div class="alert alert-danger">
                             {{ error }}
