@@ -7,14 +7,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Account confirmation page</title>
+    <title>{% block title %}{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/assets/css/bootstrap.css" rel="stylesheet">
 
 
     <!-- Custom styles for this template -->
-    <link href="static/assets/css/main.css" rel="stylesheet">
+    <link href="/static/assets/css/main.css" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 
@@ -36,7 +36,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">Account confirmation page</a>
+          <a class="navbar-brand" href="index.html"></a>
         </div>
 
       </div>
@@ -47,46 +47,18 @@
 	    <div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 centered">
-					<img src="static/assets/img/user.png" alt="Stanley">
-					<h1>Email Confirmed</h1>
-					<p>Your email address has been successful confirmed. Use the link below to login your blog account</p>
-					<p>Click the link here to <a href="http://eepurl.com/IcgkX">to login</a> </p>
-
+                    <img src="/static/assets/img/user.png" alt="Stanley">
+					{% block content%}{% endblock %}
 				</div><!-- /col-lg-8 -->
 			</div><!-- /row -->
 	    </div> <!-- /container -->
 	</div><!-- /ww -->
 
 
-	<!-- +++++ Information Section +++++ -->
-
-	<div class="container pt">
-		<div class="row mt centered">
-			<div class="col-lg-3">
-				<span class="glyphicon glyphicon-book"></span>
-
-			</div>
-
-			<div class="col-lg-3">
-				<span class="glyphicon glyphicon-user"></span>
-
-			</div>
-
-			<div class="col-lg-3">
-				<span class="glyphicon glyphicon-fire"></span>
-
-			</div>
-
-			<div class="col-lg-3">
-				<span class="glyphicon glyphicon-globe"></span>
-			</div>
-		</div><!-- /row -->
-
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="static/assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
   </body>
 </html>

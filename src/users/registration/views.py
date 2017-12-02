@@ -14,6 +14,7 @@ def register_user():
     """Allows the user to register to the application from the GUI register page"""
 
     form, registered, error = RegistrationForm(), False, None
+    blank_form = form
 
     if form.validate_on_submit():
         user = User.extract_web_form(form)
@@ -23,10 +24,9 @@ def register_user():
             user.email_user_account_verification_code()
             user.save()
             registered = True
-            Message.display_to_gui_screen('You have successful registered your account. '
-                                          'Please confirm your account using the link sent to your email')
-        else:
-            error = 'The email address used is already in use'
+            return redirect(url_for('registration_app.confirm_email'))
+
+        error = 'The email address used is already in use'
 
     return render_template('registrations/register.html', form=form, registered=registered, error=error)
 
@@ -42,10 +42,19 @@ def confirm_registration(username, code):
         user.configuration_codes.pop('verification_code')
         user.account_confirmed = True
         user.update()
-        UserSession.add_username(user.username.title())
 
         # Todo
         user.password = None
         # Save user object to Flask-Cache to go here
-        return render_template('/confirmations/user_account.html')
+        return redirect(url_for('registration_app.confirmed_email', code=code))
+
     return abort(404)
+
+
+@registration_app.route('/Confirmed/email/code_<code>_success')
+def confirmed_email(code):
+    return render_template('confirmations/confirmed_email.html')
+
+@registration_app.route('/confirmEmail')
+def confirm_email():
+    return render_template('confirmations/confirm_email.html')
