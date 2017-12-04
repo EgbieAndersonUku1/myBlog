@@ -1,9 +1,9 @@
-from users.base.base_password_form import BasePasswordForm
+from users.passwords.form import NewPasswordForm
 from wtforms import validators, PasswordField
 
 __author__ = 'Egbie Uku'
 
 
-class PasswordForm(BasePasswordForm):
+class PasswordForm(NewPasswordForm):
     """Allows the user of the blog to change their password"""
-    old_password = PasswordField('Old password', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
+    pass

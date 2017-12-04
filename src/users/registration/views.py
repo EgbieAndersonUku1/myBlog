@@ -18,7 +18,7 @@ def register_user():
 
         if not user.get_by_email(form.email.data):
             user.gen_user_verification_code()
-            user.email_user_account_verification_code()
+            user.email_user_verification_code()
             user.save()
             return redirect(url_for('registration_app.confirm_email'))
 

@@ -18,13 +18,42 @@ def email_user_verification_code(receipent_addr, username, verification_code):
         `username`: The username belonging to the user
         `verification_code`: The verification code that to be verified by the user
     """
+    _email_user_helper(receipent_addr, username, verification_code,
+                       subject="Re: Please verify your email address",
+                       body_html_path="mail/register/register.html",
+                       body_text_path="mail/register/register.txt",
+                       )
+
+
+def email_user_forgotten_password_verification_code(receipent_addr, username, verification_code):
+    """"""
+    _email_user_helper(receipent_addr, username, verification_code,
+                       subject="Re: Reset forgotten password",
+                       body_html_path="mail/password/forgotten_password.html",
+                       body_text_path="mail/password/forgotten_password.txt",
+                       )
+
+
+def _email_user_helper(receipent_addr, username, verification_code, **kwargs):
+    """"""
+
+    """_send_email_verification_code(str, obj, obj) -> returns None
+
+       Sends a verification code to the user's email address.
+
+       :param
+           `recipient_addr`: The email address of the recipient
+           `user`: The object model containing all the user's information
+           `username`: The username belonging to the user
+           `verification_code`: The verification code that to be verified by the user
+       """
 
     email = _FlaskEmailer(receipent_addr,
-                         subject="Re: Please verify your email address",
-                         body_html_path="mail/register/register.html",
-                         body_text_path="mail/register/register.txt",
-                         username=username,
-                         verification_code=verification_code)
+                          subject=kwargs['subject'],
+                          body_html_path=kwargs['body_html_path'],
+                          body_text_path=kwargs['body_text_path'],
+                          username=username,
+                          verification_code=verification_code)
     email.send_email()
 
 

@@ -1,7 +1,7 @@
 from flask import session
 
 from users.utils.generator.id_generator import gen_id
-from users.utils.email.sender import email_user_verification_code
+from users.utils.email.sender import email_user_verification_code, email_user_forgotten_password_verification_code
 from users.blogs.models import ParentBlog
 from users.records.record import Record
 from users.utils.generator.id_generator import gen_id as gen_code
@@ -33,13 +33,29 @@ class User(object):
     def gen_email_change_verification_code(self):
         self.configuration_codes['email_code'] = self._gen_code()
 
+    def gen_forgotten_password_code(self):
+        """"""
+        self.configuration_codes['forgotten_password_code'] = self._gen_code()
+
     def _gen_code(self):
         """"""
         return gen_code()
 
-    def email_user_account_verification_code(self, code_type='verification_code'):
+    def email_user_verification_code(self, code_type='verification_code'):
         """ """
-        return email_user_verification_code(self.email, self.username, self.configuration_codes.get(code_type))
+
+        emailer = self._get_email_sender(code_type)
+        emailer(self.email, self.username, self.configuration_codes.get(code_type))
+
+    def _get_email_sender(self, type_of_email):
+        """"""
+        assert type_of_email in ['verification_code', "forgotten_password_code"]
+
+        return {
+            "verification_code":  email_user_verification_code,
+            "forgotten_password_code":  email_user_forgotten_password_verification_code,
+        }.get(type_of_email)
+
 
     @classmethod
     def extract_web_form(cls, form):

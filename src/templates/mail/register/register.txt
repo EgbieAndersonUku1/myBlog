@@ -4,7 +4,7 @@
 
     Hi {{ username }},
 
-    Welcome to Social Network application. In order to use to application please confirm by clicking
+    Welcome, in order to use to application please confirm by clicking
     on the registration link located in your email.
 
      {{ config.get('HOSTNAME') }}/confirm/{{ username.data }}/{{ verification_code }}
