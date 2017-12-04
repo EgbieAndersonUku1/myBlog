@@ -40,7 +40,7 @@ def reset_password(username, code):
         user.configuration_codes.pop('forgotten_password_code')
         user.password = PasswordImplementer.hash_password(form.new_password.data)
         user.update()
-        Message.display_to_gui_screen('You have successfully changed your password. Login using your new password.')
+        Message.display_to_gui_screen('You have successfully changed your password.')
         return redirect(url_for('login_app.login'))
 
     return render_template('/password/reset_password.html', form=form, username=username, code=code)
