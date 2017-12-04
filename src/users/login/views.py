@@ -72,8 +72,6 @@ def _has_user_be_confirmed(username):
     if the user is not registered or is using an incorrect username/password returns 'ACCOUNT_NOT_FOUND'.
     """
 
-    #Todo
-    # The line will be replaced by a flash-cache.For pull from the database
     user = User.get_by_username(username)
 
     if user and not user.account_confirmed:
