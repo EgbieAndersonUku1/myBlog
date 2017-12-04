@@ -20,8 +20,9 @@ def forgotten_password():
             user.update()
             user.email_user_verification_code(code_type='forgotten_password_code')
 
-        Message.display_to_gui_screen('''A reset password code link has been sent to your email. 
-                                        Click on the link to reset your password''')
+        Message.display_to_gui_screen('''A reset password code link has been sent to your email. Click on the link 
+                                        to reset your password'''
+                                      )
     return render_template('password/forgotten_password.html', form=form)
 
 
@@ -37,7 +38,7 @@ def reset_password(username, code):
     elif form.validate_on_submit():
 
         user.configuration_codes.pop('forgotten_password_code')
-        user.password = PasswordImplementer.hash_password(form.new_password.data)
+        user.password = PasswordImplementer.hash_password(form.new_passwd.data)
         user.update()
         Message.display_to_gui_screen('You have successfully changed your password.')
         return redirect(url_for('login_app.login'))

@@ -128,9 +128,9 @@ class UserBlog(object):
         Takes a blog form and creates a child blog object.
 
         :param
-                `blog_form`: Contains the details that will be used to create the blog i.e title, description
+            `blog_form`: Contains the details that will be used to create the blog i.e title, description
         :returns
-                A child blog containing the new details.
+            A child blog containing the new details.
         """
         return self._parent_blog.create_blog(blog_form)
 

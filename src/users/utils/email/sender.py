@@ -8,7 +8,7 @@ __author__ = 'Egbie Uku'
 
 
 def email_user_verification_code(receipent_addr, username, verification_code):
-    """_send_email_verification_code(str, obj, obj) -> returns None
+    """_email_user_verification_code(str, obj, obj) -> returns None
 
     Sends a verification code to the user's email address.
 

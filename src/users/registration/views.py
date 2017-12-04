@@ -10,8 +10,7 @@ registration_app = Blueprint('registration_app', __name__)
 def register_user():
     """Allows the user to register to the application from the GUI register page"""
 
-    form, registered, error = RegistrationForm(), False, None
-    blank_form = form
+    form, error = RegistrationForm(), False
 
     if form.validate_on_submit():
         user = User.extract_web_form(form)

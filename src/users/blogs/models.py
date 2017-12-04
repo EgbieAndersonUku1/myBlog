@@ -98,4 +98,3 @@ class _ChildBlog(object):
     def delete_post(self, post_id):
         """Deletes a post from the blog"""
         self._post.delete_post(post_id)
-
