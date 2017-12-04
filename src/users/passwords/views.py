@@ -25,7 +25,6 @@ def forgotten_password():
     return render_template('password/forgotten_password.html', form=form)
 
 
-
 @password_app.route('/password/reset/<username>/<code>', methods=('GET', 'POST'))
 def reset_password(username, code):
     """"""

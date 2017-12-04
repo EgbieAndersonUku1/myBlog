@@ -22,20 +22,20 @@ def login():
         return _redirect_user_to_blog_creation_page()
     elif form.validate_on_submit():
 
-        account_confirmed = _has_user_be_confirmed(form.username.data)
+        email_confirmed = _has_user_confirmed_their_email(form.username.data)
 
-        if account_confirmed == 'ACCOUNT_CONFIRMED':
+        if email_confirmed == 'EMAIL_CONFIRMED':
 
             user = User.get_by_username(form.username.data)
 
-            if user and PasswordImplementer.check_password(form.password.data, user.password):
+            if PasswordImplementer.check_password(form.password.data, user.password):
                 UserSession.add_username(user.username)
                 UserSession.add_value_to_session('admin', True)
                 return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
 
             Message.display_to_gui_screen('Incorrect username and password!')
         else:
-            Message.display_to_gui_screen(_get_error_msg(account_confirmed))
+            Message.display_to_gui_screen(_get_account_status(email_confirmed))
 
     return render_template("login/login.html", form=form)
 
@@ -62,7 +62,7 @@ def _redirect_user_to_blog_creation_page():
     return redirect(url_for('blogs_app.blog'))
 
 
-def _has_user_be_confirmed(username):
+def _has_user_confirmed_their_email(username):
     """Checks whether the user has confirmed their email account and returns the appropriate action.
 
     Returns the appropriate status based on the user's account status:
@@ -75,17 +75,17 @@ def _has_user_be_confirmed(username):
     user = User.get_by_username(username)
 
     if user and not user.account_confirmed:
-       confirmation = 'NOT_CONFIRMED'
+        confirmation = 'NOT_CONFIRMED'
     elif user and user.account_confirmed:
-       confirmation = 'ACCOUNT_CONFIRMED'
+        confirmation = 'EMAIL_CONFIRMED'
     else:
-       confirmation = 'ACCOUNT_NOT_FOUND'
+        confirmation = 'ACCOUNT_NOT_FOUND'
     return confirmation
 
 
-def _get_error_msg(confirmation):
-    """Returns the appropriate error msg"""
+def _get_account_status(confirmation_status):
+    """Returns the appropriate status"""
     return {
         'NOT_CONFIRMED': 'You need to confirm your email address before you can login',
         'ACCOUNT_NOT_FOUND': 'Incorrect password and username'
-    }.get(confirmation)
+    }.get(confirmation_status)
