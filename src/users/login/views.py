@@ -68,8 +68,8 @@ def _has_user_be_confirmed(username):
     Returns the appropriate status based on the user's account status:
 
     If the user has registered but not confirmed their email address returns a 'NOT_CONFIRMED' message.
-    If the user has registered but not confirmed their email address Returns True.
-    if the user is not registered or is using an incorrect username or password returns False.
+    If the user has registered and confirmed their email address Returns 'ACCOUNT_CONFIRMED'.
+    if the user is not registered or is using an incorrect username/password returns 'ACCOUNT_NOT_FOUND'.
     """
 
     #Todo
