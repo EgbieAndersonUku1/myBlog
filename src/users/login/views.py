@@ -29,8 +29,7 @@ def login():
             user = User.get_by_username(form.username.data)
 
             if PasswordImplementer.check_password(form.password.data, user.password):
-                UserSession.add_username(user.username)
-                UserSession.add_value_to_session('admin', True)
+                _add_username_and_admin_to_secure_user_session(user, admin='admin')
                 return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
 
             Message.display_to_gui_screen('Incorrect username and password!')
@@ -42,24 +41,8 @@ def login():
 
 def _is_next_in_url():
     """"""
-
     if request.method == 'GET' and request.args.get('next'):
         UserSession.add_next_url(request.args.get('next'))
-
-
-def _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page():
-    """"""
-
-    if UserSession.get_value_by_key('next'):
-        next = UserSession.get_value_by_key('next')
-        UserSession.remove_next_url()
-        return redirect(next)
-    return _redirect_user_to_blog_creation_page()
-
-
-def _redirect_user_to_blog_creation_page():
-    """"""
-    return redirect(url_for('blogs_app.blog'))
 
 
 def _has_user_confirmed_their_email(username):
@@ -83,8 +66,31 @@ def _has_user_confirmed_their_email(username):
     return confirmation
 
 
+def _add_username_and_admin_to_secure_user_session(user, admin):
+    """Adds the username and admin name to the user's secure session"""
+
+    UserSession.add_username(user.username)
+    UserSession.add_value_to_session(admin, True)
+
+
+def _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page():
+    """"""
+
+    if UserSession.get_value_by_key('next'):
+        next = UserSession.get_value_by_key('next')
+        UserSession.remove_next_url()
+        return redirect(next)
+    return _redirect_user_to_blog_creation_page()
+
+
+def _redirect_user_to_blog_creation_page():
+    """Redirects the user to the blog creation page"""
+    return redirect(url_for('blogs_app.blog'))
+
+
 def _get_account_status(confirmation_status):
-    """Returns the appropriate status"""
+    """Returns the appropriate status of the user's account"""
+
     return {
         'NOT_CONFIRMED': 'You need to confirm your email address before you can login',
         'ACCOUNT_NOT_FOUND': 'Incorrect password and username'
