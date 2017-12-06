@@ -1,4 +1,5 @@
 from users.records.database.database import Database
+from app import cache
 
 
 class Record(object):
@@ -37,8 +38,8 @@ class Record(object):
                 return  cls._filter_query('email', email)
 
             @classmethod
-            def filter_user_by_id(cls, user_id):
-                return cls._filter_query(user_id)
+            def filter_by_id(cls, id_type, value):
+                return cls._filter_query(id_type, value)
 
             @classmethod
             def _filter_query(cls, query_name, query_value, collection='blogs'):

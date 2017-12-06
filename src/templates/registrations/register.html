@@ -40,10 +40,7 @@
                         <form role="form" method="post" action="{{ url_for('registration_app.register_user') }}" class="registration-form">
 
                             {{ form.hidden_tag() }} <!-- prevents cross site scripting  -->
-                            {{ render_field(form.first_name, class="form-control") }}
-                            {{ render_field(form.last_name, class="form-control") }}
                             {{ render_field(form.username, class="form-control") }}
-                            {{ render_field(form.author_name, class="form-control") }}
                             {{ render_field(form.email, class="form-control") }}
                             {{ render_field(form.password, class="form-control") }}
                             {{ render_field(form.confirm, class="form-control") }}

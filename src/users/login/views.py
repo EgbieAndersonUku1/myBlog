@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask_caching import make_template_fragment_key
 
+from app import cache
 from users.login.form import LoginForm
 from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.users import User
@@ -8,6 +10,7 @@ from users.utils.generator.msg import Message
 
 
 login_app = Blueprint('login_app', __name__)
+login_template_key = make_template_fragment_key("login/login.html")
 
 
 @login_app.route('/login', methods=('GET', 'POST'))

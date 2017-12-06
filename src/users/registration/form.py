@@ -11,8 +11,6 @@ _match = re.compile(r'^[A-Za-z0-9_]+$')
 class RegistrationForm(Form):
     """The RegistrationForm allows the user to enter the fields needed to register the application in the GUI"""
 
-    first_name = StringField('First Name', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
-    last_name  = StringField('Last Name', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
     username = StringField('Username', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
     email = EmailField('Email', validators=[validators.DataRequired()])
     password = PasswordField('Password', validators=[validators.DataRequired(),
@@ -21,13 +19,6 @@ class RegistrationForm(Form):
                                                      validators.Length(min=3, max=80)])
 
     confirm = PasswordField('Repeat password')
-    author_name = StringField('Author name', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
-
-    def validate_first_name(form, field):
-        RegistrationForm._check_name_value(form.first_name.data)
-
-    def validate_last_name(form, field):
-        RegistrationForm._check_name_value(form.last_name.data)
 
     def validate_username(form, field):
 

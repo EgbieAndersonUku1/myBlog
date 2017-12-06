@@ -6,26 +6,38 @@ from users.blogs.models import ParentBlog
 from users.records.record import Record
 from users.utils.generator.id_generator import gen_id as gen_code
 from users.utils.implementer.password_implementer import PasswordImplementer
+from users.utils.session.user_session import UserSession
+from users.users.profile_images import ProfileImages
+from app import cache
+
+
+def _to_class(class_obj, query):
+    return class_obj(**query) if query else None
+
+
+def _save_to_db(data):
+    return Record.save(data)
+
+
+def _update_db(field_id_to_find, field_id_value, data):
+    Record.Update.update(field_id_to_find, field_id_value, data)
 
 
 class User(object):
     """ """
-    def __init__(self, first_name, last_name, username, email, author_name,
-                 password, configuration_codes={}, account_confirmed=False, _id=None,
-                 parent_blog_id=None, author_id=None, parent_blog_created=False):
+    def __init__(self, username, email, password, configuration_codes={}, account_confirmed=False,
+                 _id=None, parent_blog_id=None, author_id=None, parent_blog_created=False, profile_id=None):
 
         self._id = gen_id() if _id is None else _id
+        self.profile_id = gen_id() if _id is None else profile_id
         self.parent_blog_id = gen_id() if parent_blog_id is None else parent_blog_id
         self.author_id = gen_id() if author_id is None else author_id
-        self.first_name = first_name
-        self.last_name = last_name
-        self.username  = username
+        self.username = username
         self.email = email
-        self.author_name = author_name
         self.password = password
-        self.configuration_codes = configuration_codes
         self.parent_blog_created = parent_blog_created
         self.account_confirmed = account_confirmed
+        self.configuration_codes = configuration_codes
 
     def gen_user_verification_code(self):
         self.configuration_codes['verification_code'] = self._gen_code()
@@ -60,37 +72,27 @@ class User(object):
     @classmethod
     def extract_web_form(cls, form):
         """"""
-        return cls(form.first_name.data, form.last_name.data,
-                    form.username.data, form.email.data,
-                    form.author_name.data,
-                    PasswordImplementer.hash_password(form.password.data)
-                    )
+        return cls(form.username.data, form.email.data,
+                   PasswordImplementer.hash_password(form.password.data)
+                   )
 
     @classmethod
     def get_by_username(cls, username):
         """"""
-        return cls._to_class(Record.Query.Filter.filter_user_by_username(username))
+        return _to_class(cls, Record.Query.Filter.filter_user_by_username(username))
 
     @classmethod
     def get_by_email(cls, email):
         """Searches the records by email address"""
-        return cls._to_class(Record.Query.Filter.filter_user_by_email(email))
-
-    @classmethod
-    def _to_class(cls, query):
-        return User(**query) if query else None
-
-    @staticmethod
-    def get_by_author_by_id(author_id):
-        pass
+        return _to_class(cls, Record.Query.Filter.filter_user_by_email(email))
 
     def save(self):
         """"""
-        return Record.save(self._to_json())
+        return _save_to_db(self._to_json())
 
     def update(self):
         """"""
-        Record.Update.update('_id', self._id, self._to_json())
+        _update_db('_id', self._id, self._to_json())
 
     def _to_json(self):
         """ """
@@ -98,20 +100,75 @@ class User(object):
         return {
             "_id": self._id,
             "parent_blog_id": self.parent_blog_id,
+            "profile_id": self.profile_id,
             "author_id": self.author_id,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
             "username": self.username.lower(),
             "password": self.password,
             "email": self.email.lower(),
-            "author_name": self.author_name,
             "parent_blog_created": self.parent_blog_created,
-            "configuration_codes":self.configuration_codes,
+            "configuration_codes": self.configuration_codes,
             "account_confirmed": self.account_confirmed
         }
 
     def __repr__(self):
-        return "First name: <'{}'>, Last name <'{}'>".format(self.first_name, self.last_name)
+        return "Username: <'{}'>".format(self.username)
+
+
+class UserProfile(object):
+    """"""
+
+    def __init__(self, first_name, last_name, author_name, username, email, bio, profile_img):
+        self.profile_id = self.get_profile_id()
+        self.first_name = first_name
+        self.last_name = last_name
+        self.author_name = author_name
+        self.username = username
+        self.email = email
+        self.bio = bio
+        self.profile_img = ProfileImages(self.profile_id, profile_img)
+
+    @cache.memoize(600)
+    def get_profile(self):
+        return _to_class(UserProfile, Record.Query.Filter.filter_by_id(self.profile_id))
+
+    def save(self):
+        """"""
+        return _save_to_db(self._to_json())
+
+    def update(self):
+        """"""
+        _update_db('profile_id', self.profile_id, self._to_json())
+
+    def _to_json(self):
+        """"""
+        return {
+            "profile_id": self.profile_id,
+            "first_name": self.first_name,
+            "last_name" : self.last_name,
+            "author_name":self.author_name,
+            "username": self.username,
+            "email": self.email,
+            "bio": self.bio,
+            "profile_img":self.profile_img
+        }
+
+    @cache.memoize(600)
+    def get_profile_id(self):
+        """"""
+        user = User.get_by_username(UserSession.get_username())
+        self.profile_id = user.profile_id
+
+    @classmethod
+    def extract_web_form(cls, form):
+        """"""
+        return cls(form.first_name.data,
+                   form.last_name.data,
+                   form.author_name.data,
+                   form.username.data,
+                   form.email.data,
+                   form.bio.data,
+                   form.profile_img.data
+                    )
 
 
 class UserBlog(object):

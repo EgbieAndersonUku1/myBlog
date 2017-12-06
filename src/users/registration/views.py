@@ -33,14 +33,11 @@ def confirm_registration(username, code):
     user = User.get_by_username(username)
 
     if user and user.configuration_codes.get('verification_code') == code:
+
         user.parent_blog_created = True
         user.configuration_codes.pop('verification_code')
         user.account_confirmed = True
         user.update()
-
-        # Todo
-        user.password = None
-        # Save user object to Flask-Cache to go here
         return redirect(url_for('registration_app.confirmed_email', code=code))
 
     return abort(404)
@@ -49,6 +46,7 @@ def confirm_registration(username, code):
 @registration_app.route('/Confirmed/email/code_<code>_success')
 def confirmed_email(code):
     return render_template('confirmations/confirmed_email.html')
+
 
 @registration_app.route('/confirmEmail')
 def confirm_email():

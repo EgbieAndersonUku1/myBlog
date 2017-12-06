@@ -1,4 +1,5 @@
 from flask import Blueprint, url_for, redirect, render_template, abort
+
 from users.passwords.form import ForgottenPasswordForm, NewPasswordForm, ResetForgottenPassword
 from users.users.users import User
 from users.utils.implementer.password_implementer import PasswordImplementer
