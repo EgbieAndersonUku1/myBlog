@@ -51,12 +51,14 @@ Technologies that will be used:
 4) Next run the command: **pip install -r requirement.txt**.
     This will download all the dependencies needed to run the blog and store it in on your computer or your virtual environment if you have created one.
  
- 5) Run the command **python run.py runserver**. This will start the web server.
  6) Open a new terminal and run the command sudo mongod. This will start the database.
- 7) In the file gmail_credentials.env enter your gmail username and password in the appropriate variables
+ 7) In the file gmail_credentials.env enter your gmail username and password in the appropriate variables and hit save
  7) Turn **ON** the **less secure app** setting located in your gmail setting account. This allows gmail to use scripts in order
  to send emails. If this is not turned on and error would occur if application tries to send an email.
+ 7) Run the command **python run.py runserver**. This will start the web server.
  7) Open a new browser and type in the url box: **http://127.0.0.1:5000**.
+ 
+ Should an error occur stop step 8 and by hit CTRl-D and then do step 8 again.
  To access any page just add a slash behind the URL followed by the page name
  
  

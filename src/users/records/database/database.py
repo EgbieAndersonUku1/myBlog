@@ -74,7 +74,6 @@ class Database(object):
            - collections: A table name from the database
            - query      : The information to query from the database
         """
-        print('I am hitting the database')
         return Database.DATABASE[db_name].find_one(query)
 
     @classmethod

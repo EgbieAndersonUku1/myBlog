@@ -30,11 +30,6 @@ def init_db():
    Database.db_init()
 
 
-@app.route('/time')
-@cache.cached(timeout=600, key_prefix='test')
-def test():
-   return time.ctime()
-
 def create_app():
 
     app.config.from_pyfile("settings.py")
