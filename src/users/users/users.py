@@ -123,7 +123,7 @@ class UserProfile(object):
         self.last_name = last_name
         self.author_name = author_name
         self.username = username
-        self.email = email
+        self.email = email.lower()
         self.bio = bio
         self.profile_img = ProfileImages(self.profile_id, profile_img)
 
@@ -151,12 +151,6 @@ class UserProfile(object):
             "bio": self.bio,
             "profile_img":self.profile_img
         }
-
-    @cache.memoize(600)
-    def get_profile_id(self):
-        """"""
-        user = User.get_by_username(UserSession.get_username())
-        self.profile_id = user.profile_id
 
     @classmethod
     def extract_web_form(cls, form):
@@ -208,7 +202,4 @@ class UserBlog(object):
 
     def _retreive_user_info(self):
         """A helper function that returns the user object"""
-
-        #return User.get_by_email("abyes1@hotmail.co.uk") # Test email
-
         return User.get_by_email(session.get('email'))

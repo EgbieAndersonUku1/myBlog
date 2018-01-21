@@ -73,7 +73,8 @@ def _add_username_email_and_admin_to_secure_user_session(user, admin):
     """Adds the username and admin name to the user's secure session"""
 
     UserSession.add_username(user.username)
-    UserSession.add_value_to_session('email', user.email.lower())
+
+    UserSession.add_value_to_session('email', user.email)
     UserSession.add_value_to_session(admin, True)
 
 

@@ -67,3 +67,4 @@ Technologies that will be used:
  
  1) Any operating system 
  2) A working internet connection 
+ 3)
