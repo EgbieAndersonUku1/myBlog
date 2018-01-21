@@ -14,7 +14,6 @@ def blog():
 
     blog = UserBlog()
     blogs = blog.get_all_blogs()
-
     return render_template('blogs/blogs.html', blogs=blogs)
 
 
