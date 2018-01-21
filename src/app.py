@@ -33,6 +33,7 @@ def init_db():
 def create_app():
 
     app.config.from_pyfile("settings.py")
+    app.url_map.strict_slashes = False
 
 
     app.register_blueprint(admin_app)

@@ -1,0 +1,29 @@
+{% extends "blogs/base.html" %}
+{% block title %} Create Blog {% endblock %}
+
+{% block content %}
+
+    <form method="POST" action="{{ url_for('blogs_app.blog_create') }}" role="form">
+
+    <div class="col-md-9">
+        {% from "__formhelpers.html" import render_field %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading main-color-bg">
+                <h3 class="panel-title">Create A New Blog</h3>
+            </div>
+            <div class="panel-body">
+                {{ form.hidden_tag() }}
+                {{ render_field(form.title, class='form-control') }}
+                {{ render_field(form.description, rows="16", class='form-control') }}
+                <br>
+                <button type="submit" class="btn btn-primary">Create blog</button>
+            </div>
+        </div>
+    </div>
+    <br>
+
+
+</form>
+
+{% endblock %}

@@ -6,7 +6,7 @@ from users.users.users import User
 registration_app = Blueprint('registration_app', __name__)
 
 
-@registration_app.route('/register', methods=('GET', 'POST'))
+@registration_app.route('/register', methods=['GET', 'POST'])
 def register_user():
     """Allows the user to register to the application from the GUI register page"""
 

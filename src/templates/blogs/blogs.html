@@ -1,0 +1,73 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+
+<!-- ToDo
+    Add Bootsrap styling to the page to make it more pleasing to the eye.
+-->
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            {% if blogs %}
+
+            {% include "__flash_messages.html" %}
+            <h3><u>List of blogs</u></h3>
+
+
+            <table class="table table-striped">
+
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Edit/Delete</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for blog in blogs %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ blog.title }}</td>
+                    <td>{{ blog.description | safe }}</td>
+                    <td>
+
+                        <button><a href="{{ url_for('blogs_app.blog_edit', blog_id=blog.child_blog_id) }}">Edit<a/>
+                        </button>
+
+                        |
+
+                        <button><a href="{{ url_for('blogs_app.blog_delete', blog_id=blog.child_blog_id) }}">Delete<a/>
+                        </button>
+
+
+                </tr>
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+            <div class="jumbotron">
+                You have no blogs
+            </div>
+            {% endif %}
+
+            <a href="{{ url_for('blogs_app.blog_create') }}">
+                <button type="button" class="btn btn-primary">Create Blog</button>
+            </a>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

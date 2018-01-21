@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from flask_caching import make_template_fragment_key
+
 
 from app import cache
 from users.login.form import LoginForm
@@ -10,10 +10,10 @@ from users.utils.generator.msg import Message
 
 
 login_app = Blueprint('login_app', __name__)
-login_template_key = make_template_fragment_key("login/login.html")
 
 
-@login_app.route('/login', methods=('GET', 'POST'))
+@login_app.route('/', methods=['GET', 'POST'])
+@login_app.route('/login', methods=['GET', 'POST'])
 def login():
     """Allows the user to login to the application using the GUI"""
 
@@ -32,7 +32,7 @@ def login():
             user = User.get_by_username(form.username.data)
 
             if PasswordImplementer.check_password(form.password.data, user.password):
-                _add_username_and_admin_to_secure_user_session(user, admin='admin')
+                _add_username_email_and_admin_to_secure_user_session(user, admin='admin')
                 return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
 
             Message.display_to_gui_screen('Incorrect username and password!')
@@ -69,10 +69,11 @@ def _has_user_confirmed_their_email(username):
     return confirmation
 
 
-def _add_username_and_admin_to_secure_user_session(user, admin):
+def _add_username_email_and_admin_to_secure_user_session(user, admin):
     """Adds the username and admin name to the user's secure session"""
 
     UserSession.add_username(user.username)
+    UserSession.add_value_to_session('email', user.email.lower())
     UserSession.add_value_to_session(admin, True)
 
 

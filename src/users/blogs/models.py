@@ -28,23 +28,34 @@ class ParentBlog(object):
         blog_data = self._to_json(blog_form, child_blog_id)
 
         if not Record.save(blog_data):
-           # will create a base exception here
-           pass
+           raise Exception('Error, The blog data was not saved on the database.')
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id,
-                          blog_form.name, blog_form.description)
+                          blog_form.title, blog_form.description, _id=None,
+                          blog_live=True)
 
     def find_child_blog(self, child_blog_id):
-        pass
+        """Takes a child blog id and if found returns that blog as an object"""
+
+        data = Record.Query.Filter.filter_by_key_and_value("child_blog_id", child_blog_id)
+        return _ChildBlog(**data) if data else None
+
 
     def find_all_child_blogs(self):
         """Returns all child blog created by this parent blog"""
-        pass
+
+        blogs = Record.Query.find_all(self._blog_id)
+        if blogs:
+           return [_ChildBlog(**blog) for blog in blogs]
 
     def delete_child_blog(self, child_blog_id):
-        pass
+        return Record.Delete.delete_blog(child_blog_id)
 
     def delete_all_child_blogs(self):
         pass
+
+    def update_child_blog(self, blog_id, data):
+        """"""
+        Record.Update.update(field_name='child_blog_id', field_id=blog_id, data=data)
 
     def _to_json(self, blog_form, child_blog_id):
         """"""
@@ -52,8 +63,8 @@ class ParentBlog(object):
             "user_id": self._user_id,
             "parent_blog_id": self._blog_id,
             "child_blog_id": child_blog_id,
-            "blog_title": blog_form.title(),
-            "blog_description": blog_form.description,
+            "title": blog_form.title.data,
+            "description": blog_form.description.data,
             "blog_live": True
         }
 
@@ -61,11 +72,14 @@ class ParentBlog(object):
 class _ChildBlog(object):
     """The Child blog is a child of the Parent blog"""
 
-    def __init__(self, user_id, parent_blog_id, child_blog_id, blog_name, blog_descr):
-        self._blog_name = blog_name
-        self._blog_descr = blog_descr
-        self._child_blog = child_blog_id
+    def __init__(self, user_id, parent_blog_id, child_blog_id,
+                  title, description, _id, blog_live):
+        self._id = _id
+        self.child_blog_id = child_blog_id
+        self.title = title
+        self.description = description
         self._user_id = user_id
+        self._blog_live = blog_live
         self._post = Post(user_id, parent_blog_id, child_blog_id)
 
     @property

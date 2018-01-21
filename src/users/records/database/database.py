@@ -58,11 +58,11 @@ class Database(object):
         return True if Database.DATABASE[db_name].insert(data) else False
 
     @staticmethod
-    def find_all(db_name="blogs"):
+    def find_all(blog_id, db_name="blogs"):
         """find_all(str) -> return(cursor)
         Returns all users in the db_name.
         """
-        return Database.DATABASE[db_name].find()
+        return Database.DATABASE[db_name].find({"parent_blog_id": blog_id, "blog_live": True})
 
     @staticmethod
     def find_one(query, db_name="blogs"):
@@ -87,8 +87,7 @@ class Database(object):
            - collections: A table name from the database
            - data      : The information to delete from the database
         """
-        Database.DATABASE[db_name].find_one_and_delete(data)
-        return False if cls.find_one(db_name, data) else True
+        Database.DATABASE[db_name].delete_one(data)
 
     @staticmethod
     def update(field_name, field_value, data, db_name="blogs"):

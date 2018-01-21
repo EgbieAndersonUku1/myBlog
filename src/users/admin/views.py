@@ -42,7 +42,7 @@ def admin_profile():
 @admin_required
 @login_required
 def admin_blogs():
-    return render_template('admin/blogs.html')
+    return render_template('admin/blogs_creation_page.html')
 
 
 @admin_app.route('/admin/page/posts')

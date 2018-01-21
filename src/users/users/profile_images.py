@@ -13,7 +13,7 @@ class ProfileImages(object):
 
     @cache.memoize(300)
     def get_image(self):
-        Record.Query.Filter.filter_by_id("profile_image_id", self.profile_image_id)
+        Record.Query.Filter.filter_by_key_and_value("profile_image_id", self.profile_image_id)
 
     def _to_json(self):
         return {"profile_image_id": self.profile_image_id,

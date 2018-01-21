@@ -129,7 +129,7 @@ class UserProfile(object):
 
     @cache.memoize(600)
     def get_profile(self):
-        return _to_class(UserProfile, Record.Query.Filter.filter_by_id(self.profile_id))
+        return _to_class(UserProfile, Record.Query.Filter.filter_by_key_and_value(self.profile_id))
 
     def save(self):
         """"""
@@ -177,8 +177,8 @@ class UserBlog(object):
         all through the blog object.
      """
     def __init__(self):
-        self._user = self._retreive_user_info()
-        self._parent_blog = ParentBlog(self._user.user_id, self._user.blog_id)
+        user = self._retreive_user_info()
+        self._parent_blog = ParentBlog(user._id, user.parent_blog_id)
 
     def create_blog(self, blog_form):
         """create_blog(obj) -> return blog object
@@ -199,10 +199,16 @@ class UserBlog(object):
         """Return a list containing all the blogs created by the user"""
         return self._parent_blog.find_all_child_blogs()
 
-    def get_blog_author(self):
-        """Returns the an author of the post as an object"""
-        return User.get_by_author_by_id(self._user.author_id)
+    def update_blog(self, blog_id, data):
+        """"""
+        self._parent_blog.update_child_blog(blog_id, data)
+
+    def delete_blog(self, blog_id):
+        self._parent_blog.delete_child_blog(blog_id)
 
     def _retreive_user_info(self):
         """A helper function that returns the user object"""
+
+        #return User.get_by_email("abyes1@hotmail.co.uk") # Test email
+
         return User.get_by_email(session.get('email'))

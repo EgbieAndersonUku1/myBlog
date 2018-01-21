@@ -11,21 +11,26 @@ class Record(object):
     class Update(object):
 
         @staticmethod
-        def update(row_name, row_id, data):
-            Database.update(row_name, row_id, data)
+        def update(field_name, field_id, data):
+            Database.update(field_name, field_id, data)
 
     class Delete(object):
 
         @staticmethod
         def delete_blog(blog_id):
             """"""
-            pass
+            data = {"child_blog_id": blog_id}
+            return Database.delete_one(data=data)
 
         @staticmethod
         def delete_account(user_id):
             pass
 
     class Query(object):
+
+        @staticmethod
+        def find_all(blog_id):
+            return Database.find_all(blog_id)
 
         class Filter(object):
 
@@ -38,8 +43,8 @@ class Record(object):
                 return  cls._filter_query('email', email)
 
             @classmethod
-            def filter_by_id(cls, id_type, value):
-                return cls._filter_query(id_type, value)
+            def filter_by_key_and_value(cls, key, value):
+                return cls._filter_query(key, value)
 
             @classmethod
             def _filter_query(cls, query_name, query_value, collection='blogs'):

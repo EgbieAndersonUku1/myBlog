@@ -7,4 +7,4 @@ class BaseCKEditorForm(Form):
     """The base form that enables Ck editor to be generated"""
 
     title = StringField('Title', validators=[validators.DataRequired()])
-    body = CKEditorField('body', validators=[ validators.DataRequired()])
+    description = CKEditorField('body', validators=[validators.DataRequired()])

@@ -1,0 +1,23 @@
+<section id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item active main-color-bg">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
+                    </a>
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  My Blogs <span class="badge">12</span></a>
+                    <a href="{{ url_for('blogs_app.blog') }}" class="list-group-item"><span class="glyphicon glyphicon-bitcoin"aria-hidden="true"></span> Create new blog</a>
+                    <a href="{{ url_for('posts_app.new_post') }}" class="list-group-item"><span class="glyphicon glyphicon-book"aria-hidden="true"></span> Create new post</a>
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-book"aria-hidden="true"></span> View all posts</a>
+                </div>
+
+                <div class="well well-sm">
+                    <img class='img-thumbnail' src="//placehold.it/300x400" width="350" heigh="400" alt="pictur">
+                </div>
+            </div>
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+
+</section>
