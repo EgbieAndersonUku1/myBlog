@@ -14,6 +14,7 @@ def blog():
 
     blog = UserBlog()
     blogs = blog.get_all_blogs()
+
     return render_template('blogs/blogs.html', blogs=blogs)
 
 
@@ -57,6 +58,23 @@ def blog_edit(blog_id):
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
 
 
+
+@blogs_app.route('/blogs/<blog_id>')
+def my_blog(blog_id):
+    """"""
+    return redirect(url_for('blogs_app.blog_posts', blog_id=blog_id))
+
+
+@blogs_app.route('/blogs/<blog_id>/posts')
+def blog_posts(blog_id):
+    """"""
+    blog = UserBlog()
+    child_blog = blog.get_blog(blog_id)
+
+    posts = child_blog.get_all_posts()
+    return render_template('posts/posts.html', posts=posts, blog_id=blog_id)
+
+
 @blogs_app.route('/blogs/delete/<blog_id>', methods=['GET', 'POST'])
 def blog_delete(blog_id):
     """Takes a blog_id and deletes that blog"""
@@ -65,3 +83,5 @@ def blog_delete(blog_id):
     blog.delete_blog(blog_id)
     Message.display_to_gui_screen("The blog was deleted successfully")
     return redirect(url_for("blogs_app.blog"))
+
+

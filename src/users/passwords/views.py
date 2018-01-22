@@ -16,13 +16,12 @@ def forgotten_password():
     if form.validate_on_submit():
 
         user = User.get_by_email(form.email.data)
-        if user:
-            user.gen_forgotten_password_code()
-            user.update()
-            user.email_user_verification_code(code_type='forgotten_password_code')
 
-        Message.display_to_gui_screen('''A reset password code link has been sent to your email. Click on the link 
-                                        to reset your password'''
+        if user:
+           user.reset_forgotten_password()
+
+        Message.display_to_gui_screen("""A reset password code link has been sent to your email. 
+                                         Click on the link to reset your password"""
                                       )
     return render_template('password/forgotten_password.html', form=form)
 

@@ -43,8 +43,11 @@ class ParentBlog(object):
     def find_all_child_blogs(self):
         """Returns all child blog created by this parent blog"""
 
-        blogs = Record.Query.find_all(self._blog_id)
+        query = {"parent_blog_id": self._blog_id, "blog_live": True}
+        blogs = Record.Query.find_all(query)
+
         return [_ChildBlog(**blog) for blog in blogs] if blogs else None
+
 
     def delete_child_blog(self, child_blog_id):
         return Record.Delete.delete_blog(child_blog_id)
@@ -93,7 +96,11 @@ class _ChildBlog(object):
         """Takes an ID associated and returns the post object for that ID"""
         return self._post.get_post_by_id(post_id)
 
-    def new_post(self, post_form, author_id):
+    def get_all_posts(self):
+        """"""
+        return self._post.get_all_posts()
+
+    def new_post(self, post_form):
         """new_post(object, str) -> returns None
 
         Creates a new post
@@ -102,7 +109,7 @@ class _ChildBlog(object):
                 `post_form`: The post details which include the title, post content
                 `author_id`: The ID associated with the author.
         """
-        self._post.create_new_post(post_form, author_id)
+        self._post.create_new_post(post_form)
 
     def update_post(self, post_form):
         """ """

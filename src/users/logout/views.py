@@ -11,5 +11,4 @@ def logout():
 
     UserSession.remove_username()
     UserSession.remove_value_by_key('admin')
-    UserSession.remove_value_by_key('email')
     return redirect(url_for('login_app.login'))

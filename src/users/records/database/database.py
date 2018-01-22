@@ -58,11 +58,14 @@ class Database(object):
         return True if Database.DATABASE[db_name].insert(data) else False
 
     @staticmethod
-    def find_all(blog_id, db_name="blogs"):
+    def find_all(query, db_name="blogs"):
         """find_all(str) -> return(cursor)
-        Returns all users in the db_name.
+        Returns a query from the database.
+
+        :param
+            `query` : A dictionary object that will be used to search the database
         """
-        return Database.DATABASE[db_name].find({"parent_blog_id": blog_id, "blog_live": True})
+        return Database.DATABASE[db_name].find(query)
 
     @staticmethod
     def find_one(query, db_name="blogs"):
@@ -88,6 +91,10 @@ class Database(object):
            - data      : The information to delete from the database
         """
         Database.DATABASE[db_name].delete_one(data)
+
+    @classmethod
+    def cascade_delete(cls, db_name="blogs", data=None):
+        Database.DATABASE[db_name].delete_many(data)
 
     @staticmethod
     def update(field_name, field_value, data, db_name="blogs"):

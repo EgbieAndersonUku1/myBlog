@@ -1,7 +1,73 @@
-{% extends "base.html" %}
+{% extends "base/index.html" %}
 
 {% block content %}
 
-			ALL POSTS WILL BE HERE
+<!-- ToDo
+    Add Bootsrap styling to the page to make it more pleasing to the eye.
+-->
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            {% if posts %}
+
+            {% include "__flash_messages.html" %}
+            <h3><u>List of blogs</u></h3>
+
+
+            <table class="table table-striped">
+
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Post Name</th>
+                    <th>Description</th>
+                    <th>Edit/Delete</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for post in posts %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.post | safe }}</td>
+                    <td>
+
+                        <button><a href="#">Edit<a/>
+                        </button>
+
+                        |
+
+                        <button><a href="#">Delete<a/>
+                        </button>
+
+
+                </tr>
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+            <div class="jumbotron">
+                You have no posts
+            </div>
+            {% endif %}
+
+            <a href="{{ url_for('posts_app.new_post', blog_id=blog_id) }}">
+                <button type="button" class="btn btn-primary">Create New post</button>
+            </a>
+            <br>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}

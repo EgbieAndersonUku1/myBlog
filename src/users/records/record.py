@@ -20,11 +20,7 @@ class Record(object):
         def delete_blog(blog_id):
             """"""
             data = {"child_blog_id": blog_id}
-            return Database.delete_one(data=data)
-
-        @staticmethod
-        def delete_account(user_id):
-            pass
+            return Database.cascade_delete(data=data)
 
     class Query(object):
 

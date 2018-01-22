@@ -16,9 +16,7 @@ def register_user():
         user = User.extract_web_form(form)
 
         if not user.get_by_email(form.email.data):
-            user.gen_user_verification_code()
-            user.email_user_verification_code()
-            user.save()
+            user.register()
             return redirect(url_for('registration_app.confirm_email'))
 
         error = 'The email address used is already in use'
@@ -30,16 +28,8 @@ def register_user():
 def confirm_registration(username, code):
     """"""
 
-    user = User.get_by_username(username)
-
-    if user and user.configuration_codes.get('verification_code') == code:
-
-        user.parent_blog_created = True
-        user.configuration_codes.pop('verification_code')
-        user.account_confirmed = True
-        user.update()
+    if User.confirm_registration(username, code):
         return redirect(url_for('registration_app.confirmed_email', code=code))
-
     return abort(404)
 
 
