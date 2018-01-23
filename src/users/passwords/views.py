@@ -21,8 +21,8 @@ def forgotten_password():
            user.reset_forgotten_password()
 
         Message.display_to_gui_screen("""A reset password code link has been sent to your email. 
-                                         Click on the link to reset your password"""
-                                      )
+                                         Click on the link to reset your password
+                                      """)
     return render_template('password/forgotten_password.html', form=form)
 
 
