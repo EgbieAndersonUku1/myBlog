@@ -2,6 +2,7 @@ from users.utils.generator.id_generator import gen_id
 from users.posts.models import Post
 from users.drafts.model import Draft
 from users.records.record import Record
+from users.utils.generator.date_generator import time_now
 
 
 class ParentBlog(object):
@@ -26,13 +27,15 @@ class ParentBlog(object):
             Returns a blog object
         """
         child_blog_id = gen_id()
-        blog_data = self._to_json(blog_form, child_blog_id)
+        date_created = time_now()
+        blog_data = self._to_json(blog_form, child_blog_id, date_created)
 
         if not Record.save(blog_data):
            raise Exception('Error, The blog data was not saved on the database.')
+
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
                           blog_form.title, blog_form.description, _id=None,
-                          blog_live=True)
+                          blog_live=True, date_created=date_created)
 
     def find_child_blog(self, child_blog_id):
         """Takes a child blog id and if found returns that blog as an object"""
@@ -57,7 +60,7 @@ class ParentBlog(object):
         """"""
         Record.Update.update(field_name='child_blog_id', field_id=blog_id, data=data)
 
-    def _to_json(self, blog_form, child_blog_id):
+    def _to_json(self, blog_form, child_blog_id, date_created):
         """"""
         return {
             "user_id": self._user_id,
@@ -66,7 +69,8 @@ class ParentBlog(object):
             "child_blog_id": child_blog_id,
             "title": blog_form.title.data,
             "description": blog_form.description.data,
-            "blog_live": True
+            "blog_live": True,
+            "date_created": date_created
         }
 
 
@@ -74,12 +78,13 @@ class _ChildBlog(object):
     """The Child blog is a child of the Parent blog and should not be called directly"""
 
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
-                  title, description, _id, blog_live):
+                  title, description, _id, blog_live, date_created):
 
         self.child_blog_id = child_blog_id
         self.post_id = post_id
         self.title = title
         self.description = description
+        self.date_created = date_created
         self._id = _id
         self._user_id = user_id
         self._blog_live = blog_live

@@ -23,6 +23,7 @@
                     <th>Post Name</th>
                     <th>Description</th>
                     <th>Author</th>
+                    <th>Published date</th>
                     <th>Edit/Delete</th>
                 </tr>
                 </thead>
@@ -35,6 +36,7 @@
                     <td>{{ post.title | truncate(20) }}</td>
                     <td>{{ post.post |truncate(30) | safe }}</td>
                     <td>{{ post.author.title() | truncate(10) }}</td>
+                    <td>{{ post.publish_date.strftime('%c') }}</td>
                     <td>
 
                         <a href="#">

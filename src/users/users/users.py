@@ -17,8 +17,8 @@ class User(object):
         self._id = gen_id() if _id is None else _id
         self.parent_blog_id = gen_id() if parent_blog_id is None else parent_blog_id
         self.post_id = gen_id() if post_id is None else post_id
-        self.username = username
-        self.email = email
+        self.username = username.lower()
+        self.email = email.lower()
         self.password = password
         self.account_confirmed = account_confirmed
         self.configuration_codes = configuration_codes
@@ -63,9 +63,9 @@ class User(object):
             "_id": self._id,
             "parent_blog_id": self.parent_blog_id,
             "post_id": self.post_id,
-            "username": self.username.lower(),
+            "username": self.username,
             "password": self.password,
-            "email": self.email.lower(),
+            "email": self.email,
             "configuration_codes": self.configuration_codes,
             "account_confirmed": self.account_confirmed
         }
