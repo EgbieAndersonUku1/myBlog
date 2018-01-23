@@ -40,16 +40,14 @@ class ParentBlog(object):
         data = Record.Query.Filter.filter_by_key_and_value("child_blog_id", child_blog_id)
         return _ChildBlog(**data) if data else None
 
-
     def find_all_child_blogs(self):
         """Returns all child blog created by this parent blog"""
 
-        query = {"parent_blog_id": self._blog_id, "blog_live": True}
-        blogs = Record.Query.find_all(query)
-
+        blogs = Record.Query.find_all(query={"parent_blog_id": self._blog_id, "blog_live": True})
         return [_ChildBlog(**blog) for blog in blogs] if blogs else None
 
     def delete_child_blog(self, child_blog_id):
+        """"""
         return Record.Delete.delete_blog(child_blog_id)
 
     def delete_all_child_blogs(self):

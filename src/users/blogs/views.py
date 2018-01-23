@@ -14,7 +14,6 @@ def blog():
 
     blog = UserBlog()
     blogs = blog.get_all_blogs()
-
     return render_template('blogs/blogs.html', blogs=blogs)
 
 
@@ -48,11 +47,7 @@ def blog_edit(blog_id):
 
     if form.validate_on_submit():
 
-        blog_form = {
-            "title": form.title.data,
-            "description": form.description.data
-        }
-        blog.update_blog(blog_id, blog_form)
+        blog.update_blog(blog_id, data={ "title": form.title.data, "description": form.description.data})
         Message.display_to_gui_screen("You have successfully updated your blog")
 
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
@@ -82,5 +77,3 @@ def blog_delete(blog_id):
     blog.delete_blog(blog_id)
     Message.display_to_gui_screen("The blog was deleted successfully")
     return redirect(url_for("blogs_app.blog"))
-
-

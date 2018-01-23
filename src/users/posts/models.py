@@ -38,6 +38,7 @@ class Post(object):
     def get_all_posts(self):
         """"""
         query = {"parent_blog_id": self._blog_id,
+                 "child_blog_id": self.child_blog_id,
                  "parent_post_id": self.post_id, "post_live": True}
 
         posts = Record.Query.find_all(query)

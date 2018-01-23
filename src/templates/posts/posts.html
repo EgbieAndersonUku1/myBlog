@@ -34,8 +34,8 @@
                 {% for post in posts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td>{{ post.title| truncate(20) }}</td>
-                    <td>{{ post.post|truncate(30) | safe }}</td>
+                    <td>{{ post.title | truncate(20) }}</td>
+                    <td>{{ post.post |truncate(30) | safe }}</td>
                     <td>{{ post.author.title() | truncate(10) }}</td>
                     <td>
 
@@ -62,7 +62,10 @@
             {% endif %}
 
             <a href="{{ url_for('posts_app.new_post', blog_id=blog_id) }}">
-                <button type="button" class="btn btn-primary">Create New post</button>
+                <button type="button">Create New post</button>
+            </a>
+            <a href="{{ url_for('blogs_app.blog', blog_id=blog_id) }}">
+                <button type="button">Back to my Blog</button>
             </a>
             <br>
 

@@ -28,8 +28,8 @@ class Record(object):
     class Query(object):
 
         @staticmethod
-        def find_all(blog_id):
-            return Database.find_all(blog_id)
+        def find_all(query):
+            return Database.find_all(query)
 
         class Filter(object):
 
