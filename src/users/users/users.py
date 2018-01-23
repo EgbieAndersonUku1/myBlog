@@ -72,6 +72,8 @@ class User(object):
 
     @classmethod
     def confirm_registration(cls, username, registration_code):
+        """"""
+
         user = cls.get_by_username(username)
 
         if user and user.configuration_codes.get('verification_code') == registration_code:
