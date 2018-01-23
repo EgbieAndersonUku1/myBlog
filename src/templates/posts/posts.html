@@ -24,6 +24,7 @@
                     <th>#</th>
                     <th>Post Name</th>
                     <th>Description</th>
+                    <th>Author</th>
                     <th>Edit/Delete</th>
                 </tr>
                 </thead>
@@ -34,7 +35,8 @@
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
                     <td>{{ post.title| truncate(20) }}</td>
-                    <td>{{ post.post|truncate(80) | safe }}</td>
+                    <td>{{ post.post|truncate(30) | safe }}</td>
+                    <td>{{ post.author.title() | truncate(10) }}</td>
                     <td>
 
                         <a href="#"><button>Edit</button><a/>
