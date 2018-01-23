@@ -14,25 +14,22 @@ class RegistrationForm(Form):
     username = StringField('Username', validators=[validators.DataRequired(), validators.Length(min=3, max=80)])
     email = EmailField('Email', validators=[validators.DataRequired()])
     password = PasswordField('Password', validators=[validators.DataRequired(),
-                                                     validators.EqualTo('confirm',
-                                                                        message='The password entered does not match'),
+                                                     validators.EqualTo('confirm',message='The password entered does not match'),
                                                      validators.Length(min=3, max=80)])
 
     confirm = PasswordField('Repeat password')
+
+    def validate_email(form, field):
+        """"""
+        if User.get_by_email(form.email.data):
+            raise ValidationError('The email is already in use')
+
 
     def validate_username(form, field):
 
         username = form.username.data
 
-        RegistrationForm._check_name_value(username)
+        if not _match.search(username):
+            raise ValidationError("Invalid username format!")
         if User.get_by_username(username):
             raise ValidationError('The username is already in use')
-
-    @staticmethod
-    def _check_name_value(name):
-        """"""
-        found = _match.search(name)
-        if not found:
-            raise ValidationError("The name can contain an uppercase, a lowercase, digits(0-9) or an underscore"
-                                  " but must not contain any special characters!")
-

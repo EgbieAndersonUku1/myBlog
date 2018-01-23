@@ -13,13 +13,10 @@ def register_user():
     form, error = RegistrationForm(), False
 
     if form.validate_on_submit():
+
         user = User.extract_web_form(form)
-
-        if not user.get_by_email(form.email.data):
-            user.register()
-            return redirect(url_for('registration_app.confirm_email'))
-
-        error = 'The email address used is already in use'
+        user.register()
+        return redirect(url_for('registration_app.confirm_email'))
 
     return render_template('registrations/register.html', form=form, error=error)
 
@@ -30,7 +27,7 @@ def confirm_registration(username, code):
 
     if User.confirm_registration(username, code):
         return redirect(url_for('registration_app.confirmed_email', code=code))
-    return abort(404)
+    abort(404)
 
 
 @registration_app.route('/Confirmed/email/code_<code>_success')
