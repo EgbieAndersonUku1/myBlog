@@ -1,4 +1,3 @@
-from users.authors.model import Author
 from users.utils.generator.id_generator import gen_id
 from users.utils.generator.date_generator import time_now
 from users.records.record import Record
@@ -7,7 +6,8 @@ from users.utils.session.user_session import UserSession
 
 class Post(object):
     """The post allows the blog to create, save and delete a post. The
-        class should not be accessed directly.
+        class should not be accessed directly and should only be accessed
+        from the User blog class
      """
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id):
         self._user_id = user_id
@@ -16,27 +16,14 @@ class Post(object):
         self.post_id = post_id
 
     def get_post_by_id(self, post_id):
-        """get_post_by_id(str, str) -> returns post obj
+        """Test a post ID and returns that particular post."""
 
-        Returns a post from .
-
-        :param
-                blog_id: The blog ID that housed the post that is been queried.
-                post_id: The post ID to query from the blog.
-
-        :returns
-            returns a post object.
-
-        >>> post = Post.get_post_by_id(blog_id, post_id)
-        >>> post
-        >>> post_object([.....])
-        """
-        # Add a function that calls the records to find the posts
         data = Record.Query.Filter.filter_by_key_and_value("child_post_id", post_id)
         return _ChildPost(**data) if data else None
 
     def get_all_posts(self):
-        """"""
+        """Returns all posts belonging to a particular blog"""
+
         query = {"parent_blog_id": self._blog_id,
                  "child_blog_id" : self.child_blog_id,
                  "parent_post_id": self.post_id, "post_live": True}
@@ -44,9 +31,12 @@ class Post(object):
         posts = Record.Query.find_all(query)
         return [_ChildPost(**post) for post in posts] if posts else None
 
-
     def create_new_post(self, post_form):
-        """ """
+        """create_new_post(form_post_obj) -> returns Post Object
+
+        Takes a post form object containing the user post details
+        and then creates a new post. Returns a post objects.
+        """
 
         child_post_id = gen_id()
         child_post = self._to_json(post_form, child_post_id)
@@ -62,14 +52,14 @@ class Post(object):
                         )
 
     def _to_json(self, post_form, child_post_id):
-        """_to_json(str, str, str) -> return dict
+        """_to_json(post_obj, str) -> return a dictionary object
 
         Returns the data for post model object as json object
 
         :param
-                `title`: The title for the post
-                `description`: The description for the post here
-                `author_id`: The author id
+            `post_form`: A form object containing the user posts
+                        .e.g title, description.
+            `child_post_id`: The post id for the post.
 
         :returns
                 Returns a json object

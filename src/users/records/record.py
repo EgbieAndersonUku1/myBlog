@@ -39,7 +39,7 @@ class Record(object):
 
             @classmethod
             def filter_user_by_email(cls, email):
-                return  cls._filter_query('email', email)
+                return cls._filter_query('email', email)
 
             @classmethod
             def filter_by_key_and_value(cls, key, value):
@@ -55,8 +55,4 @@ class Record(object):
                 # First, the cache will be searched
                 # If the data is found in the cache then return it from the cache.
                 # If the data is not found then query the database, cache the results and then return the results
-
-
-
-
 

@@ -56,7 +56,7 @@ def my_blog(blog_id):
     return redirect(url_for('blogs_app.blog_posts', blog_id=blog_id))
 
 
-@blogs_app.route('/blogs/<blog_id>/posts')
+@blogs_app.route('/blogs/blog/id/<blog_id>/posts')
 def blog_posts(blog_id):
     """Takes an id belonging to a blog and returns all post that associated with that blog"""
     return redirect(url_for("posts_app.posts", blog_id=blog_id))

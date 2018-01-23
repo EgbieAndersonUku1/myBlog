@@ -56,4 +56,3 @@ def delete(blog_id, post_id):
 
     Message.display_to_gui_screen("The post has successfully been deleted")
     return redirect(url_for("posts_app.posts", blog_id=blog_id))
-
