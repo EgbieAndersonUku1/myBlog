@@ -11,6 +11,7 @@ posts_app = Blueprint('posts_app', __name__)
 @posts_app.route('/post/new/<blog_id>', methods=['GET', 'POST'])
 @login_required
 def new_post(blog_id):
+    """Takes a blog id and creates a new post within that blog"""
 
     form = PostForm()
 
@@ -28,6 +29,7 @@ def new_post(blog_id):
 @posts_app.route('/posts/<blog_id>')
 @login_required
 def posts(blog_id):
+    """Takes a blog id and returns all posts associated with that blog"""
 
     blog = UserBlog()
     child_blog = blog.get_blog(blog_id)
@@ -37,6 +39,7 @@ def posts(blog_id):
 @posts_app.route('/posts/edit/<blog_id>/<post_id>')
 @login_required
 def edit(blog_id, post_id):
+    """"""
 
     blog = UserBlog()
     child_blog = blog.get_blog(blog_id)

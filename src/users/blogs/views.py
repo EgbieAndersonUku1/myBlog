@@ -12,7 +12,6 @@ blogs_app = Blueprint('blogs_app', __name__)
 @login_required
 def blog():
     """"""
-
     blog = UserBlog()
     return render_template('blogs/blogs.html', blogs=blog.get_all_blogs())
 

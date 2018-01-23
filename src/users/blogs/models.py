@@ -71,7 +71,7 @@ class ParentBlog(object):
 
 
 class _ChildBlog(object):
-    """The Child blog is a child of the Parent blog"""
+    """The Child blog is a child of the Parent blog and should not be called directly"""
 
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
                   title, description, _id, blog_live):
@@ -107,7 +107,7 @@ class _ChildBlog(object):
         Creates a new post
 
         :param
-                `post_form`: The post details which include the title, post content
+            `post_form`: The post details which include the title, post content
         """
         self._post.create_new_post(post_form)
 
