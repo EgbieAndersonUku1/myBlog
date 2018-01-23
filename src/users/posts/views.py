@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect
+from flask import Blueprint, render_template, request, url_for, redirect, abort
 
 from users.posts.form import PostForm
 from users.decorators import login_required
@@ -33,6 +33,9 @@ def posts(blog_id):
 
     blog = UserBlog()
     child_blog = blog.get_blog(blog_id)
+
+    if not child_blog:
+       abort(404)
     return render_template("posts/posts.html", posts=child_blog.get_all_posts(), blog_id=blog_id)
 
 
