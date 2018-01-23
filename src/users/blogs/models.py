@@ -11,9 +11,10 @@ class ParentBlog(object):
     from the user class and not directly.
     """
 
-    def __init__(self, user_id, blog_id):
+    def __init__(self, user_id, blog_id, post_id):
         self._blog_id = blog_id
         self._user_id = user_id
+        self._post_id = post_id
 
     def create_blog(self, blog_form):
         """create_blog(blog form object) -> returns child blog object
@@ -29,7 +30,7 @@ class ParentBlog(object):
 
         if not Record.save(blog_data):
            raise Exception('Error, The blog data was not saved on the database.')
-        return _ChildBlog(self._user_id, self._blog_id, child_blog_id,
+        return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
                           blog_form.title, blog_form.description, _id=None,
                           blog_live=True)
 
@@ -64,6 +65,7 @@ class ParentBlog(object):
         return {
             "user_id": self._user_id,
             "parent_blog_id": self._blog_id,
+            "post_id": self._post_id,
             "child_blog_id": child_blog_id,
             "title": blog_form.title.data,
             "description": blog_form.description.data,
@@ -74,15 +76,16 @@ class ParentBlog(object):
 class _ChildBlog(object):
     """The Child blog is a child of the Parent blog"""
 
-    def __init__(self, user_id, parent_blog_id, child_blog_id,
+    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
                   title, description, _id, blog_live):
         self._id = _id
         self.child_blog_id = child_blog_id
+        self.post_id = post_id
         self.title = title
         self.description = description
         self._user_id = user_id
         self._blog_live = blog_live
-        self._post = Post(user_id, parent_blog_id, child_blog_id)
+        self._post = Post(user_id, parent_blog_id, child_blog_id, post_id)
 
     @property
     def blog_name(self):
@@ -117,4 +120,6 @@ class _ChildBlog(object):
 
     def delete_post(self, post_id):
         """Deletes a post from the blog"""
-        self._post.delete_post(post_id)
+
+        post = self._post.get_post_by_id(post_id)
+        post.delete_post(post_id)

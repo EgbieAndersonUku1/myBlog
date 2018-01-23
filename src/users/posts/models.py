@@ -9,11 +9,11 @@ class Post(object):
     """The post allows the blog to create, save and delete a post. The
         class should not be accessed directly.
      """
-    def __init__(self, user_id, parent_blog_id, child_blog_id):
+    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id):
         self._user_id = user_id
         self._blog_id = parent_blog_id
         self.child_blog_id = child_blog_id
-        self.post_id = gen_id()
+        self.post_id = post_id
 
     def get_post_by_id(self, post_id):
         """get_post_by_id(str, str) -> returns post obj
@@ -38,8 +38,7 @@ class Post(object):
     def get_all_posts(self):
         """"""
         query = {"parent_blog_id": self._blog_id,
-                 "child_blog_id": self.child_blog_id,
-                 "post_id": self.post_id, "post_live": True}
+                 "parent_post_id": self.post_id, "post_live": True}
 
         posts = Record.Query.find_all(query)
         return [_ChildPost(**post) for post in posts] if posts else None
@@ -54,11 +53,12 @@ class Post(object):
 
         Record.save(child_post)
 
-        return _ChildPost(
-            self.post_id, child_post_id,
-            post_form.title, post_form.description,
-            publish_date
-        )
+        return _ChildPost(self._blog_id, self.post_id,
+                          self.child_blog_id,
+                          self.post_id, child_post_id,
+                          post_form.title, post_form.description,
+                          publish_date
+                        )
 
     def _to_json(self, post_form, child_post_id):
         """_to_json(str, str, str) -> return dict
@@ -76,22 +76,27 @@ class Post(object):
         return {
             "parent_blog_id": self._blog_id,
             "child_blog_id": self.child_blog_id,
-            "post_id": self.post_id,
+            "parent_post_id": self.post_id,
             "child_post_id": child_post_id,
             "title": post_form.title.data,
-            "description": post_form.description.data,
+            "post": post_form.description.data,
             "post_live": True,
-            "created" : time_now()
+            "publish_date" : time_now(),
         }
 
 
 class _ChildPost(object):
 
-    def __init__(self, parent_post_id, child_post_id, title, post, publish_date):
-        self.parent_post_id = parent_post_id
+    def __init__(self, parent_blog_id, parent_post_id, child_blog_id,
+                 child_post_id, title, post, publish_date, post_live, _id=None):
+        self._id = _id if _id else gen_id()
+        self._parent_blog_id = parent_blog_id
+        self._parent_post_id = parent_post_id
         self.child_post_id = child_post_id
+        self.child_blog_id = child_blog_id
         self.title = title
         self.post = post
+        self.post_live = post_live
         self.publish_date = publish_date
         self.author = UserSession.get_username()
 
@@ -104,9 +109,5 @@ class _ChildPost(object):
 
     def delete_post(self, post_id):
         """"""
-        pass
+        Record.Delete.delete_post(self.child_blog_id, self.child_post_id)
 
-    def _save_to_blog(self, data):
-
-        # Save to the records will add it here
-        pass

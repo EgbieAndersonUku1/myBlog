@@ -4,9 +4,14 @@
     <ul classes="flashes">
         <div class="alert alert-success">
             <br>
-            {% for message in messages %}
-            <strong>{{ message }}</strong>
-            {% endfor %}
+
+            <ul>
+                 {% for message in messages %}
+                    <strong><li>{{ message }}</li></strong>
+                 {% endfor %}
+            </ul>
+
+
         </div>
     </ul>
 </div>

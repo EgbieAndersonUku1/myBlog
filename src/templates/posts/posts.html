@@ -11,11 +11,10 @@
     <div class="row">
 
         <div class="col-md-12">
-
+            {% include "__flash_messages.html" %}
             {% if posts %}
 
-            {% include "__flash_messages.html" %}
-            <h3><u>List of blogs</u></h3>
+            <h3><u>List of posts</u></h3>
 
 
             <table class="table table-striped">
@@ -34,17 +33,16 @@
                 {% for post in posts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td>{{ post.title }}</td>
-                    <td>{{ post.post | safe }}</td>
+                    <td>{{ post.title| truncate(20) }}</td>
+                    <td>{{ post.post|truncate(80) | safe }}</td>
                     <td>
 
-                        <button><a href="#">Edit<a/>
-                        </button>
+                        <a href="#"><button>Edit</button><a/>
 
                         |
 
-                        <button><a href="#">Delete<a/>
-                        </button>
+                        <a href="{{ url_for('posts_app.delete', blog_id=post.child_blog_id, post_id=post.child_post_id) }}"><button>Delete</button><a/>
+
 
 
                 </tr>

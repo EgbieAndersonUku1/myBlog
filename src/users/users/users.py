@@ -13,10 +13,11 @@ from users.users.helper import save_to_db, update_db, to_class
 class User(object):
     """ """
     def __init__(self, username, email, password, configuration_codes={}, account_confirmed=False,
-                 _id=None, parent_blog_id=None):
+                 _id=None, parent_blog_id=None, post_id=None):
 
         self._id = gen_id() if _id is None else _id
         self.parent_blog_id = gen_id() if parent_blog_id is None else parent_blog_id
+        self.post_id = gen_id() if post_id is None else post_id
         self.username = username
         self.email = email
         self.password = password
@@ -62,6 +63,7 @@ class User(object):
         return {
             "_id": self._id,
             "parent_blog_id": self.parent_blog_id,
+            "post_id": self.post_id,
             "username": self.username.lower(),
             "password": self.password,
             "email": self.email.lower(),
@@ -115,10 +117,8 @@ class User(object):
             "forgotten_password_code":  email_user_forgotten_password_verification_code,
         }.get(type_of_email)
 
-
     def __repr__(self):
         return "Username: <'{}'>".format(self.username)
-
 
 
 class UserBlog(object):
@@ -128,7 +128,7 @@ class UserBlog(object):
      """
     def __init__(self):
         user = self._retreive_user_info()
-        self._parent_blog = ParentBlog(user._id, user.parent_blog_id)
+        self._parent_blog = ParentBlog(user._id, user.parent_blog_id, user.post_id)
 
     def create_blog(self, blog_form):
         """create_blog(obj) -> return blog object

@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, url_for, redirect
 from users.posts.form import PostForm
 from users.decorators import login_required
 from users.users.users import UserBlog
+from users.utils.generator.msg import Message
 
 posts_app = Blueprint('posts_app', __name__)
 
@@ -18,6 +19,9 @@ def new_post(blog_id):
         child_blog = blog.get_blog(blog_id)
         child_blog.new_post(form)
 
+        Message.display_to_gui_screen("The post was created successfully")
+        return redirect(url_for('posts_app.posts', blog_id=blog_id))
+
     return render_template('posts/new_post.html', form=form, blog_id=blog_id)
 
 
@@ -28,7 +32,29 @@ def posts(blog_id):
     blog = UserBlog()
     child_blog = blog.get_blog(blog_id)
     posts = child_blog.get_all_posts()
+    return render_template("posts/posts.html", posts=posts, blog_id=blog_id)
 
-    print(posts)
 
-    return render_template("posts/posts.html", posts=posts)
+@posts_app.route('/posts/edit/<blog_id>/<post_id>')
+@login_required
+def edit(blog_id, post_id):
+
+    blog = UserBlog()
+    child_blog = blog.get_blog(blog_id)
+
+    #ToDo
+    # Add the method to edit post here
+    return redirect(url_for("posts_app.posts", blog_id=blog_id))
+
+
+@posts_app.route('/posts/<blog_id>/<post_id>')
+@login_required
+def delete(blog_id, post_id):
+
+    blog = UserBlog()
+    child_blog = blog.get_blog(blog_id)
+    child_blog.delete_post(post_id)
+
+    Message.display_to_gui_screen("The post has successfully been deleted")
+    return redirect(url_for("posts_app.posts", blog_id=blog_id))
+

@@ -61,7 +61,19 @@ Technologies that will be used:
  Should an error occur stop step 8 and by hit CTRl-D and then do step 8 again.
  To access any page just add a slash behind the URL followed by the page name
  
+ Should an error occurs stating that there is a missing value delete the mongod database from the shell and then run step 7 again
  
+ To Delete the mongod database using Linux do the following steps.
+ 
+ Open a terminal
+ 1) Type in 'mongo' in the shell
+ 2) Type the commmand 'use blogs'
+ 3) Type the command drop 'db.blogs.drop()'
+ A message should occur stating true.
+
+The database will now be empty
+
+
  Things needed to run the blog
  ----------------------------------------------------------------------
  

@@ -19,8 +19,11 @@ class Record(object):
         @staticmethod
         def delete_blog(blog_id):
             """"""
-            data = {"child_blog_id": blog_id}
-            return Database.cascade_delete(data=data)
+            return Database.cascade_delete(data={"child_blog_id": blog_id})
+
+        @staticmethod
+        def delete_post(blog_id, post_id):
+            Database.delete_one(data={"child_blog_id": blog_id, "child_post_id": post_id})
 
     class Query(object):
 
