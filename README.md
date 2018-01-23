@@ -61,7 +61,7 @@ Technologies that will be used:
  Should an error occur stop step 8 and by hit CTRl-D and then do step 8 again.
  To access any page just add a slash behind the URL followed by the page name
  
- Should an error occurs stating that there is a missing value delete the mongod database from the shell and then run step 7 again
+ Should an error occurs stating that there is a missing value delete the mongod database from the shell and then run step 8 again
  
  To Delete the mongod database using Linux do the following steps.
  
