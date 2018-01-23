@@ -35,7 +35,7 @@
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
                     <td><a href="{{ url_for('blogs_app.my_blog', blog_id=blog.child_blog_id) }}">{{ blog.title | truncate(20) }}</a></td>
-                    <td>{{ blog.description  | truncate(60) | safe }}</td>
+                    <td>{{ blog.description  | truncate(60) | safe }} </td>
                     <td>
 
                         <a href="{{ url_for('blogs_app.blog_edit', blog_id=blog.child_blog_id) }}"><button>Edit</button></a>
