@@ -13,8 +13,7 @@ blogs_app = Blueprint('blogs_app', __name__)
 def blog():
 
     blog = UserBlog()
-    blogs = blog.get_all_blogs()
-    return render_template('blogs/blogs.html', blogs=blogs)
+    return render_template('blogs/blogs.html', blogs=blog.get_all_blogs())
 
 
 @blogs_app.route('/blogs/create', methods=['GET', 'POST'])
@@ -38,8 +37,6 @@ def blog_edit(blog_id):
     blog = UserBlog()
     child_blog = blog.get_blog(blog_id)
 
-    form = BlogForm()
-
     if not child_blog:
         abort(404)
 
@@ -47,7 +44,7 @@ def blog_edit(blog_id):
 
     if form.validate_on_submit():
 
-        blog.update_blog(blog_id, data={ "title": form.title.data, "description": form.description.data})
+        blog.update_blog(blog_id, data={"title": form.title.data, "description": form.description.data})
         Message.display_to_gui_screen("You have successfully updated your blog")
 
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
@@ -55,18 +52,14 @@ def blog_edit(blog_id):
 
 @blogs_app.route('/blogs/<blog_id>')
 def my_blog(blog_id):
-    """"""
+    """Takes a blog id and returns that blog"""
     return redirect(url_for('blogs_app.blog_posts', blog_id=blog_id))
 
 
 @blogs_app.route('/blogs/<blog_id>/posts')
 def blog_posts(blog_id):
-    """"""
-    blog = UserBlog()
-    child_blog = blog.get_blog(blog_id)
-
-    posts = child_blog.get_all_posts()
-    return render_template('posts/posts.html', posts=posts, blog_id=blog_id)
+    """Takes an id belonging to a blog and returns all post that associated with that blog"""
+    return redirect(url_for("posts_app.posts", blog_id=blog_id))
 
 
 @blogs_app.route('/blogs/delete/<blog_id>', methods=['GET', 'POST'])

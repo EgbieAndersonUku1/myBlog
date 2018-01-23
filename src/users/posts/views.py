@@ -31,8 +31,7 @@ def posts(blog_id):
 
     blog = UserBlog()
     child_blog = blog.get_blog(blog_id)
-    posts = child_blog.get_all_posts()
-    return render_template("posts/posts.html", posts=posts, blog_id=blog_id)
+    return render_template("posts/posts.html", posts=child_blog.get_all_posts(), blog_id=blog_id)
 
 
 @posts_app.route('/posts/edit/<blog_id>/<post_id>')
