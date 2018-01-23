@@ -89,9 +89,7 @@ class _ChildPost(object):
 
     def __init__(self, parent_blog_id, parent_post_id, child_blog_id,
                  child_post_id, title, post, publish_date, post_live, _id=None):
-        self._id = _id if _id else gen_id()
-        self._parent_blog_id = parent_blog_id
-        self._parent_post_id = parent_post_id
+
         self.child_post_id = child_post_id
         self.child_blog_id = child_blog_id
         self.title = title
@@ -99,6 +97,9 @@ class _ChildPost(object):
         self.post_live = post_live
         self.publish_date = publish_date
         self.author = UserSession.get_username()
+        self._id = _id if _id else gen_id()
+        self._parent_blog_id = parent_blog_id
+        self._parent_post_id = parent_post_id
 
     def update_post(self, post_form, post_id):
         """"""

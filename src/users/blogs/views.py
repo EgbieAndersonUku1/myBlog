@@ -58,7 +58,6 @@ def blog_edit(blog_id):
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
 
 
-
 @blogs_app.route('/blogs/<blog_id>')
 def my_blog(blog_id):
     """"""

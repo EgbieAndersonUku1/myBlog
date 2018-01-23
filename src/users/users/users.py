@@ -9,7 +9,6 @@ from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.helper import save_to_db, update_db, to_class
 
 
-
 class User(object):
     """ """
     def __init__(self, username, email, password, configuration_codes={}, account_confirmed=False,

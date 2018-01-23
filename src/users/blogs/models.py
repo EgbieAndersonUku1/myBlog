@@ -49,7 +49,6 @@ class ParentBlog(object):
 
         return [_ChildBlog(**blog) for blog in blogs] if blogs else None
 
-
     def delete_child_blog(self, child_blog_id):
         return Record.Delete.delete_blog(child_blog_id)
 
@@ -78,11 +77,12 @@ class _ChildBlog(object):
 
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
                   title, description, _id, blog_live):
-        self._id = _id
+
         self.child_blog_id = child_blog_id
         self.post_id = post_id
         self.title = title
         self.description = description
+        self._id = _id
         self._user_id = user_id
         self._blog_live = blog_live
         self._post = Post(user_id, parent_blog_id, child_blog_id, post_id)
@@ -110,7 +110,6 @@ class _ChildBlog(object):
 
         :param
                 `post_form`: The post details which include the title, post content
-                `author_id`: The ID associated with the author.
         """
         self._post.create_new_post(post_form)
 
@@ -121,5 +120,5 @@ class _ChildBlog(object):
     def delete_post(self, post_id):
         """Deletes a post from the blog"""
 
-        post = self._post.get_post_by_id(post_id)
-        post.delete_post(post_id)
+        child_post = self._post.get_post_by_id(post_id)
+        child_post.delete_post(post_id)
