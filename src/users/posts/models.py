@@ -15,11 +15,12 @@ class Post(object):
         self.child_blog_id = child_blog_id
         self.post_id = post_id
 
-    def get_post_by_id(self, post_id):
+    @staticmethod
+    def get_post_by_id(post_id):
         """Test a post ID and returns that particular post."""
 
-        data = Record.Query.Filter.filter_by_key_and_value("child_post_id", post_id)
-        return _ChildPost(**data) if data else None
+        post_data = Record.Query.Filter.filter_by_key_and_value("child_post_id", post_id)
+        return _ChildPost(**post_data) if post_data else None
 
     def get_all_posts(self):
         """Returns all posts belonging to a particular blog"""

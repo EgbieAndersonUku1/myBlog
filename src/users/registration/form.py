@@ -24,8 +24,8 @@ class RegistrationForm(Form):
         if User.get_by_email(form.email.data):
             raise ValidationError('The email is already in use')
 
-
     def validate_username(form, field):
+        """"""
 
         username = form.username.data
 

@@ -11,6 +11,7 @@ blogs_app = Blueprint('blogs_app', __name__)
 @blogs_app.route('/blogs', methods=['GET', 'POST'])
 @login_required
 def blog():
+    """"""
 
     blog = UserBlog()
     return render_template('blogs/blogs.html', blogs=blog.get_all_blogs())
@@ -23,10 +24,12 @@ def blog_create():
     form = BlogForm()
 
     if form.validate_on_submit():
+
         blog = UserBlog()
         blog.create_blog(form)
         Message.display_to_gui_screen("A new blog was successfully created")
         return redirect(url_for("blogs_app.blog"))
+
     return render_template('blogs/blogs_creation_page.html', form=form)
 
 
