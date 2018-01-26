@@ -1,0 +1,67 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+
+<!-- ToDo
+    Add Bootsrap styling to the page to make it more pleasing to the eye.
+-->
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+
+            {% if drafts %}
+
+            {% include "__flash_messages.html" %}
+            <h3><u>List of drafts</u></h3>
+
+
+            <table class="table table-striped">
+
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Draft</th>
+                    <th>Description</th>
+                    <th>Creation date</th>
+                    <th>View</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for draft in drafts %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td><a href="{{ url_for('blogs_app.my_blog', blog_id=blog.child_blog_id) }}">{{ draft.title | truncate(20) }}</a></td>
+                    <td>{{ draft.post  | truncate(60) | safe }} </td>
+
+                    <td>
+
+                        <a href="#"><button>View</button></a>
+                        |
+                        <a href="#"><button>Publish</button></a>
+
+                    </td>
+                </tr>
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+            <div class="jumbotron">
+                You have no drafts
+            </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -2,6 +2,7 @@ from users.utils.generator.id_generator import gen_id
 from users.utils.generator.date_generator import time_now
 from users.records.record import Record
 from users.utils.session.user_session import UserSession
+from users.drafts.model import Draft
 
 
 class Post(object):
@@ -14,6 +15,7 @@ class Post(object):
         self._blog_id = parent_blog_id
         self.child_blog_id = child_blog_id
         self.post_id = post_id
+        self.Draft = Draft(self.child_blog_id, self.post_id)
 
     @staticmethod
     def get_post_by_id(post_id):
@@ -52,6 +54,11 @@ class Post(object):
                           publish_date
                         )
 
+    def delete_post(self, post_id):
+        """"""
+        child_post = Post.get_post_by_id(post_id)
+        Record.Delete.delete_post(child_post.child_blog_id, child_post.child_post_id)
+
     def _to_json(self, post_form, child_post_id):
         """_to_json(post_obj, str) -> return a dictionary object
 
@@ -78,6 +85,7 @@ class Post(object):
 
 
 class _ChildPost(object):
+    """This _ChildPost is a container and should not be accessed directly"""
 
     def __init__(self, parent_blog_id, parent_post_id, child_blog_id,
                  child_post_id, title, post, publish_date, post_live, _id=None):
@@ -93,13 +101,4 @@ class _ChildPost(object):
         self._parent_blog_id = parent_blog_id
         self._parent_post_id = parent_post_id
 
-    def update_post(self, post_form, post_id):
-        """"""
-        post = self.get_post_by_id(post_id)
 
-        # Add the functionality to update posts here
-        pass
-
-    def delete_post(self, post_id):
-        """"""
-        Record.Delete.delete_post(self.child_blog_id, self.child_post_id)

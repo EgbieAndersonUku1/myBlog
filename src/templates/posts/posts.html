@@ -65,6 +65,9 @@
             <a href="{{ url_for('posts_app.new_post', blog_id=blog_id) }}">
                 <button type="button">Create New post</button>
             </a>
+            <a href="{{ url_for('posts_app.get_drafts', blog_id=blog_id) }}">
+                <button type="button">View drafts({{num_of_drafts}})</button>
+            </a>
             <br>
             <br>
 

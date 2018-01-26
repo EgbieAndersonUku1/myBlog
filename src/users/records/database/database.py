@@ -43,6 +43,7 @@ class Database(object):
         blog.create_index([('post_live', pymongo.ASCENDING)])
         blog.create_index([('email', pymongo.ASCENDING)])
         blog.create_index([('time_created', pymongo.ASCENDING)])
+        blog.create_index([('collection_name', pymongo.ASCENDING)])
 
     @staticmethod
     def insert_one(data, db_name="blogs"):

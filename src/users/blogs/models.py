@@ -75,7 +75,9 @@ class ParentBlog(object):
 
 
 class _ChildBlog(object):
-    """The Child blog is a child of the Parent blog and should not be called directly"""
+    """The Child blog is a child of the Parent blog and should not be called directly.
+       It is a container
+    """
 
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
                   title, description, _id, blog_live, date_created):
@@ -89,6 +91,7 @@ class _ChildBlog(object):
         self._user_id = user_id
         self._blog_live = blog_live
         self._post = Post(user_id, parent_blog_id, child_blog_id, post_id)
+        self.Post = Post(user_id, parent_blog_id, child_blog_id, post_id)
 
     @property
     def blog_name(self):
@@ -98,30 +101,4 @@ class _ChildBlog(object):
     def blog_description(self):
         return self._blog_descr
 
-    def get_post_by_id(self, post_id):
-        """Takes an ID associated and returns the post object for that ID"""
-        return self._post.get_post_by_id(post_id)
 
-    def get_all_posts(self):
-        """"""
-        return self._post.get_all_posts()
-
-    def new_post(self, post_form):
-        """new_post(object, str) -> returns None
-
-        Creates a new post
-
-        :param
-            `post_form`: The post details which include the title, post content
-        """
-        self._post.create_new_post(post_form)
-
-    def update_post(self, post_form):
-        """ """
-        self._post.update_post(post_form)
-
-    def delete_post(self, post_id):
-        """Deletes a post from the blog"""
-
-        child_post = self._post.get_post_by_id(post_id)
-        child_post.delete_post(post_id)
