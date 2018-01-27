@@ -41,7 +41,7 @@ def posts(blog_id):
 
 @posts_app.route('/edit/<blog_id>/<post_id>')
 @login_required
-def edit(blog_id, post_id):
+def edit_(blog_id, post_id):
     """"""
 
     child_blog = _get_blog(blog_id)
@@ -53,7 +53,7 @@ def edit(blog_id, post_id):
 
 @posts_app.route('/<blog_id>/<post_id>')
 @login_required
-def delete(blog_id, post_id):
+def delete_post(blog_id, post_id):
     """"""
 
     child_blog = _get_blog(blog_id)

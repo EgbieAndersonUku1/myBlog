@@ -15,10 +15,15 @@ class Record(object):
 
     class Delete(object):
 
-        @staticmethod
-        def delete_blog(blog_id):
+        @classmethod
+        def delete_blog(cls, blog_id):
             """"""
-            return Database.cascade_delete(data={"child_blog_id": blog_id})
+            cls._cascade_delete(data={"child_blog_id": blog_id})
+
+        @classmethod
+        def delete_all_blogs(cls, data):
+            """"""
+            cls._cascade_delete(data=data)
 
         @classmethod
         def delete_post(cls, blog_id, post_id):
@@ -29,10 +34,15 @@ class Record(object):
             cls._delete(query={"blog_id": blog_id, "draft_id": draft_id})
 
         @staticmethod
-        def _delete(query):
-            assert type(query) == dict
-            Database.delete_one(data=query)
+        def _delete(data):
+            assert type(data) == dict
+            Database.delete_one(data=data)
 
+        @staticmethod
+        def _cascade_delete(data):
+            """"""
+            assert type(data) == dict
+            Database.cascade_delete(data=data)
 
     class Query(object):
 

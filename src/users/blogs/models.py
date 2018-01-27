@@ -49,12 +49,13 @@ class ParentBlog(object):
         blogs = Record.Query.find_all(query={"parent_blog_id": self._blog_id, "blog_live": True})
         return [_ChildBlog(**blog) for blog in blogs] if blogs else None
 
-    def delete_child_blog(self, child_blog_id):
+    @staticmethod
+    def delete_child_blog(child_blog_id):
         """"""
-        return Record.Delete.delete_blog(child_blog_id)
+        Record.Delete.delete_blog(child_blog_id)
 
     def delete_all_child_blogs(self):
-        pass
+        Record.Delete.delete_all_blogs(data={"parent_blog_id": self._blog_id, "blog_live": True})
 
     def update_child_blog(self, blog_id, data):
         """"""

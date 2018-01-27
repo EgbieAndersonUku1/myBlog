@@ -158,6 +158,9 @@ class UserBlog(object):
     def delete_blog(self, blog_id):
         self._parent_blog.delete_child_blog(blog_id)
 
+    def delete_all_blogs(self):
+        self._parent_blog.delete_all_child_blogs()
+
     @staticmethod
     def _retreive_user_info():
         """A helper function that returns the user object"""

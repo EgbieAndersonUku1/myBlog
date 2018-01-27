@@ -79,10 +79,21 @@ def blog_delete(blog_id):
     return redirect(url_for("blogs_app.blog"))
 
 
+@blogs_app.route('/blogs/all/delete')
+def delete_all_blogs():
+    """"""
+    blog = UserBlog()
+    blog.delete_all_blogs()
+    Message.display_to_gui_screen("All child blogs relating to this blog have been deleted.")
+    return redirect(url_for('blogs_app.blog'))
+
+
 def _get_updated_data(form, blog):
-    """Checks if the user has updated their data. If the data has
-       been updated returns only the updated data otherwise returns
-       an empty dictionary.
+    """_get_updated_data(form_obj, blog_obj) -> return dict
+
+    Checks if the user has updated their data. If the data has
+    been updated returns only the updated data otherwise returns
+    an empty dictionary.
     """
 
     data = {}
