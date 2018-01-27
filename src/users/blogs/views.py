@@ -47,7 +47,7 @@ def blog_edit(blog_id):
     if form.validate_on_submit():
 
         data = _get_updated_data(form, child_blog)
-        
+
         if data:
             blog.update_blog(blog_id, data=data)
             Message.display_to_gui_screen("You have successfully updated your blog")
@@ -59,7 +59,7 @@ def blog_edit(blog_id):
 @blogs_app.route('/<blog_id>')
 def my_blog(blog_id):
     """Takes a blog id and returns that blog"""
-    return redirect(url_for('blogs_app.blog_posts', blog_id=blog_id))
+    return redirect(url_for('blogs_app.blog'))
 
 
 @blogs_app.route('/blog/id/<blog_id>/posts')
@@ -93,5 +93,3 @@ def _get_updated_data(form, blog):
     if form.description.data != blog.description:
         data.update({"description": form.description.data})
     return data
-
-
