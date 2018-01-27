@@ -19,6 +19,7 @@ def blog():
 @blogs_app.route('/create', methods=['GET', 'POST'])
 @login_required
 def blog_create():
+    """"""
 
     form = BlogForm()
 
@@ -56,8 +57,8 @@ def blog_edit(blog_id):
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
 
 
-@blogs_app.route('/<blog_id>')
-def my_blog(blog_id):
+@blogs_app.route('/')
+def my_blog():
     """Takes a blog id and returns that blog"""
     return redirect(url_for('blogs_app.blog'))
 
