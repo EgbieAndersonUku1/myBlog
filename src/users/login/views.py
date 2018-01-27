@@ -1,7 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 
-
-from app import cache
 from users.login.form import LoginForm
 from users.utils.implementer.password_implementer import PasswordImplementer
 from users.users.users import User

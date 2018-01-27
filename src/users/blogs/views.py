@@ -46,7 +46,7 @@ def blog_edit(blog_id):
 
     if form.validate_on_submit():
 
-        blog.update_blog(blog_id, data={"title": form.title.data, "description": form.description.data})
+        blog.update_blog(blog_id, data={"blog_name":form.blog_name.data, "title": form.title.data, "description": form.description.data})
         Message.display_to_gui_screen("You have successfully updated your blog")
 
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)

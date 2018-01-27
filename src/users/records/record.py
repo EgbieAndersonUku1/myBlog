@@ -1,5 +1,4 @@
 from users.records.database.database import Database
-from app import cache
 
 
 class Record(object):

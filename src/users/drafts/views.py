@@ -42,7 +42,7 @@ def publish(blog_id, draft_id):
     child_blog.Post.create_new_post(draft_form.get('title'), draft_form.get('post'))
     child_blog.Post.Draft.delete_draft(draft_id)
 
-    Message.display_to_gui_screen("The draft title '{}' has been published.".format(draft_form.get('title')))
+    Message.display_to_gui_screen("The draft with the title '{}' has been published.".format(draft_form.get('title')))
     return redirect(url_for('drafts_app.get_drafts', blog_id=blog_id))
 
 

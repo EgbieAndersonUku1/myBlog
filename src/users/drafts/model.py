@@ -1,7 +1,6 @@
 from users.records.record import Record
 
 from users.utils.generator.date_generator import time_now as date_created
-
 from users.utils.generator.id_generator import gen_id
 
 
@@ -18,6 +17,7 @@ class Draft(object):
         Record.save(self._to_json(form))
 
     def get_draft_post(self, draft_id):
+        """"""
 
         return Record.Query.Filter.filter_by_key_and_value(query={
             "collection_name": "draft",
@@ -27,6 +27,7 @@ class Draft(object):
         })
 
     def get_all_draft_posts(self):
+        """"""
 
         drafts = Record.Query.find_all(query={"collection_name":"draft", "blog_id": self.blog_id, "post_id":self.post_id})
         return [_Draft(**draft) for draft in drafts] if drafts else None

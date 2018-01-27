@@ -33,7 +33,7 @@ class ParentBlog(object):
            raise Exception('Error, The blog data was not saved on the database.')
 
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
-                          blog_form.name, blog_form.title, blog_form.description, _id=None,
+                          blog_form.blog_name, blog_form.title, blog_form.description, _id=None,
                           blog_live=True, date_created=date_created)
 
     def find_child_blog(self, child_blog_id):
@@ -66,7 +66,7 @@ class ParentBlog(object):
             "parent_blog_id": self._blog_id,
             "post_id": self._post_id,
             "child_blog_id": child_blog_id,
-            "name": blog_form.name.data,
+            "blog_name": blog_form.blog_name.data,
             "title": blog_form.title.data,
             "description": blog_form.description.data,
             "blog_live": True,
@@ -79,11 +79,11 @@ class _ChildBlog(object):
        It is a container
     """
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
-                  name, title, description, _id, blog_live, date_created):
+                  blog_name, title, description, _id, blog_live, date_created):
 
         self.child_blog_id = child_blog_id
         self.post_id = post_id
-        self.blog_name = name
+        self.blog_name = blog_name
         self.title = title
         self.description = description
         self.date_created = date_created

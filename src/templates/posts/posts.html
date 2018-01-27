@@ -13,7 +13,11 @@
             {% include "__flash_messages.html" %}
             {% if posts %}
 
-            <h3><u>List of posts</u></h3>
+            <div class="well">
+                <h1><center>Blog name: {{ blog_name.title() }}</center></h1> <!-- To be changed to using CSS instead of center tag -->
+            </div>
+
+             <h3><u>List of posts</u></h3>
 
             <table class="table table-striped">
 
