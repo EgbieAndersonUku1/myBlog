@@ -6,7 +6,7 @@ from users.blogs.models import ParentBlog
 from users.records.record import Record
 from users.utils.generator.id_generator import gen_id as gen_code
 from users.utils.implementer.password_implementer import PasswordImplementer
-from users.users.helper import save_to_db, update_db, to_class
+from users.utils.session.user_session import UserSession
 
 
 class User(object):
@@ -33,12 +33,16 @@ class User(object):
     @classmethod
     def get_by_username(cls, username):
         """"""
-        return to_class(cls, Record.Query.Filter.filter_user_by_username(username))
+        return cls._to_class(query=Record.Query.Filter.filter_user_by_username(username))
 
     @classmethod
     def get_by_email(cls, email):
         """Searches the records by email address"""
-        return to_class(cls, Record.Query.Filter.filter_user_by_email(email))
+        return cls._to_class(query=Record.Query.Filter.filter_user_by_email(email))
+
+    @classmethod
+    def _to_class(cls, query):
+        return cls(**query) if query else None
 
     def register(self):
         """"""
@@ -54,7 +58,7 @@ class User(object):
 
     def save(self):
         """"""
-        return save_to_db(self._to_json())
+        return Record.save(self._to_json())
 
     def _to_json(self):
         """ """
@@ -83,10 +87,8 @@ class User(object):
             return True
         return False
 
-
     def reset_forgotten_password(self):
         """"""
-
         self._gen_forgotten_password_code()
         self.update()
         self._email_user_verification_code(code_type='forgotten_password_code')
@@ -97,8 +99,7 @@ class User(object):
 
     def update(self):
         """"""
-        update_db('_id', self._id, self._to_json())
-
+        Record.Update.update('_id', self._id, self._to_json())
 
     def _gen_code(self):
         """"""
@@ -128,7 +129,7 @@ class UserBlog(object):
         all through the blog object.
      """
     def __init__(self):
-        user = self._retreive_user_info()
+        user = UserBlog._retreive_user_info()
         self._parent_blog = ParentBlog(user._id, user.parent_blog_id, user.post_id)
 
     def create_blog(self, blog_form):
@@ -157,8 +158,8 @@ class UserBlog(object):
     def delete_blog(self, blog_id):
         self._parent_blog.delete_child_blog(blog_id)
 
-    def _retreive_user_info(self):
+    @staticmethod
+    def _retreive_user_info():
         """A helper function that returns the user object"""
-
-        return User.get_by_email(session.get('email'))
+        return User.get_by_email(UserSession.get_value_by_key("email"))
 

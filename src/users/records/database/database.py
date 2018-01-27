@@ -112,5 +112,3 @@ class Database(object):
            - data       : The information used to update to the database
         """
         Database.DATABASE[db_name].update({field_name:field_value}, {'$set': data})
-
-

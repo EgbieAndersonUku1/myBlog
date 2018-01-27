@@ -1,5 +1,5 @@
 from users.utils.generator.id_generator import gen_id
-from users.utils.generator.date_generator import time_now
+from users.utils.generator.date_generator import time_now as date_created
 from users.records.record import Record
 from users.utils.session.user_session import UserSession
 from users.drafts.model import Draft
@@ -21,7 +21,7 @@ class Post(object):
     def get_post_by_id(post_id):
         """Test a post ID and returns that particular post."""
 
-        post_data = Record.Query.Filter.filter_by_key_and_value("child_post_id", post_id)
+        post_data = Record.Query.Filter.filter_by_key_and_value({"child_post_id":post_id})
         return _ChildPost(**post_data) if post_data else None
 
     def get_all_posts(self):
@@ -34,7 +34,7 @@ class Post(object):
         posts = Record.Query.find_all(query)
         return [_ChildPost(**post) for post in posts] if posts else None
 
-    def create_new_post(self, post_form):
+    def create_new_post(self, title, description):
         """create_new_post(form_post_obj) -> returns Post Object
 
         Takes a post form object containing the user post details
@@ -42,24 +42,25 @@ class Post(object):
         """
 
         child_post_id = gen_id()
-        child_post = self._to_json(post_form, child_post_id)
-        publish_date = time_now()
+        publish_date = date_created()
+        child_post = self._to_json(title, description, child_post_id, publish_date)
 
         Record.save(child_post)
 
         return _ChildPost(self._blog_id, self.post_id,
                           self.child_blog_id,
                           self.post_id, child_post_id,
-                          post_form.title, post_form.description,
+                          title, description,
                           publish_date
-                        )
+                         )
 
-    def delete_post(self, post_id):
+    @classmethod
+    def delete_post(cls, post_id):
         """"""
-        child_post = Post.get_post_by_id(post_id)
+        child_post = cls.get_post_by_id(post_id)
         Record.Delete.delete_post(child_post.child_blog_id, child_post.child_post_id)
 
-    def _to_json(self, post_form, child_post_id):
+    def _to_json(self, title, description, child_post_id, publish_date):
         """_to_json(post_obj, str) -> return a dictionary object
 
         Returns the data for post model object as json object
@@ -68,6 +69,7 @@ class Post(object):
             `post_form`: A form object containing the user posts
                         .e.g title, description.
             `child_post_id`: The post id for the post.
+            `publish_date`: The date the blog was created
 
         :returns
                 Returns a json object
@@ -77,10 +79,10 @@ class Post(object):
             "child_blog_id": self.child_blog_id,
             "parent_post_id": self.post_id,
             "child_post_id": child_post_id,
-            "title": post_form.title.data,
-            "post": post_form.description.data,
+            "title": title,
+            "post": description,
             "post_live": True,
-            "publish_date" : time_now(),
+            "publish_date": publish_date,
         }
 
 
@@ -100,5 +102,3 @@ class _ChildPost(object):
         self._id = _id if _id else gen_id()
         self._parent_blog_id = parent_blog_id
         self._parent_post_id = parent_post_id
-
-

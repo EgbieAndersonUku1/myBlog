@@ -3,9 +3,8 @@
 {% block content %}
 
 <!-- ToDo
-    Add Bootsrap styling to the page to make it more pleasing to the eye.
+    Add Bootstrap styling to the page to make it more pleasing to the eye.
 -->
-
 
 <div class="container">
     <div class="row">
@@ -15,8 +14,12 @@
             {% if drafts %}
 
             {% include "__flash_messages.html" %}
-            <h3><u>List of drafts</u></h3>
 
+            <div class="well">
+                You have a total of {{ num_of_drafts }} posts not yet published
+                <br>
+            </div>
+            <h3><u>List of drafts</u></h3>
 
             <table class="table table-striped">
 
@@ -26,7 +29,7 @@
                     <th>Draft</th>
                     <th>Description</th>
                     <th>Creation date</th>
-                    <th>View</th>
+                    <th>View/Publish/Delete</th>
                 </tr>
                 </thead>
 
@@ -35,14 +38,17 @@
                 {% for draft in drafts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td><a href="{{ url_for('blogs_app.my_blog', blog_id=blog.child_blog_id) }}">{{ draft.title | truncate(20) }}</a></td>
+                    <td><a href="#">{{ draft.title | truncate(20) }}</a></td>
                     <td>{{ draft.post  | truncate(60) | safe }} </td>
+                    <td>{{ draft.date_created.strftime('%c') }}</td>
 
                     <td>
 
                         <a href="#"><button>View</button></a>
                         |
-                        <a href="#"><button>Publish</button></a>
+                        <a href="{{ url_for('drafts_app.publish', blog_id=blog_id, draft_id=draft.draft_id) }}"><button>Publish</button></a>
+                        |
+                        <a href="{{ url_for('drafts_app.delete_draft', blog_id=blog_id, draft_id=draft.draft_id) }}"><button>Delete</button></a>
 
                     </td>
                 </tr>
@@ -58,8 +64,9 @@
                 You have no drafts
             </div>
             {% endif %}
-
-
+            <a href="{{ url_for('posts_app.posts', blog_id=blog_id) }}">
+                <button type="button"><< Back to my posts</button>
+            </a>
         </div>
     </div>
 </div>

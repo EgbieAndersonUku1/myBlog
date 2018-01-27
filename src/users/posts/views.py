@@ -18,7 +18,7 @@ def new_post(blog_id):
     if form.validate_on_submit():
 
         child_blog = _get_blog(blog_id)
-        child_blog.Post.create_new_post(form)
+        child_blog.Post.create_new_post(form.title.data, form.description.data)
 
         Message.display_to_gui_screen("The post was created successfully")
         return redirect(url_for('posts_app.posts', blog_id=blog_id))
@@ -60,28 +60,6 @@ def delete(blog_id, post_id):
 
     Message.display_to_gui_screen("The post has successfully been deleted")
     return redirect(url_for("posts_app.posts", blog_id=blog_id))
-
-
-@posts_app.route("/drafts/<blog_id>", methods=['GET', 'POST'])
-def drafts(blog_id):
-
-    form = PostForm()
-
-    child_blog = _get_blog(blog_id)
-    child_blog.Post.Draft.save(form)
-
-    Message.display_to_gui_screen("The post has saved to draft section")
-    return redirect(url_for("posts_app.posts", blog_id=blog_id))
-
-
-@posts_app.route("/<blog_id>/drafts/all", methods=['GET', 'POST'])
-def get_drafts(blog_id, post_id):
-    """"""
-
-    child_blog = _get_blog(blog_id)
-    #drafts = child_blog.Post.Draft.get_all_draft_posts(blog_id, post_id)
-
-    return render_template("drafts/drafts.html", blog_id=blog_id, drafts=drafts)
 
 
 def _get_blog(blog_id):

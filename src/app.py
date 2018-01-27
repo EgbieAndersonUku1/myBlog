@@ -23,6 +23,7 @@ from users.login.views import login_app
 from users.registration.views import registration_app
 from users.logout.views import logout_app
 from users.passwords.views import password_app
+from users.drafts.views import drafts_app
 
 
 @app.before_first_request
@@ -35,7 +36,6 @@ def create_app():
     app.config.from_pyfile("settings.py")
     app.url_map.strict_slashes = False
 
-
     app.register_blueprint(admin_app)
     app.register_blueprint(blogs_app)
     app.register_blueprint(posts_app)
@@ -43,6 +43,7 @@ def create_app():
     app.register_blueprint(registration_app)
     app.register_blueprint(password_app)
     app.register_blueprint(logout_app)
+    app.register_blueprint(drafts_app)
 
 
     return app

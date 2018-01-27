@@ -1,7 +1,7 @@
 from users.utils.session.user_session import UserSession
 from users.users.profile_images import ProfileImages
 from app import cache
-from users.users.helper import to_class, update_db, save_to_db
+#from users.users.helper import to_class, update_db, save_to_db
 
 from users.records.record import Record
 from users.users.users import User
@@ -21,15 +21,16 @@ class UserProfile(object):
 
     @cache.memoize(600)
     def get_profile(self):
-        return to_class(UserProfile, Record.Query.Filter.filter_by_key_and_value(self.profile_id))
+        pass
+        #return to_class(UserProfile, Record.Query.Filter.filter_by_key_and_value(self.profile_id))
 
     def save(self):
         """"""
-        return save_to_db(self._to_json())
+        return Record.save(self._to_json())
 
     def update(self):
         """"""
-        update_db('profile_id', self.profile_id, self._to_json())
+        Record.Update.update('profile_id', self.profile_id, self._to_json())
 
     def _to_json(self):
         """"""

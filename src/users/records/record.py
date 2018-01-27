@@ -21,9 +21,19 @@ class Record(object):
             """"""
             return Database.cascade_delete(data={"child_blog_id": blog_id})
 
+        @classmethod
+        def delete_post(cls, blog_id, post_id):
+            cls._delete(query={"child_blog_id": blog_id, "child_post_id": post_id})
+
+        @classmethod
+        def delete_draft(cls, blog_id, draft_id):
+            cls._delete(query={"blog_id": blog_id, "draft_id": draft_id})
+
         @staticmethod
-        def delete_post(blog_id, post_id):
-            Database.delete_one(data={"child_blog_id": blog_id, "child_post_id": post_id})
+        def _delete(query):
+            assert type(query) == dict
+            Database.delete_one(data=query)
+
 
     class Query(object):
 
@@ -35,20 +45,21 @@ class Record(object):
 
             @classmethod
             def filter_user_by_username(cls, username):
-                return cls._filter_query('username', username)
+                return cls._filter_query({'username': username})
 
             @classmethod
             def filter_user_by_email(cls, email):
-                return cls._filter_query('email', email)
+                return cls._filter_query({'email': email})
 
             @classmethod
-            def filter_by_key_and_value(cls, key, value):
-                return cls._filter_query(key, value)
+            def filter_by_key_and_value(cls, query):
+                return cls._filter_query(query)
 
             @classmethod
-            def _filter_query(cls, query_name, query_value, collection='blogs'):
+            def _filter_query(cls, query, collection='blogs'):
                 """"""
-                return Database.find_one({query_name: query_value}, collection) if query_value else None
+                assert type(query) == dict
+                return Database.find_one(query, collection) if query else None
 
                 # ToDo
                 # Line 46 will be replaced by a Flask-cache
