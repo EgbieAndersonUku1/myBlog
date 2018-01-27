@@ -6,7 +6,6 @@
     Add Bootsrap styling to the page to make it more pleasing to the eye.
 -->
 
-
 <div class="container">
     <div class="row">
 
@@ -37,8 +36,8 @@
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
                     <td><a href="{{ url_for('blogs_app.my_blog', blog_id=blog.child_blog_id) }}">{{ blog.blog_name  | truncate(20) | safe }}<a/></td>
-                    <td>{{ blog.title | truncate(20) }}</td>
-                    <td>{{ blog.description  | truncate(60) | safe }} </td>
+                    <td>{{ blog.html_strip(blog.title) | truncate(20) }}</td>
+                    <td>{{ blog.html_strip(blog.description) | truncate(60)  }} </td>
                     <td>{{ blog.date_created.strftime('%c') }} </td>
                     <td>
 
@@ -54,7 +53,6 @@
                 </tbody>
 
             </table>
-
             {% else %}
             <div class="jumbotron">
                 You have no blogs

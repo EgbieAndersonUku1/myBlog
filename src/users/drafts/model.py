@@ -2,6 +2,7 @@ from users.records.record import Record
 
 from users.utils.generator.date_generator import time_now as date_created
 from users.utils.generator.id_generator import gen_id
+from users.utils.html_stripper import strip_html_tags
 
 
 class Draft(object):
@@ -62,3 +63,6 @@ class _Draft(object):
         self.title = title
         self.post = post
         self.date_created = date_created
+
+    def html_strip(self, text):
+        return strip_html_tags(text)

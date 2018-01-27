@@ -37,8 +37,8 @@
                 {% for post in posts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td>{{ post.title | truncate(20) }}</td>
-                    <td>{{ post.post |truncate(30) | safe }}</td>
+                    <td>{{ post.html_strip(post.title)| truncate(20) }}</td>
+                    <td>{{ post.html_strip(post.post) | truncate(30) }}</td>
                     <td>{{ post.author.title() | truncate(10) }}</td>
                     <td>{{ post.publish_date.strftime('%c') }}</td>
                     <td>

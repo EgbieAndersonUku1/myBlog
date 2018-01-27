@@ -3,6 +3,7 @@ from users.posts.models import Post
 from users.drafts.model import Draft
 from users.records.record import Record
 from users.utils.generator.date_generator import time_now as date_created
+from users.utils.html_stripper import strip_html_tags
 
 
 class ParentBlog(object):
@@ -91,3 +92,6 @@ class _ChildBlog(object):
         self._user_id = user_id
         self._blog_live = blog_live
         self.Post = Post(user_id, parent_blog_id, child_blog_id, post_id)
+
+    def html_strip(self, text):
+        return strip_html_tags(text)

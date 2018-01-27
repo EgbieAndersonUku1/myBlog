@@ -38,8 +38,8 @@
                 {% for draft in drafts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td><a href="#">{{ draft.title | truncate(20) }}</a></td>
-                    <td>{{ draft.post  | truncate(60) | safe }} </td>
+                    <td><a href="#">{{ draft.html_strip(draft.title) | truncate(20) }}</a></td>
+                    <td>{{ draft.html_strip(draft.post) | truncate(60)  }} </td>
                     <td>{{ draft.date_created.strftime('%c') }}</td>
 
                     <td>
