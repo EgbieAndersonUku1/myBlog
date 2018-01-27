@@ -46,8 +46,12 @@ def blog_edit(blog_id):
 
     if form.validate_on_submit():
 
-        blog.update_blog(blog_id, data={"blog_name":form.blog_name.data, "title": form.title.data, "description": form.description.data})
-        Message.display_to_gui_screen("You have successfully updated your blog")
+        data = _get_updated_data(form, child_blog)
+        
+        if data:
+            blog.update_blog(blog_id, data=data)
+            Message.display_to_gui_screen("You have successfully updated your blog")
+            return redirect(url_for("blogs_app.my_blog", blog_id=child_blog.child_blog_id))
 
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
 
@@ -72,3 +76,22 @@ def blog_delete(blog_id):
     blog.delete_blog(blog_id)
     Message.display_to_gui_screen("The blog was deleted successfully")
     return redirect(url_for("blogs_app.blog"))
+
+
+def _get_updated_data(form, blog):
+    """Checks if the user has updated their data. If the data has
+       been updated returns only the updated data otherwise returns
+       an empty dictionary.
+    """
+
+    data = {}
+
+    if form.blog_name.data != blog.blog_name:
+        data.update({"blog_name": form.blog_name.data})
+    if form.title.data != blog.title:
+        data.update({"title": form.title.data})
+    if form.description.data != blog.description:
+        data.update({"description": form.description.data})
+    return data
+
+
