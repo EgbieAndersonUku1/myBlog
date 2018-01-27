@@ -67,10 +67,10 @@ class Post(object):
         Returns the data for post model object as json object
 
         :param
-            `post_form`: A form object containing the user posts
-                        .e.g title, description.
+            `title`: Post title
+            `description`: The post description.
             `child_post_id`: The post id for the post.
-            `publish_date`: The date the blog was created
+            `publish_date`: The date the post was created
 
         :returns
                 Returns a json object
