@@ -31,15 +31,12 @@ def reset_password(username, code):
     """"""
 
     form = ForgottenPasswordForm()
-    user = User.get_by_username(username)
+    user = User.verify_forgotten_password_code(username, code)
 
-    if user and user.configuration_codes.get('forgotten_password_code') != code:
+    if not user:
         abort(404)
-    elif form.validate_on_submit():
-
-        user.configuration_codes.pop('forgotten_password_code')
-        user.password = PasswordImplementer.hash_password(form.new_passwd.data)
-        user.update()
+    if form.validate_on_submit():
+        user.update_forgotten_password(form)
         Message.display_to_gui_screen('You have successfully changed your password.')
         return redirect(url_for('login_app.login'))
 

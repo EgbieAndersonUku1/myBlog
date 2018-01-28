@@ -7,6 +7,7 @@ from users.records.record import Record
 from users.utils.generator.id_generator import gen_id as gen_code
 from users.utils.implementer.password_implementer import PasswordImplementer
 from users.utils.session.user_session import UserSession
+from werkzeug.exceptions import abort
 
 
 class User(object):
@@ -86,6 +87,20 @@ class User(object):
             user.update()
             return True
         return False
+
+    def update_forgotten_password(self, form):
+        """"""
+
+        self.configuration_codes.pop('forgotten_password_code')
+        self.password = PasswordImplementer.hash_password(form.new_passwd.data)
+        self.update()
+
+    @classmethod
+    def verify_forgotten_password_code(cls, username, code):
+        """"""
+
+        user = cls.get_by_username(username)
+        return user if user and user.configuration_codes.get('forgotten_password_code') == code else None
 
     def reset_forgotten_password(self):
         """"""

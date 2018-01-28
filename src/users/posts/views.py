@@ -34,9 +34,9 @@ def posts(blog_id):
     child_blog = _get_blog(blog_id)
 
     if not child_blog:
-       abort(404)
+        abort(404)
     return render_template("posts/posts.html", posts=child_blog.Post.get_all_posts(),
-                            blog_id=blog_id, blog_name=child_blog.blog_name)
+                           blog_id=blog_id, blog_name=child_blog.blog_name)
 
 
 @posts_app.route('/edit/<blog_id>/<post_id>')

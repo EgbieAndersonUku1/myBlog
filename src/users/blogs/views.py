@@ -27,7 +27,7 @@ def blog_create():
 
         blog = UserBlog()
         blog.create_blog(form)
-        Message.display_to_gui_screen("A new blog was successfully created")
+        Message.display_to_gui_screen("A new blog was successfully created.")
         return redirect(url_for("blogs_app.blog"))
 
     return render_template('blogs/blogs_creation_page.html', form=form)
@@ -51,7 +51,7 @@ def blog_edit(blog_id):
 
         if data:
             blog.update_blog(blog_id, data=data)
-            Message.display_to_gui_screen("You have successfully updated your blog")
+            Message.display_to_gui_screen("You have successfully updated your blog.")
             return redirect(url_for("blogs_app.my_blog", blog_id=child_blog.child_blog_id))
 
     return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
@@ -75,7 +75,7 @@ def blog_delete(blog_id):
 
     blog = UserBlog()
     blog.delete_blog(blog_id)
-    Message.display_to_gui_screen("The blog was deleted successfully")
+    Message.display_to_gui_screen("One of your blogs was deleted successfully")
     return redirect(url_for("blogs_app.blog"))
 
 
