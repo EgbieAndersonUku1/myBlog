@@ -8,6 +8,7 @@ from users.utils.html_stripper import strip_html_tags
 
 class ParentBlog(object):
     """ ParentBlog: class
+
     Each user on the application has a parent blog and from the parent blog
     many child blogs can be generated. This class SHOULD only be accessed
     from the user blog class and not directly.
@@ -34,8 +35,10 @@ class ParentBlog(object):
            raise Exception('Error, The blog data was not saved on the database.')
 
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
-                          blog_form.blog_name, blog_form.title, blog_form.description,
-                          _id=None, blog_live=True, date_created=date_created)
+                          blog_form.blog_name.data, blog_form.title.data,
+                          blog_form.description.data,_id=None, blog_live=True,
+                          date_created=date_created
+                          )
 
     def find_child_blog(self, child_blog_id):
         """Takes a child blog id and if found returns that blog as an object"""
@@ -56,7 +59,10 @@ class ParentBlog(object):
 
     def delete_all_child_blogs(self):
         """Deletes all blogs created by the user"""
-        Record.Delete.delete_all_blogs(data={"parent_blog_id": self._blog_id, "blog_live": True})
+        data = [{"parent_blog_id": self._blog_id, "blog_live": True}, {"post_id": self._post_id, "post_live":True},
+                {"post_id": self._post_id, "collection_name": "draft"}, {"parent_blog_id": self._blog_id, "post_live": True}
+               ]
+        Record.Delete.delete_all_blogs(data=data)
 
     @staticmethod
     def update_child_blog(blog_id, data):

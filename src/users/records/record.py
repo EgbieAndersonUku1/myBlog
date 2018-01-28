@@ -23,7 +23,7 @@ class Record(object):
         @classmethod
         def delete_all_blogs(cls, data):
             """"""
-            cls._cascade_delete(data=data)
+            cls._cascade_delete(data={"$or": data})
 
         @classmethod
         def delete_post(cls, blog_id, post_id):
