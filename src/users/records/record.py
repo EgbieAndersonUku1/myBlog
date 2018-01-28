@@ -71,7 +71,7 @@ class Record(object):
                 return Database.find_one(query, collection) if query else None
 
                 # ToDo
-                # Line 46 will be replaced by a Flask-cache
+                # Use Flask-cache
                 # First, the cache will be searched
                 # If the data is found in the cache then return it from the cache.
                 # If the data is not found then query the database, cache the results and then return the results
