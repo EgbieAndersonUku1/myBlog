@@ -32,18 +32,19 @@ class ParentBlog(object):
         blog_data = self._to_json(blog_form, child_blog_id, date_created)
 
         if not Record.save(blog_data):
-           raise Exception('Error, The blog data was not saved on the database.')
+            raise Exception('Error, The blog data was not saved on the database.')
 
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
                           blog_form.blog_name.data, blog_form.title.data,
-                          blog_form.description.data,_id=None, blog_live=True,
+                          blog_form.description.data, _id=None, blog_live=True,
                           date_created=date_created
                           )
 
-    def find_child_blog(self, child_blog_id):
+    @staticmethod
+    def find_child_blog(child_blog_id):
         """Takes a child blog id and if found returns that blog as an object"""
 
-        data = Record.Query.Filter.filter_by_key_and_value({"child_blog_id":child_blog_id})
+        data = Record.Query.Filter.filter_by_key_and_value({"child_blog_id": child_blog_id})
         return _ChildBlog(**data) if data else None
 
     def find_all_child_blogs(self):
@@ -59,9 +60,12 @@ class ParentBlog(object):
 
     def delete_all_child_blogs(self):
         """Deletes all blogs created by the user"""
-        data = [{"parent_blog_id": self._blog_id, "blog_live": True}, {"post_id": self._post_id, "post_live":True},
-                {"post_id": self._post_id, "collection_name": "draft"}, {"parent_blog_id": self._blog_id, "post_live": True}
-               ]
+
+        data = [{"parent_blog_id": self._blog_id, "blog_live": True},
+                {"post_id": self._post_id, "post_live": True},
+                {"post_id": self._post_id, "collection_name": "draft"},
+                {"parent_blog_id": self._blog_id, "post_live": True}
+                ]
         Record.Delete.delete_all_blogs(data=data)
 
     @staticmethod
@@ -88,8 +92,9 @@ class _ChildBlog(object):
     """The Child blog is a child of the Parent blog and
        should not be called directly. It is a container.
     """
-    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
-                  blog_name, title, description, _id, blog_live, date_created):
+
+    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id, blog_name,
+                 title, description, _id, blog_live, date_created):
 
         self.child_blog_id = child_blog_id
         self.post_id = post_id
@@ -102,5 +107,6 @@ class _ChildBlog(object):
         self._blog_live = blog_live
         self.Post = Post(user_id, parent_blog_id, child_blog_id, post_id)
 
-    def html_strip(self, text):
+    @staticmethod
+    def html_strip(text):
         return strip_html_tags(text)
