@@ -11,7 +11,7 @@ blogs_app = Blueprint('blogs_app', __name__, url_prefix="/blogs")
 @blogs_app.route('/', methods=['GET', 'POST'])
 @login_required
 def blog():
-    """"""
+    """Displays all the blogs created by the user"""
     blog = UserBlog()
     return render_template('blogs/blogs.html', blogs=blog.get_all_blogs())
 
@@ -19,7 +19,7 @@ def blog():
 @blogs_app.route('/create', methods=['GET', 'POST'])
 @login_required
 def blog_create():
-    """"""
+    """Allows the user to create a brand new blog."""
 
     form = BlogForm()
 
@@ -71,7 +71,7 @@ def blog_posts(blog_id):
 
 @blogs_app.route('/delete/<blog_id>', methods=['GET', 'POST'])
 def blog_delete(blog_id):
-    """Takes a blog_id and deletes that blog"""
+    """Deletes a blog using its blog_id"""
 
     blog = UserBlog()
     blog.delete_blog(blog_id)
@@ -81,7 +81,8 @@ def blog_delete(blog_id):
 
 @blogs_app.route('/blogs/all/delete')
 def delete_all_blogs():
-    """"""
+    """Deletes all blogs created by the user"""
+
     blog = UserBlog()
     blog.delete_all_blogs()
     Message.display_to_gui_screen("All child blogs relating to this blog have been deleted.")

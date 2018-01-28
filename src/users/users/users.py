@@ -125,8 +125,8 @@ class User(object):
 
 class UserBlog(object):
     """The user class is the class allows the user to created a single blog
-         or create multiple blogs, delete blogs, create, save and deletes
-        all through the blog object.
+       or create multiple blogs, delete blogs, create, save and deletes
+       all through the blog object.
      """
     def __init__(self):
         user = UserBlog._retreive_user_info()
@@ -137,28 +137,31 @@ class UserBlog(object):
         Takes a blog form and creates a child blog object.
 
         :param
-            `blog_form`: Contains the details that will be used to create the blog i.e title, description
+            `blog_form`: Contains the details that will be used to create
+                        the blog i.e title, description
         :returns
             A child blog containing the new details.
         """
         return self._parent_blog.create_blog(blog_form)
 
     def get_blog(self, child_blog_id):
-        """Using the ID returns the child blog object that is associated with that ID"""
+        """Using the blog ID returns the child blog object associated with that ID"""
         return self._parent_blog.find_child_blog(child_blog_id)
 
     def get_all_blogs(self):
-        """Return a list containing all the blogs created by the user"""
+        """Return a list that contains all the blogs created by the user"""
         return self._parent_blog.find_all_child_blogs()
 
     def update_blog(self, blog_id, data):
-        """"""
+        """Takes data and a blog id and updates that blog using the data"""
         self._parent_blog.update_child_blog(blog_id, data)
 
     def delete_blog(self, blog_id):
+        """Deletes a blog by ID"""
         self._parent_blog.delete_child_blog(blog_id)
 
     def delete_all_blogs(self):
+        """Deletes all blogs created by the user"""
         self._parent_blog.delete_all_child_blogs()
 
     @staticmethod

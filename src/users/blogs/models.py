@@ -10,7 +10,7 @@ class ParentBlog(object):
     """ ParentBlog: class
     Each user on the application has a parent blog and from the parent blog
     many child blogs can be generated. This class SHOULD only be accessed
-    from the user class and not directly.
+    from the user blog class and not directly.
     """
 
     def __init__(self, user_id, blog_id, post_id):
@@ -20,7 +20,7 @@ class ParentBlog(object):
 
     def create_blog(self, blog_form):
         """create_blog(blog form object) -> returns child blog object
-        Creates a child blog that allows the user to create or delete a post
+        Creates a child blog that allows the user to either create or delete a post
 
         :param
             `blog_form`: The post details which include the title, post content
@@ -34,8 +34,8 @@ class ParentBlog(object):
            raise Exception('Error, The blog data was not saved on the database.')
 
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
-                          blog_form.blog_name, blog_form.title, blog_form.description, _id=None,
-                          blog_live=True, date_created=date_created)
+                          blog_form.blog_name, blog_form.title, blog_form.description,
+                          _id=None, blog_live=True, date_created=date_created)
 
     def find_child_blog(self, child_blog_id):
         """Takes a child blog id and if found returns that blog as an object"""
@@ -51,34 +51,36 @@ class ParentBlog(object):
 
     @staticmethod
     def delete_child_blog(child_blog_id):
-        """"""
+        """Deletes a blog by ID"""
         Record.Delete.delete_blog(child_blog_id)
 
     def delete_all_child_blogs(self):
+        """Deletes all blogs created by the user"""
         Record.Delete.delete_all_blogs(data={"parent_blog_id": self._blog_id, "blog_live": True})
 
-    def update_child_blog(self, blog_id, data):
-        """"""
+    @staticmethod
+    def update_child_blog(blog_id, data):
+        """Finds a specific blog by ID and updates that blog using the new data"""
         Record.Update.update(field_name='child_blog_id', field_id=blog_id, data=data)
 
     def _to_json(self, blog_form, child_blog_id, date_created):
         """"""
         return {
-            "user_id": self._user_id,
-            "parent_blog_id": self._blog_id,
-            "post_id": self._post_id,
-            "child_blog_id": child_blog_id,
-            "blog_name": blog_form.blog_name.data,
-            "title": blog_form.title.data,
-            "description": blog_form.description.data,
-            "blog_live": True,
-            "date_created": date_created()
-        }
+                "user_id": self._user_id,
+                "parent_blog_id": self._blog_id,
+                "post_id": self._post_id,
+                "child_blog_id": child_blog_id,
+                "blog_name": blog_form.blog_name.data,
+                "title": blog_form.title.data,
+                "description": blog_form.description.data,
+                "blog_live": True,
+                "date_created": date_created()
+                }
 
 
 class _ChildBlog(object):
-    """The Child blog is a child of the Parent blog and should not be called directly.
-       It is a container
+    """The Child blog is a child of the Parent blog and
+       should not be called directly. It is a container.
     """
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id,
                   blog_name, title, description, _id, blog_live, date_created):

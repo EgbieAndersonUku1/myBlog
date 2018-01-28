@@ -27,11 +27,11 @@ class Record(object):
 
         @classmethod
         def delete_post(cls, blog_id, post_id):
-            cls._delete(query={"child_blog_id": blog_id, "child_post_id": post_id})
+            cls._delete(data={"child_blog_id": blog_id, "child_post_id": post_id})
 
         @classmethod
         def delete_draft(cls, blog_id, draft_id):
-            cls._delete(query={"blog_id": blog_id, "draft_id": draft_id})
+            cls._delete(data={"blog_id": blog_id, "draft_id": draft_id})
 
         @staticmethod
         def _delete(data):

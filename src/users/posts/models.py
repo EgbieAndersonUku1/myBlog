@@ -36,7 +36,7 @@ class Post(object):
         return [_ChildPost(**post) for post in posts] if posts else None
 
     def create_new_post(self, title, description):
-        """create_new_post(form_post_obj) -> returns Post Object
+        """create_new_post(str, str) -> returns Post Object
 
         Takes a post form object containing the user post details
         and then creates a new post. Returns a post objects.
