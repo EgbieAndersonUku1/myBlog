@@ -44,7 +44,7 @@ class Draft(object):
             "blog_id": self.blog_id,
             "post_id": self.post_id,
             "title": form.title.data,
-            "post": form.description.data,
+            "post": form.post.data,
             "date_created": date_created(),
             "draft_id": self.draft_id,
 
