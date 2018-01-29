@@ -50,16 +50,14 @@ def edit_post(blog_id, post_id):
         abort(404)
 
     post = child_blog.Post.get_post_by_id(post_id)
-    print(post)
     form = PostForm(obj=post)
 
     if form.validate_on_submit():
 
-        data = _get_updated_data(form, post)
+        post_data = _get_updated_data(form, post)
 
-        if data:
-            print(data)
-            post.update_post(data)
+        if post_data:
+            post.update_post(post_data)
             Message.display_to_gui_screen("You post has successfully been updated.")
             return redirect(url_for("posts_app.posts", blog_id=blog_id))
 

@@ -47,10 +47,10 @@ def blog_edit(blog_id):
 
     if form.validate_on_submit():
 
-        data = _get_updated_data(form, child_blog)
+        blog_data = _get_updated_data(form, child_blog)
 
-        if data:
-            child_blog.update_blog(data=data)
+        if blog_data:
+            child_blog.update_blog(data=blog_data)
             Message.display_to_gui_screen("You have successfully updated your blog.")
             return redirect(url_for("blogs_app.my_blog", blog_id=child_blog.child_blog_id))
 
