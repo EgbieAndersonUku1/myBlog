@@ -7,7 +7,12 @@
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading main-color-bg">
-            <h3 class="panel-title">Create A New Post</h3>
+
+            {% if edit_post %}
+                <h3 class="panel-title">Edit Post</h3>
+            {% else %}
+                <h3 class="panel-title">Create A New Post</h3>
+            {% endif %}
         </div>
 
         {% from "__formhelpers.html" import render_field %}
@@ -17,12 +22,17 @@
             <div class="panel-body">
                 {{ form.hidden_tag() }}
                 {{ render_field(form.title, class='form-control') }}
-                {{ render_field(form.description, rows="10", class='form-control') }}
+                {{ render_field(form.post, rows="10", class='form-control') }}
                 {{ render_field(form.image, class='form-control') }}
 
                 <br>
 
-                <a href="#"><button type="submit">Save and post</button></a>
+                {% if edit_post %}
+                    <button type="submit" name="update post" formaction="{{ url_for('posts_app.edit_post', blog_id=blog_id, post_id=post_id) }}">Update post</button>
+
+                {% else %}
+                    <button type="submit">Save and post</button>
+                {% endif %}
 
                 <button type="submit" name="save draft" formaction="{{ url_for('drafts_app.drafts', blog_id=blog_id) }}">Save to draft</button>
 

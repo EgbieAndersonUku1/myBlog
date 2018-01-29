@@ -68,11 +68,6 @@ class ParentBlog(object):
                 ]
         Record.Delete.delete_all_blogs(data=data)
 
-    @staticmethod
-    def update_child_blog(blog_id, data):
-        """Finds a specific blog by ID and updates that blog using the new data"""
-        Record.Update.update(field_name='child_blog_id', field_id=blog_id, data=data)
-
     def _to_json(self, blog_form, child_blog_id, date_created):
         """"""
         return {
@@ -90,7 +85,7 @@ class ParentBlog(object):
 
 class _ChildBlog(object):
     """The Child blog is a child of the Parent blog and
-       should not be called directly. It is a container.
+       should not be called directly.
     """
 
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id, blog_name,
@@ -110,3 +105,7 @@ class _ChildBlog(object):
     @staticmethod
     def html_strip(text):
         return strip_html_tags(text)
+
+    def update_blog(self, data):
+        """Finds a specific blog by ID and updates that blog using the new data"""
+        Record.Update.update(field_name='child_blog_id', field_id=self.child_blog_id, data=data)

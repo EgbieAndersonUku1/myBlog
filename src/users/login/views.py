@@ -23,9 +23,9 @@ def login():
         return _redirect_user_to_blog_creation_page()
     elif form.validate_on_submit():
 
-        email_confirmed = _has_user_confirmed_their_email(form.username.data)
+        email_status = _has_user_confirmed_their_email(form.username.data)
 
-        if email_confirmed == 'EMAIL_CONFIRMED':
+        if email_status == 'EMAIL_CONFIRMED':
 
             user = User.get_by_username(form.username.data)
 
@@ -35,7 +35,7 @@ def login():
 
             Message.display_to_gui_screen('Incorrect username and password!')
         else:
-            Message.display_to_gui_screen(_get_account_status(email_confirmed))
+            Message.display_to_gui_screen(_get_account_status(email_status))
 
     return render_template("login/login.html", form=form)
 

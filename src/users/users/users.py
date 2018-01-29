@@ -1,5 +1,3 @@
-from flask import session
-
 from users.utils.generator.id_generator import gen_id
 from users.utils.email.sender import email_user_verification_code, email_user_forgotten_password_verification_code
 from users.blogs.models import ParentBlog
@@ -7,7 +5,6 @@ from users.records.record import Record
 from users.utils.generator.id_generator import gen_id as gen_code
 from users.utils.implementer.password_implementer import PasswordImplementer
 from users.utils.session.user_session import UserSession
-from werkzeug.exceptions import abort
 
 
 class User(object):
@@ -76,7 +73,7 @@ class User(object):
         }
 
     @classmethod
-    def confirm_registration(cls, username, registration_code):
+    def verify_registration_code(cls, username, registration_code):
         """"""
 
         user = cls.get_by_username(username)
@@ -139,9 +136,8 @@ class User(object):
 
 
 class UserBlog(object):
-    """The user class is the class allows the user to created a single blog
-       or create multiple blogs, delete blogs, create, save and deletes
-       all through the blog object.
+    """The user blog class allows the user to created either a single blog,
+       multiple blogs, delete blogs.
      """
     def __init__(self):
         user = UserBlog._retreive_user_info()
@@ -164,7 +160,7 @@ class UserBlog(object):
         return self._parent_blog.find_child_blog(child_blog_id)
 
     def get_all_blogs(self):
-        """Return a list that contains all the blogs created by the user"""
+        """Return a list of objects that contains all the blogs created by the user"""
         return self._parent_blog.find_all_child_blogs()
 
     def update_blog(self, blog_id, data):

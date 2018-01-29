@@ -25,7 +25,7 @@ def register_user():
 def confirm_registration(username, code):
     """"""
 
-    if User.confirm_registration(username, code):
+    if User.verify_registration_code(username, code):
         return redirect(url_for('registration_app.confirmed_email', code=code))
     abort(404)
 

@@ -35,7 +35,7 @@ class Post(object):
         posts = Record.Query.find_all(query)
         return [_ChildPost(**post) for post in posts] if posts else None
 
-    def create_new_post(self, title, description):
+    def create_new_post(self, title, post):
         """create_new_post(str, str) -> returns Post Object
 
         Takes a post form object containing the user post details
@@ -44,14 +44,14 @@ class Post(object):
 
         child_post_id = gen_id()
         publish_date = date_created()
-        child_post = self._to_json(title, description, child_post_id, publish_date)
+        child_post = self._to_json(title, post, child_post_id, publish_date)
 
         Record.save(child_post)
 
         return _ChildPost(self._blog_id, self.post_id,
                           self.child_blog_id,
                           self.post_id, child_post_id,
-                          title, description,
+                          title, post,
                           publish_date
                          )
 
@@ -61,7 +61,7 @@ class Post(object):
         child_post = cls.get_post_by_id(post_id)
         Record.Delete.delete_post(child_post.child_blog_id, child_post.child_post_id)
 
-    def _to_json(self, title, description, child_post_id, publish_date):
+    def _to_json(self, title, post, child_post_id, publish_date):
         """_to_json(post_obj, str) -> return a dictionary object
 
         Returns the data for post model object as json object
@@ -81,7 +81,7 @@ class Post(object):
             "parent_post_id": self.post_id,
             "child_post_id": child_post_id,
             "title": title,
-            "post": description,
+            "post": post,
             "post_live": True,
             "publish_date": publish_date,
         }
@@ -91,12 +91,13 @@ class _ChildPost(object):
     """This _ChildPost is a container and should not be accessed directly"""
 
     def __init__(self, parent_blog_id, parent_post_id, child_blog_id,
-                 child_post_id, title, post, publish_date, post_live, _id=None):
+                 child_post_id, title, post, publish_date, post_live, _id=None, image=None):
 
         self.child_post_id = child_post_id
         self.child_blog_id = child_blog_id
         self.title = title
         self.post = post
+        self.image = image
         self.post_live = post_live
         self.publish_date = publish_date
         self.author = UserSession.get_username()
@@ -106,3 +107,7 @@ class _ChildPost(object):
 
     def html_strip(self, text):
         return strip_html_tags(text)
+
+    def update_post(self, data):
+        """"""
+        Record.Update.update(field_name='child_post_id', field_id=self.child_post_id, data=data)

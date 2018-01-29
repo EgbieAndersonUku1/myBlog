@@ -23,6 +23,7 @@ class Record(object):
         @classmethod
         def delete_all_blogs(cls, data):
             """"""
+            assert type(data) == list
             cls._cascade_delete(data={"$or": data})
 
         @classmethod

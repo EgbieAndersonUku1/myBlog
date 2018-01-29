@@ -43,7 +43,7 @@
                     <td>{{ post.publish_date.strftime('%c') }}</td>
                     <td>
 
-                        <a href="#">
+                        <a href="{{ url_for('posts_app.edit_post', blog_id=post.child_blog_id, post_id=post.child_post_id) }}">
                             <button>Edit</button>
                             <a/>
                             |

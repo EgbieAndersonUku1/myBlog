@@ -43,14 +43,14 @@ def blog_edit(blog_id):
     if not child_blog:
         abort(404)
 
-    form = BlogForm(obj=child_blog)
+    form = BlogForm(obj=child_blog) # populate the blog form with details from the child blog object
 
     if form.validate_on_submit():
 
         data = _get_updated_data(form, child_blog)
 
         if data:
-            blog.update_blog(blog_id, data=data)
+            child_blog.update_blog(data=data)
             Message.display_to_gui_screen("You have successfully updated your blog.")
             return redirect(url_for("blogs_app.my_blog", blog_id=child_blog.child_blog_id))
 
