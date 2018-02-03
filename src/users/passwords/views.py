@@ -37,8 +37,8 @@ def reset_password(username, code):
     form = ForgottenPasswordForm()
     user = User.verify_forgotten_password_code(username, code)
 
-    if not user:
-        abort(404)
+    assert user or abort(404)
+
     if form.validate_on_submit():
         user.update_forgotten_password(form)
         Message.display_to_gui_screen('You have successfully changed your password.')
