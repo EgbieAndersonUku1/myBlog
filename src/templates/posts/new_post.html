@@ -40,7 +40,11 @@
                     <button type="submit">Save and post</button>
                     {% endif %}
 
-                    <button type="submit" name="save draft" formaction="{{ url_for('drafts_app.drafts', blog_id=blog_id) }}">Save to draft</button>
+                    {% if edit_draft %}
+                        <button type="submit" name="save draft" formaction="{{ url_for('drafts_app.drafts', blog_id=blog_id) }}">Save as new draft</button>
+                    {% else %}
+                        <button type="submit" name="save draft" formaction="{{ url_for('drafts_app.drafts', blog_id=blog_id) }}">Save as draft</button>
+                    {% endif %}
                     <button type="submit" name="preview" formaction="{{ url_for('posts_app.post_preview', blog_id=blog_id) }}">Preview</button>
 
                 </div>
