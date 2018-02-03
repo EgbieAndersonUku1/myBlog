@@ -54,7 +54,7 @@ class Draft(object):
 
 
 class _Draft(object):
-    """ """
+    """This Draft object class should not be called directly as it is a container"""
 
     def __init__(self, _id, blog_id, post_id, draft_id, title, post, collection_name, date_created):
         self._table_name = collection_name
