@@ -1,6 +1,6 @@
-{% extends "base/index.html" %}
+{% extends "base/main/index.html" %}
 
-{% block content %}
+{% block body %}
 
 <!-- ToDo
     Add Bootstrap styling to the page to make it more pleasing to the eye.
@@ -15,10 +15,12 @@
 
             {% include "__flash_messages.html" %}
 
-            <div class="well">
-                You have a total of {{ num_of_drafts }} posts not yet published
+            <br><br>
+            <div class="jumbotron">
+                You have a total of <strong>{{ num_of_drafts }}</strong> posts not yet published
                 <br>
             </div>
+
             <h3><u>List of drafts</u></h3>
 
             <table class="table table-striped">
@@ -38,13 +40,13 @@
                 {% for draft in drafts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td><a href="#">{{ draft.html_strip(draft.title) | truncate(20) }}</a></td>
+                    <td><a href="{{ url_for('drafts_app.view', blog_id=blog_id, draft_id=draft.draft_id) }}">{{ draft.html_strip(draft.title) | truncate(20) }}</a></td>
                     <td>{{ draft.html_strip(draft.post) | truncate(60) | safe }} </td>
                     <td>{{ draft.date_created.strftime('%c') }}</td>
 
                     <td>
 
-                        <a href="#"><button>View</button></a>
+                        <a href="{{ url_for('drafts_app.view', blog_id=blog_id, draft_id=draft.draft_id) }}"><button>View</button></a>
                         |
                         <a href="{{ url_for('drafts_app.publish', blog_id=blog_id, draft_id=draft.draft_id) }}"><button>Publish</button></a>
                         |

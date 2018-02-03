@@ -1,0 +1,54 @@
+{% extends "base/main/index.html" %}
+
+{% if edit_blog %}
+    {% block title %} Create Blog {% endblock %}
+{% endif %}
+
+{% block body %}
+
+<div class="container">
+    <div id='creation' class="row">
+
+        {% include "base/dashboard/dashboard.html" %}
+
+        <div class="col-md-offset-1 col-lg-9">
+
+
+            {% include "__flash_messages.html" %}
+            {% from "__formhelpers.html" import render_field %}
+
+            {% if edit_blog %}
+
+                <h3 class="panel-title">Edit Blog</h3>
+                <form method="POST" action="{{ url_for('blogs_app.blog_edit', blog_id=child_blog.child_blog_id) }}" role="form">
+
+                    {{ form.hidden_tag() }}
+                    {{ render_field(form.blog_name, class='form-control') }}
+                    {{ render_field(form.title, class='form-control') }}
+                    {{ render_field(form.description, rows="16", class='form-control') }}
+                    <br>
+                    <button type="submit">Save edited blog</button>
+                </form>
+
+            {% else %}
+
+               <form method="POST" action="{{ url_for('blogs_app.blog_create') }}" role="form">
+                    <h3 class="panel-title">Create A New Blog</h3>
+
+                    {{ form.hidden_tag() }}
+                    {{ render_field(form.blog_name, class='form-control') }}
+                    {{ render_field(form.title, class='form-control') }}
+                    {{ render_field(form.description, rows="16", class='form-control') }}
+                    <br>
+                    <button type="submit">Create blog</button>
+
+                </form>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

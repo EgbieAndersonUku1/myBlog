@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, url_for, redirect
+from flask import Blueprint, render_template, url_for, redirect, abort
 
 from users.utils.generator.msg import Message
 from users.users.users import UserBlog
 from users.posts.form import PostForm
+from users.posts.views import get_updated_data
 
 drafts_app = Blueprint("drafts_app", __name__, url_prefix="/drafts")
 
@@ -29,8 +30,29 @@ def get_drafts(blog_id):
 
     child_blog = _get_blog(blog_id)
     drafts = child_blog.Post.Draft.get_all_draft_posts()
-
     return render_template("drafts/drafts.html", blog_id=blog_id, drafts=drafts, num_of_drafts=len(drafts))
+
+
+@drafts_app.route('/view/<blog_id>/<draft_id>', methods=['GET', 'POST'])
+def view(blog_id, draft_id):
+    """"""
+    child_blog = _get_blog(blog_id)
+    edit_draft = True
+
+    assert child_blog or abort(404)
+
+    draft = child_blog.Post.Draft.get_draft_post(draft_id, to_class=True)
+
+    form = PostForm(obj=draft)
+
+    if form.validate_on_submit():
+
+        draft_data = get_updated_data(form, draft)
+        if draft_data:
+            draft.update_draft(draft_data)
+            Message.display_to_gui_screen("You post has successfully been updated.")
+            return redirect(url_for("drafts_app.get_drafts", blog_id=blog_id))
+    return render_template('posts/new_post.html', form=form, blog_id=blog_id, draft_id=draft_id, edit_post=False, edit_draft=edit_draft)
 
 
 @drafts_app.route("/<blog_id>/<draft_id>/publish", methods=['GET', 'POST'])

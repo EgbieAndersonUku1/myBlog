@@ -30,7 +30,7 @@ def blog_create():
         Message.display_to_gui_screen("A new blog was successfully created.")
         return redirect(url_for("blogs_app.blog"))
 
-    return render_template('blogs/blogs_creation_page.html', form=form)
+    return render_template('blogs/blog.html', form=form, edit_blog=False)
 
 
 @blogs_app.route('/edit/<blog_id>', methods=('GET', 'POST'))
@@ -54,7 +54,7 @@ def blog_edit(blog_id):
             Message.display_to_gui_screen("You have successfully updated your blog.")
             return redirect(url_for("blogs_app.my_blog", blog_id=child_blog.child_blog_id))
 
-    return render_template("blogs/blog_edit.html", form=form, child_blog=child_blog)
+    return render_template("blogs/blog.html", form=form, child_blog=child_blog, edit_blog=True)
 
 
 @blogs_app.route('/')
@@ -90,7 +90,7 @@ def delete_all_blogs():
 
 
 def _get_updated_data(form, blog):
-    """_get_updated_data(form_obj, blog_obj) -> return dict
+    """get_updated_data(form_obj, blog_obj) -> return dict
 
     Checks if the user has updated their data. If the data has
     been updated returns only the updated data otherwise returns

@@ -17,15 +17,17 @@ class Draft(object):
         """"""
         Record.save(self._to_json(form))
 
-    def get_draft_post(self, draft_id):
+    def get_draft_post(self, draft_id, to_class=False):
         """"""
 
-        return Record.Query.Filter.filter_by_key_and_value(query={
+        draft = Record.Query.Filter.filter_by_key_and_value(query={
             "collection_name": "draft",
             "blog_id": self.blog_id,
             "post_id": self.post_id,
             "draft_id": draft_id
         })
+
+        return _Draft(**draft) if to_class else draft
 
     def get_all_draft_posts(self):
         """"""
@@ -66,3 +68,7 @@ class _Draft(object):
 
     def html_strip(self, text):
         return strip_html_tags(text)
+
+    def update_draft(self, data):
+        """"""
+        Record.Update.update(field_name='draft_id', field_id=self.draft_id, data=data)

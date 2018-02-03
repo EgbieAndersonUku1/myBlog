@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}{% endblock %}</title>
+    {{ ckeditor.load() }}
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../../static/vendor/bootstrap/css/blog_post.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    {% include "base/navbar/navbar.html" %}
+
+
+
+    {% block body %}{% endblock %}
+
+    <!-- Footer -->
+    <div class="footer">
+        <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../../../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

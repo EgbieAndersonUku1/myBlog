@@ -1,48 +1,58 @@
-{% extends "index.html" %}
+{% extends "base/main/index.html" %}
+{% block title %} Create Blog {% endblock %}
 
-{% block title %} New post {% endblock %}
 
-{% block content %}
+{% block body %}
 
-<div class="col-md-9">
-    <div class="panel panel-default">
-        <div class="panel-heading main-color-bg">
+<div class="container">
+    <div id='creation' class="row">
+
+        {% include "base/dashboard/dashboard.html" %}
+
+        <div class="col-md-offset-1 col-lg-9">
+
+            {% from "__formhelpers.html" import render_field %}
 
             {% if edit_post %}
-                <h3 class="panel-title">Edit Post</h3>
+                <h2> Edit Post </h2>
+            {% elif edit_draft %}
+                <h2> Edit draft </h2>
             {% else %}
-                <h3 class="panel-title">Create A New Post</h3>
+                <h2> Create New Post</h2>
             {% endif %}
-        </div>
 
-        {% from "__formhelpers.html" import render_field %}
+            <form method="POST" action="{{ url_for('posts_app.new_post', blog_id=blog_id) }}" role="form">
 
-        <form method="POST" action="{{ url_for('posts_app.new_post', blog_id=blog_id) }}" role="form">
+                <div class="panel-body">
+                    {{ form.hidden_tag() }}
+                    {{ render_field(form.title, class='form-control') }}
+                    {{ render_field(form.post, rows="10", class='form-control') }}
+                    {{ render_field(form.image, class='form-control') }}
 
-            <div class="panel-body">
-                {{ form.hidden_tag() }}
-                {{ render_field(form.title, class='form-control') }}
-                {{ render_field(form.post, rows="10", class='form-control') }}
-                {{ render_field(form.image, class='form-control') }}
+                    <br>
 
-                <br>
-
-                {% if edit_post %}
+                    {% if edit_post %}
                     <button type="submit" name="update post" formaction="{{ url_for('posts_app.edit_post', blog_id=blog_id, post_id=post_id) }}">Update post</button>
 
-                {% else %}
+                    {% elif edit_draft %}
+                        <button type="submit" name="update post" formaction="{{ url_for('drafts_app.view', blog_id=blog_id, draft_id=draft_id) }}">Update draft</button>
+                    {% else %}
                     <button type="submit">Save and post</button>
-                {% endif %}
+                    {% endif %}
 
-                <button type="submit" name="save draft" formaction="{{ url_for('drafts_app.drafts', blog_id=blog_id) }}">Save to draft</button>
+                    <button type="submit" name="save draft" formaction="{{ url_for('drafts_app.drafts', blog_id=blog_id) }}">Save to draft</button>
+                    <button type="submit" name="preview" formaction="#">Preview</button>
 
-            </div>
+                </div>
+
+            <br>
+
+
+            </form>
+        </div>
+
     </div>
-</div>
-<br>
 
-
-</form>
-
+    </div>
 
 {% endblock %}
