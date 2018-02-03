@@ -16,33 +16,31 @@
             {% from "__formhelpers.html" import render_field %}
 
             {% if edit_blog %}
-
-                <h3 class="panel-title">Edit Blog</h3>
-                <form method="POST" action="{{ url_for('blogs_app.blog_edit', blog_id=child_blog.child_blog_id) }}" role="form">
-
-                    {{ form.hidden_tag() }}
-                    {{ render_field(form.blog_name, class='form-control') }}
-                    {{ render_field(form.title, class='form-control') }}
-                    {{ render_field(form.description, rows="16", class='form-control') }}
-                    <br>
-                    <button type="submit">Save</button>
-                </form>
-
+            <h3 class="panel-title">Edit Blog</h3>
             {% else %}
-
-               <form method="POST" action="{{ url_for('blogs_app.blog_create') }}" role="form">
-                    <h3 class="panel-title">Create A New Blog</h3>
-
-                    {{ form.hidden_tag() }}
-                    {{ render_field(form.blog_name, class='form-control') }}
-                    {{ render_field(form.title, class='form-control') }}
-                    {{ render_field(form.description, rows="16", class='form-control') }}
-                    <br>
-                    <button type="submit">Create blog</button>
-
-                </form>
-
+            <h3 class="panel-title">Create A New Blog</h3>
             {% endif %}
+
+            <form method="POST" role="form">
+
+                {{ form.hidden_tag() }} <!-- prevent cross-site scripting -->
+                {{ render_field(form.blog_name, class='form-control') }}
+                {{ render_field(form.title, class='form-control') }}
+                {{ render_field(form.description, rows="20", class='form-control') }}
+                <br>
+
+                {% if edit_blog %}
+                <button type="submit"
+                        formaction="{{ url_for('blogs_app.blog_edit', blog_id=child_blog.child_blog_id) }}">Save
+                </button>
+                {% else %}
+                <button type="submit" name="new_blog" formaction="{{ url_for('blogs_app.blog_create') }}">Create new
+                    blog
+                </button>
+                {% endif %}
+
+            </form>
+
 
         </div>
     </div>
