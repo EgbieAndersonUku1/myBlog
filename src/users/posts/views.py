@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, abort, request
+from flask import Blueprint, render_template, url_for, redirect, abort
 
 from users.posts.form import PostForm
 from users.decorators import login_required
@@ -80,7 +80,8 @@ def delete_post(blog_id, post_id):
 
 @posts_app.route("/mode/preview/<blog_id>", methods=['GET', 'POST'])
 def post_preview(blog_id):
-    """"""
+    """Allows the user to preview a post before it is published"""
+
     form = PostForm()
 
     if form.validate_on_submit():
@@ -95,7 +96,7 @@ def _get_blog(blog_id):
 
 
 def get_updated_data(form, post_obj):
-    """get_updated_data(form_obj, blog_obj) -> return dict
+    """get_updated_data(form_obj, post_obj) -> return dict
 
     Checks if the user has updated their data. If the data has
     been updated returns only the updated data otherwise returns

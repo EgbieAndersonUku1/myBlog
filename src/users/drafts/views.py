@@ -9,7 +9,7 @@ drafts_app = Blueprint("drafts_app", __name__, url_prefix="/drafts")
 
 
 @drafts_app.route("/drafts/<blog_id>", methods=['GET', 'POST'])
-def drafts(blog_id):
+def save_to_drafts(blog_id):
     """"""
 
     form = PostForm()
@@ -18,7 +18,7 @@ def drafts(blog_id):
         child_blog = _get_blog(blog_id)
         child_blog.Post.Draft.save(form)
 
-        Message.display_to_gui_screen("The created post has been saved to draft section")
+        Message.display_to_gui_screen("The newly created post has been saved to draft section")
         return redirect(url_for('drafts_app.get_drafts', blog_id=blog_id))
 
     return render_template('posts/new_post.html', form=form, blog_id=blog_id)
@@ -52,7 +52,8 @@ def view(blog_id, draft_id):
             draft.update_draft(draft_data)
             Message.display_to_gui_screen("You post has successfully been updated.")
             return redirect(url_for("drafts_app.get_drafts", blog_id=blog_id))
-    return render_template('posts/new_post.html', form=form, blog_id=blog_id, draft_id=draft_id, edit_post=False, edit_draft=edit_draft)
+    return render_template('posts/new_post.html', form=form, blog_id=blog_id, draft_id=draft_id,
+                           edit_post=False, edit_draft=edit_draft)
 
 
 @drafts_app.route("/<blog_id>/<draft_id>/publish", methods=['GET', 'POST'])
