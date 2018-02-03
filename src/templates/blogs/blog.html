@@ -1,8 +1,6 @@
 {% extends "base/main/index.html" %}
 
-{% if edit_blog %}
-    {% block title %} Create Blog {% endblock %}
-{% endif %}
+{% block title %} Blog {% endblock %}
 
 {% block body %}
 
@@ -27,7 +25,7 @@
                     {{ render_field(form.title, class='form-control') }}
                     {{ render_field(form.description, rows="16", class='form-control') }}
                     <br>
-                    <button type="submit">Save edited blog</button>
+                    <button type="submit">Save</button>
                 </form>
 
             {% else %}
@@ -47,7 +45,6 @@
             {% endif %}
 
         </div>
-
     </div>
 </div>
 
