@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, url_for, redirect, abort
+from flask import Blueprint, render_template, url_for, redirect, abort, request
 
 from users.posts.form import PostForm
 from users.decorators import login_required
 from users.users.users import UserBlog
 from users.utils.generator.msg import Message
+from users.utils.generator.date_generator import time_now
 
 posts_app = Blueprint('posts_app', __name__, url_prefix="/posts")
 
@@ -77,11 +78,15 @@ def delete_post(blog_id, post_id):
     return redirect(url_for("posts_app.posts", blog_id=blog_id))
 
 
-@posts_app.route("/preview/<blog_id>", methods=['GET', 'POST'])
+@posts_app.route("/mode/preview/<blog_id>", methods=['GET', 'POST'])
 def post_preview(blog_id):
     """"""
-    pass
+    form = PostForm()
 
+    if form.validate_on_submit():
+
+        return render_template("posts/post_preview.html", form=form, date=time_now())
+    return redirect(url_for("posts_app.new_post", blog_id=blog_id, back=request.referrer))
 
 
 def _get_blog(blog_id):

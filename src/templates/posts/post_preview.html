@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base/main/index.html" %}
 
-  <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Blog Post - Start Bootstrap Template</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../../../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../../../static/vendor/bootstrap/css/blog_post.css" rel="stylesheet">
-
-  </head>
-
-  <body>
-
-    <!-- Navigation -->
-    {% include "base/navbar.html" %}
+{% block body %}
 
     <!-- Page Content -->
     <div class="container">
@@ -29,32 +9,36 @@
       <div class="row">
 
         <!-- Post Content Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-offset-4 col-lg-8">
 
           <!-- Title -->
-          <h1 class="mt-4">Post Title</h1>
+          <h1 class="mt-4">This is a preview post page</h1>
+
+          <h3 class="mt-4">{{ form.title.data }}</h3>
 
           <!-- Author -->
           <p class="lead">
             by
-            <a href="#">Start Bootstrap</a>
+            <a href="#">{{ session.username.title() }}</a>
           </p>
 
           <hr>
 
           <!-- Date/Time -->
-          <p>Posted on January 1, 2018 at 12:00 PM</p>
+          <p> Created on <strong>{{ date.strftime('%c') }}</strong></p>
 
           <hr>
 
           <!-- Preview Image -->
-          <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+          <img class="img-fluid rounded" src="http://placehold.it/400x400" alt="">
 
           <hr>
 
           <!-- Post Content -->
+          {{ form.post.data  | safe }}
 
           <hr>
+          <input type="button" value="Go back to post" onclick="window.history.back()" />
 
 
         </div>
@@ -65,18 +49,7 @@
     </div>
     <!-- /.container -->
 
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-      <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-      </div>
-      <!-- /.container -->
-    </footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="../../../static/vendor/jquery/jquery.min.js"></script>
-    <script src="../../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  </body>
 
-</html>
+{% endblock %}
