@@ -63,7 +63,9 @@
 
             {% else %}
             <div class="jumbotron">
-                You currently have no saved drafts
+                You currently have no saved drafts.
+                <br>
+                Saving a draft allows you to keep a post you aren't ready to publish yet.
             </div>
             {% endif %}
             <a href="{{ url_for('posts_app.posts', blog_id=blog_id) }}">
