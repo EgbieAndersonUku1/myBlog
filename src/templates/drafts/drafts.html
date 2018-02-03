@@ -40,13 +40,13 @@
                 {% for draft in drafts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td><a href="{{ url_for('drafts_app.view', blog_id=blog_id, draft_id=draft.draft_id) }}">{{ draft.html_strip(draft.title) | truncate(20) }}</a></td>
+                    <td><a href="{{ url_for('drafts_app.view_draft', blog_id=blog_id, draft_id=draft.draft_id) }}">{{ draft.html_strip(draft.title) | truncate(20) }}</a></td>
                     <td>{{ draft.html_strip(draft.post) | truncate(40) | safe }} </td>
                     <td>{{ draft.date_created.strftime('%c') }}</td>
 
                     <td>
 
-                        <a href="{{ url_for('drafts_app.view', blog_id=blog_id, draft_id=draft.draft_id) }}"><button>View</button></a>
+                        <a href="{{ url_for('drafts_app.view_draft', blog_id=blog_id, draft_id=draft.draft_id) }}"><button>View</button></a>
                         |
                         <a href="{{ url_for('drafts_app.publish', blog_id=blog_id, draft_id=draft.draft_id) }}"><button>Publish</button></a>
                         |

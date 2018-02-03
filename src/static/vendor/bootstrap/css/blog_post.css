@@ -24,6 +24,22 @@ body {
 }
 
 
+#forgotten_password{
+    margin-left: 150px;
+    margin-top: 100px;
+}
+
+label {
+
+    font-family: FANTASY;
+    font-weight: 10px;
+    font-size: 25px;
+}
+
+input {
+    height: 40px;
+}
+
 a {
  text-decoration: none;
 

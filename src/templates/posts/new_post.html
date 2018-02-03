@@ -1,7 +1,6 @@
 {% extends "base/main/index.html" %}
 {% block title %} Create Blog {% endblock %}
 
-
 {% block body %}
 
 <div class="container">
@@ -35,7 +34,7 @@
                     <button type="submit" name="update post" formaction="{{ url_for('posts_app.edit_post', blog_id=blog_id, post_id=post_id) }}">Update post</button>
 
                     {% elif edit_draft %}
-                        <button type="submit" name="update post" formaction="{{ url_for('drafts_app.view', blog_id=blog_id, draft_id=draft_id) }}">Update draft</button>
+                        <button type="submit" name="update post" formaction="{{ url_for('drafts_app.view_draft', blog_id=blog_id, draft_id=draft_id) }}">Update draft</button>
                     {% else %}
                     <button type="submit">Save and post</button>
                     {% endif %}

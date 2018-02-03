@@ -34,7 +34,7 @@ def get_drafts(blog_id):
 
 
 @drafts_app.route('/view/<blog_id>/<draft_id>', methods=['GET', 'POST'])
-def view(blog_id, draft_id):
+def view_draft(blog_id, draft_id):
     """"""
     child_blog = _get_blog(blog_id)
     edit_draft = True
@@ -71,6 +71,7 @@ def publish(blog_id, draft_id):
 
 @drafts_app.route("/delete/<blog_id>/<draft_id>")
 def delete_draft(blog_id, draft_id):
+    """"""
 
     child_blog = _get_blog(blog_id)
     child_blog.Post.Draft.delete_draft(draft_id)
