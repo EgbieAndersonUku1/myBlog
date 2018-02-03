@@ -3,6 +3,7 @@ from flask import Blueprint, url_for, redirect, render_template, abort
 from users.passwords.form import ForgottenPasswordForm, NewPasswordForm, ResetForgottenPassword
 from users.users.users import User
 from users.utils.implementer.password_implementer import PasswordImplementer
+from users.utils.session.user_session import UserSession
 from users.utils.generator.msg import Message
 
 password_app = Blueprint('password_app', __name__)
@@ -13,16 +14,19 @@ def forgotten_password():
 
     form = ResetForgottenPassword()
 
-    if form.validate_on_submit():
+    if UserSession.get_username():
+        return redirect(url_for("blogs_app.blog"))
+    elif form.validate_on_submit():
 
         user = User.get_by_email(form.email.data)
 
         if user:
            user.reset_forgotten_password()
-
-        Message.display_to_gui_screen("""A reset password code link has been sent to your email. 
-                                         Click on the link to reset your password
-                                      """)
+        Message.display_to_gui_screen("""
+                                      A reset password code link has been sent to your email. 
+                                      Click on the link to reset your password
+                                      """
+                                      )
     return render_template('password/forgotten_password.html', form=form)
 
 
