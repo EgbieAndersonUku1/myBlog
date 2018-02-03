@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request, redirect, url_for, abort
-from users.utils.session.user_session import UserSession
+from users.utils.security.user_session import UserSession
 
 
 def login_required(f):

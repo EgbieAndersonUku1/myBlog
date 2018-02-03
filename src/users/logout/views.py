@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for
 
-from users.utils.session.user_session import UserSession
+from users.utils.security.user_session import UserSession
 
 logout_app = Blueprint('logout_app', __name__)
 

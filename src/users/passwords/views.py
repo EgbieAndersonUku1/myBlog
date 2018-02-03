@@ -2,8 +2,7 @@ from flask import Blueprint, url_for, redirect, render_template, abort
 
 from users.passwords.form import ForgottenPasswordForm, NewPasswordForm, ResetForgottenPassword
 from users.users.users import User
-from users.utils.implementer.password_implementer import PasswordImplementer
-from users.utils.session.user_session import UserSession
+from users.utils.security.user_session import UserSession
 from users.utils.generator.msg import Message
 
 password_app = Blueprint('password_app', __name__)

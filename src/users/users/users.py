@@ -3,8 +3,8 @@ from users.utils.email.sender import email_user_verification_code, email_user_fo
 from users.blogs.models import ParentBlog
 from users.records.record import Record
 from users.utils.generator.id_generator import gen_id as gen_code
-from users.utils.implementer.password_implementer import PasswordImplementer
-from users.utils.session.user_session import UserSession
+from users.utils.security.password_implementer import PasswordImplementer
+from users.utils.security.user_session import UserSession
 
 
 class User(object):

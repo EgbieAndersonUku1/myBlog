@@ -1,7 +1,7 @@
 from users.utils.generator.id_generator import gen_id
 from users.utils.generator.date_generator import time_now as date_created
 from users.records.record import Record
-from users.utils.session.user_session import UserSession
+from users.utils.security.user_session import UserSession
 from users.drafts.model import Draft
 from users.utils.html_stripper import strip_html_tags
 
@@ -105,7 +105,8 @@ class _ChildPost(object):
         self._parent_blog_id = parent_blog_id
         self._parent_post_id = parent_post_id
 
-    def html_strip(self, text):
+    @staticmethod
+    def html_strip(text):
         return strip_html_tags(text)
 
     def update_post(self, data):

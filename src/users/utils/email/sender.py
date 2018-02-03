@@ -1,6 +1,6 @@
 from flask import render_template
 
-from users.utils.credentials_reader import cred_reader
+from users.utils.security.credentials_reader import cred_reader
 from users.utils.email.email_model import EmailGmail
 
 

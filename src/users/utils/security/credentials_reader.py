@@ -24,5 +24,6 @@ def get_value(cred_file, key):
     try:
         dotenv.load_dotenv(cred_file)
     except KeyError:
-        pass # replace this with an error
-    return os.environ.get(key)
+        print("Could not find the username and password for the gmail account")
+    else:
+        return os.environ.get(key)
