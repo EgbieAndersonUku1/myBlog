@@ -33,7 +33,6 @@ class ParentBlog(object):
 
         if not Record.save(blog_data):
             raise Exception('Error, The blog data was not saved on the database.')
-
         return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
                           blog_form.blog_name.data, blog_form.title.data,
                           blog_form.description.data, _id=None, blog_live=True,
@@ -85,7 +84,7 @@ class ParentBlog(object):
 
 class _ChildBlog(object):
     """The Child blog is a child of the Parent blog and
-       should not be called directly.
+       should not be called directly. It is also a container.
     """
 
     def __init__(self, user_id, parent_blog_id, child_blog_id, post_id, blog_name,

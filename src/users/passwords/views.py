@@ -21,7 +21,7 @@ def forgotten_password():
         user = User.get_by_email(form.email.data)
 
         if user:
-           user.reset_forgotten_password()
+            user.reset_forgotten_password()
         Message.display_to_gui_screen("""
                                       A reset password code link has been sent to your email. 
                                       Click on the link to reset your password
