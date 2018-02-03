@@ -84,9 +84,8 @@ def post_preview(blog_id):
     form = PostForm()
 
     if form.validate_on_submit():
-
         return render_template("posts/post_preview.html", form=form, date=time_now())
-    return redirect(url_for("posts_app.new_post", blog_id=blog_id, back=request.referrer))
+    return redirect(url_for("posts_app.new_post", blog_id=blog_id))
 
 
 def _get_blog(blog_id):
