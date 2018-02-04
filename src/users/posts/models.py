@@ -30,6 +30,7 @@ class Post(object):
 
         query = {"parent_blog_id": self._blog_id,
                  "child_blog_id" : self.child_blog_id,
+                 "user_id": self._user_id,
                  "parent_post_id": self.post_id, "post_live": True}
 
         posts = Record.Query.find_all(query)
@@ -49,7 +50,7 @@ class Post(object):
         Record.save(child_post)
 
         return _ChildPost(self._blog_id, self.post_id,
-                          self.child_blog_id,
+                          self.child_blog_id, self._user_id,
                           self.post_id, child_post_id,
                           title, post,
                           publish_date
@@ -76,6 +77,7 @@ class Post(object):
                 Returns a json object
         """
         return {
+            "user_id": self._user_id,
             "parent_blog_id": self._blog_id,
             "child_blog_id": self.child_blog_id,
             "parent_post_id": self.post_id,
@@ -91,10 +93,12 @@ class _ChildPost(object):
     """This _ChildPost is a container and should not be accessed directly"""
 
     def __init__(self, parent_blog_id, parent_post_id, child_blog_id,
-                 child_post_id, title, post, publish_date, post_live, _id=None, image=None):
+                 child_post_id, user_id, title, post, publish_date,
+                 post_live, _id=None, image=None):
 
         self.child_post_id = child_post_id
         self.child_blog_id = child_blog_id
+        self.user_id = user_id
         self.title = title
         self.post = post
         self.image = image
