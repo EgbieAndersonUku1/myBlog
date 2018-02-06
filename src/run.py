@@ -7,6 +7,8 @@ manager.add_command('runserver', Server(
     use_debugger=True
 ))
 
+
+
 @manager.shell
 def create_shell():
       return dict(app=create_app)

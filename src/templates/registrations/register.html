@@ -1,60 +1,41 @@
-{% extends "base/login_and_registration/login_and_registration.html" %}
-{% block title %}Blog Registration Form{% endblock %}
-{% block content %}
+{% extends "blogs/front_page.html" %}
 
-<!-- Top content -->
-<div class="top-content">
-
-    <div class="inner-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>Blog</strong> Registration Form</h1>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 phone">
-                    <img src="static/template/assets/img/iphone.png" alt="">
-                </div>
-                <div class="col-sm-5 form-box">
-                    <div class="form-top">
-                        <div class="form-top-left">
-                            <h2>Register to use your blog</h2>
-                            <p>Fill in the form below or click the <a href="{{ url_for('login_app.login') }}"> login</a>
-                                button to login</p>
-                        </div>
+{% block title %} Registration Page {% endblock %}
 
 
-                        <div class="form-top-right">
-                            <i class="fa fa-pencil"></i>
-                        </div>
-                    </div>
-                    <div class="form-bottom">
-                        {% if error %}
-                        <div class="alert alert-danger">
-                            {{ error }}
-                        </div>
-                        {% endif %}
-                        {% from "__formhelpers.html" import render_field %}
-                        <form role="form" method="post" action="{{ url_for('registration_app.register_user') }}" class="registration-form">
+{% block body %}
 
-                            {{ form.hidden_tag() }} <!-- prevents cross site scripting  -->
-                            {{ render_field(form.username, class="form-control") }}
-                            {{ render_field(form.email, class="form-control") }}
-                            {{ render_field(form.password, class="form-control") }}
-                            {{ render_field(form.confirm, class="form-control") }}
 
-                            <hr>
-                            <button type="submit" class="btn btn-primary">Sign me up!</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        {% include "__flash_messages.html" %}
+        <div class="col-lg-5 col-md-10 mx-auto">
+
+            <h1>Registration Page</h1>
+            <p>Register your details in order to use the facilities of the blog</p>
+
+            {% from "__formhelpers.html" import render_field %}
+
+            <form method="post" action="{{ url_for('registration_app.register_user') }}" class="registration_form">
+
+                {{ form.hidden_tag() }} <!-- prevents cross site scripting  -->
+                {{ render_field(form.username, class="form-control") }}
+                {{ render_field(form.email, class="form-control") }}
+                {{ render_field(form.password, class="form-control") }}
+                {{ render_field(form.confirm, class="form-control") }}
+
+                <br>
+                <button type="submit" class="btn btn-primary">Sign me up!</button>
+            </form>
+
         </div>
     </div>
-
 </div>
+
+
+
+
 
 
 {% endblock %}

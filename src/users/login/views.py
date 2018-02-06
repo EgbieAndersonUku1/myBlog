@@ -10,7 +10,6 @@ from users.utils.generator.msg import Message
 login_app = Blueprint('login_app', __name__)
 
 
-@login_app.route('/', methods=['GET', 'POST'])
 @login_app.route('/login', methods=['GET', 'POST'])
 def login():
     """Allows the user to login to the application using the GUI"""

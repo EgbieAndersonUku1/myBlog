@@ -1,5 +1,5 @@
 import time
-from flask import Flask
+from flask import Flask, render_template
 from flask_caching import Cache
 from flask_ckeditor import CKEditor
 from users.records.database.database import Database

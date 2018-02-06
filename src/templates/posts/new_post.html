@@ -1,4 +1,4 @@
-{% extends "base/main/index.html" %}
+{% extends "index.html" %}
 {% block title %} Create Blog {% endblock %}
 
 {% block body %}
@@ -6,7 +6,7 @@
 <div class="container">
     <div id='creation' class="row">
 
-        {% include "base/dashboard/dashboard.html" %}
+        {% include "dashboard/dashboard.html" %}
 
         <div class="col-md-offset-1 col-lg-9">
 
@@ -23,6 +23,7 @@
             <form method="POST" action="{{ url_for('posts_app.new_post', blog_id=blog_id) }}" role="form">
 
                 <div class="panel-body">
+
                     {{ form.hidden_tag() }}
                     {{ render_field(form.title, class='form-control') }}
                     {{ render_field(form.post, rows="10", class='form-control') }}

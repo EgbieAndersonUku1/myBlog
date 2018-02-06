@@ -1,53 +1,38 @@
-{% extends "base/login_and_registration/login_and_registration.html" %}
-{% block title %} Blog Login Form {% endblock %}
-{% block content %}
+{% extends "blogs/front_page.html" %}
 
-<!-- Top content -->
-<div class="top-content">
+{% block title %} Login Page {% endblock %}
 
-    <div class="inner-bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>Blog</strong> Login Form</h1>
 
-                </div>
+{% block body %}
+
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+
+
+        <div class="col-md-offset-3 col-lg-6 mx-auto">
+            {% include "__flash_messages.html" %}
+            <h1>Login Page</h1>
+
+            <div class="login-msg">
+                 <p>Logged in to access your blog's functionality</p>
             </div>
-            <div class="row">
-                <div class="col-sm-6 phone">
-                    <a href="{{ url_for('registration_app.register_user') }}">
-                        <img src="static/template/assets/img/iphone.png" alt="">
-                    </a>
-                </div>
 
 
-                <div class="col-sm-5 form-box">
-
-                    <div class="form-bottom">
-                        {% include "__flash_messages.html" %}
-                        {% from "__formhelpers.html" import render_field %}
-
-                        <form role="form" action="" method="post" class="registration-form">
-
-                            {{ form.hidden_tag() }} <!--Prevents cross site scripting -->
-                            {{ render_field(form.username, class="form-control") }}
-                            {{ render_field(form.password, class="form-control") }}
-
-                            <span id="passwordHelpBlock" class="help_block"><a
-                                    href="{{ url_for('password_app.forgotten_password') }}">Forgot password??</a> </span>
-                            <br>
-
-                            <br>
-                            <button type="submit" class="btn btn-primary">Log me in!</button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-</div>
+            {% from "__formhelpers.html" import render_field %}
 
 
-{% endblock %}
+            <form role="form" action="" method="post" class="registration-form">
+
+                {{ form.hidden_tag() }} <!--Prevents cross site scripting -->
+                {{ render_field(form.username, class="form-control") }}
+                {{ render_field(form.password, class="form-control") }}
+
+                <span id="passwordHelpBlock" class="help_block"><a href="{{ url_for('password_app.forgotten_password') }}">Forgot password?</a> </span>
+                <br>
+
+                <br>
+                <button type="submit" class="btn btn-primary">Log me in!</button>
+            </form>
+            {% endblock %}
