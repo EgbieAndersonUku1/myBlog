@@ -21,12 +21,13 @@ def forgotten_password():
 
         if user:
             user.reset_forgotten_password()
-        Message.display_to_gui_screen("""
-                                      A reset password code link has been sent to your email. 
-                                      Click on the link to reset your password
-                                      """
-                                      )
+            return redirect(url_for('password_app.reset_password_msg'))
     return render_template('password/forgotten_password.html', form=form)
+
+
+@password_app.route("/Message/sent")
+def reset_password_msg():
+    return render_template("password/forgotten_password_msg.html")
 
 
 @password_app.route('/password/reset/<username>/<code>', methods=('GET', 'POST'))
