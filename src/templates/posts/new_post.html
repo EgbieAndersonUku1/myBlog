@@ -20,7 +20,7 @@
                 <h2> Create New Post</h2>
             {% endif %}
 
-            <form method="POST" action="{{ url_for('posts_app.new_post', blog_id=blog_id) }}" role="form">
+            <form method="POST" action="{{ url_for('posts_app.new_post', blog_id=blog_id) }}" role="form" enctype="multipart/form-data">
 
                 <div class="panel-body">
 

@@ -1,6 +1,5 @@
 {% extends "index.html" %}
 
-
 {% block body %}
 
     <!-- Page Content -->
@@ -14,7 +13,7 @@
           <!-- Title -->
           <h1 class="mt-4">This is a preview post page</h1>
 
-          <h3 class="mt-4">{{ form.title.data }}</h3>
+          <h3 class="mt-4">{{ form.title.data.title() }}</h3>
 
           <!-- Author -->
           <p class="lead">
@@ -31,6 +30,8 @@
 
           <!-- Preview Image -->
           <img class="img-fluid rounded" src="http://placehold.it/400x400" alt="">
+          <p> <b>Sorry, you cannot view your picture in preview mode</b></p>
+
 
           <hr>
 
@@ -38,11 +39,11 @@
           {{ form.post.data  | safe }}
 
           <hr>
-          <input type="button" value="Go back to post" onclick="window.history.back()" />
+          <input type="button" value="Go back to where I was" onclick="window.history.back()" />
 
-          <br><br>
+          <hr>
           <h1><center>THIS IS A PREVIEW</center></h1>
-
+          <hr>
 
         </div>
 
@@ -51,8 +52,6 @@
 
     </div>
     <!-- /.container -->
-
-
 
 
 {% endblock %}

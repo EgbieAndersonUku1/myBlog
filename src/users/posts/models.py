@@ -1,3 +1,6 @@
+import os
+
+from settings import STATIC_IMAGE_URL
 from users.utils.generator.id_generator import gen_id
 from users.utils.generator.date_generator import time_now as date_created
 from users.records.record import Record
@@ -11,11 +14,12 @@ class Post(object):
         class should not be accessed directly and should only be accessed
         from the User blog class
      """
-    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id):
+    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id, post_img=None):
         self._user_id = user_id
         self._blog_id = parent_blog_id
         self.child_blog_id = child_blog_id
         self.post_id = post_id
+        self.post_img = post_img
         self.Draft = Draft(self.child_blog_id, self.post_id)
 
     @staticmethod
@@ -53,7 +57,8 @@ class Post(object):
                           self.child_blog_id, self._user_id,
                           self.post_id, child_post_id,
                           title, post,
-                          publish_date
+                          publish_date,
+                          self.post_img
                          )
 
     @classmethod
@@ -86,6 +91,7 @@ class Post(object):
             "post": post,
             "post_live": True,
             "publish_date": publish_date,
+            "post_img": self.post_img,
         }
 
 
@@ -94,14 +100,14 @@ class _ChildPost(object):
 
     def __init__(self, parent_blog_id, parent_post_id, child_blog_id,
                  child_post_id, user_id, title, post, publish_date,
-                 post_live, _id=None, image=None):
+                 post_live, _id=None, post_img=None):
 
         self.child_post_id = child_post_id
         self.child_blog_id = child_blog_id
         self.user_id = user_id
         self.title = title
         self.post = post
-        self.image = image
+        self.post_img = post_img
         self.post_live = post_live
         self.publish_date = publish_date
         self.author = UserSession.get_username()
@@ -116,3 +122,6 @@ class _ChildPost(object):
     def update_post(self, data):
         """"""
         Record.Update.update(field_name='child_post_id', field_id=self.child_post_id, data=data)
+
+    def get_post_img(self, size):
+        pass

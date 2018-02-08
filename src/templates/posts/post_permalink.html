@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+
+
+{% block body %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-md-offset-3 col-md-8">
+
+          <!-- Title -->
+          <h1 class="mt-4">This is a preview post page</h1>
+
+          <h3 class="mt-4">{{ post.title.title() }}</h3>
+
+          <!-- Author -->
+          <p class="lead">
+            by
+            <a href="#">{{ session.username.title() }}</a>
+          </p>
+
+          <hr>
+
+          <!-- Date/Time -->
+          <p> Created on <strong>{{ post.publish_date.strftime('%c') }}</strong></p>
+
+          <hr>
+
+          <!-- Preview Image -->
+            {% if post.post_img %}
+                <img class="img-fluid rounded" src="{{ url_for('static', filename=post.get_post_img('xlarge')) }}">
+            {% endif %}
+
+          <hr>
+
+          <!-- Post Content -->
+          {{ post.post  | safe }}
+
+          <hr>
+
+
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+
+
+
+{% endblock %}
