@@ -1,14 +1,22 @@
-{% extends "base/intro.html" %}
+{% extends "front_page_index.html" %}
 
 {% block title %}Email confirmation page {% endblock %}
 
 
-{% block content %}
+{% block body %}
 
-<h1>Email Confirmed</h1>
-<p>Your email address has been successful confirmed. Use the link below to login your blog account</p>
-<p>Click the <a href="{{ url_for('login_app.login') }}"> link</a> to login</p>
+<div class="container">
+    <div class="row">
 
+        <div class="col-md-offset-3 col-lg-9 mx-auto">
+
+            <h1>Email Confirmed</h1>
+            <p>Your email address has been successful confirmed. Use the link below to login your blog account.
+                 Click the <a id="login" href="{{ url_for('login_app.login') }}"> link</a> to login
+            </p>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
 

@@ -1,17 +1,23 @@
-{% extends "base/intro.html" %}
+{% extends "front_page_index.html" %}
 
 {% block title %}Verify Email {% endblock %}
 
 
-{% block content %}
+{% block body %}
 
-<h1>Verify your email address</h1>
-<p>The details given have successful be added to the database. To log into your account and begin creating blogs,
-    please verify your email address.
-</p>
-<p>Click here to go to the <a href="{{ url_for('registration_app.register_user') }}">registration page</a> or here to
-    <a href="{{ url_for('login_app.login') }}"> login page</a> </p>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-offset-3 col-lg-9 mx-auto">
 
 
+            <h1>Verify your email address</h1>
+            <p>The details given have successful be added to the database. To log into your account and begin creating blogs,
+                please verify your email address.
+            </p>
+
+        </div>
+    </div>
+</div>
 {% endblock %}
 
