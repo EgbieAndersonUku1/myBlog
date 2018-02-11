@@ -5,6 +5,7 @@ from users.decorators import login_required
 from users.users.users import UserBlog
 from users.utils.generator.msg import Message
 from users.utils.generator.date_generator import time_now
+from users.comments.form import CommentForm
 
 posts_app = Blueprint('posts_app', __name__, url_prefix="/posts")
 
@@ -79,6 +80,7 @@ def delete_post(blog_id, post_id):
 
 
 @posts_app.route("/mode/preview/<blog_id>", methods=['GET', 'POST'])
+@login_required
 def post_preview(blog_id):
     """Allows the user to preview a post before it is published"""
 
@@ -87,6 +89,24 @@ def post_preview(blog_id):
     if form.validate_on_submit():
         return render_template("posts/post_preview.html", form=form, date=time_now())
     return redirect(url_for("posts_app.new_post", blog_id=blog_id))
+
+
+
+@posts_app.route("/permalink/<blog_id>/<post_id>", methods=['GET', 'POST'])
+def post_permalink(blog_id, post_id):
+    """"""
+    form = CommentForm()
+
+    child_blog = _get_blog(blog_id)
+
+    post = child_blog.Post.get_post_by_id(post_id)
+
+    if form.validate_on_submit():
+        post.Comment.save_comment(comment=form.comment.data)
+        return redirect(url_for("posts_app.post_permalink", blog_id=blog_id, post_id=post_id))
+
+    return render_template("posts/post_permalink.html", form=form, post=post)
+
 
 
 def _get_blog(blog_id):

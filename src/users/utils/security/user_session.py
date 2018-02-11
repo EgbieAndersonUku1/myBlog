@@ -14,7 +14,7 @@ class UserSession(object):
     @staticmethod
     def add_username(username):
         """Add a username to the register's session"""
-        session['username'] = username
+        session['username'] = username.lower()
 
     @staticmethod
     def add_next_url(url):

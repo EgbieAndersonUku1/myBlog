@@ -3,54 +3,116 @@
 
 {% block body %}
 
-    <!-- Page Content -->
-    <div class="container">
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-7">
 
-      <div class="row">
+            <!-- Title -->
+            <h1 class="mt-4">{{ post.title.title() }}</h1>
 
-        <!-- Post Content Column -->
-        <div class="col-md-offset-3 col-md-8">
+            <!-- Author -->
+            <p class="lead">
+                by
+                {% if session.username %}
+                    <a href="#">{{ session.username.title() }}</a>
+                {% endif %}
+            </p>
 
-          <!-- Title -->
-          <h1 class="mt-4">This is a preview post page</h1>
+            <hr>
 
-          <h3 class="mt-4">{{ post.title.title() }}</h3>
+            <!-- Date/Time -->
+            <p> Created on <strong>{{ post.publish_date.strftime('%c') }}</strong></p>
 
-          <!-- Author -->
-          <p class="lead">
-            by
-            <a href="#">{{ session.username.title() }}</a>
-          </p>
+            <hr>
 
-          <hr>
-
-          <!-- Date/Time -->
-          <p> Created on <strong>{{ post.publish_date.strftime('%c') }}</strong></p>
-
-          <hr>
-
-          <!-- Preview Image -->
+            <!-- Image -->
             {% if post.post_img %}
                 <img class="img-fluid rounded" src="{{ url_for('static', filename=post.get_post_img('xlarge')) }}">
+            {% else %}
+                <img class="img-fluid rounded" src="http://placehold.it/400x400" alt="">
             {% endif %}
 
-          <hr>
+            <hr>
 
-          <!-- Post Content -->
-          {{ post.post  | safe }}
+            <!-- Post Content -->
+            {{ post.post | safe }}
 
-          <hr>
+            <hr>
+
+            {% from "__formhelpers.html" import render_field %}
+
+
+            <form method="POST"
+                  action="{{ url_for('posts_app.post_permalink', blog_id=post.child_blog_id, post_id=post.child_post_id) }}"
+                  role="form">
+
+                {{ form.hidden_tag() }}
+                {{ render_field(form.comment, rows="5", class="form-control") }}
+
+                {% if session.username %}
+                    Post your comments
+
+                    <br><br>
+                    <button type="submit">Post comment</button>
+
+                {% else %}
+
+                    You must be logged into to make a comment.
+                    <a href="{{ url_for('login_app.login') }}">login</a> |
+                    <a href="{{ url_for('registration_app.register_user') }}">register</a>
+                {% endif %}
+
+            </form>
+
+
+            <br><br>
+            <h2>Comments</h2>
+            <hr>
+            <br>
+
+            {% for comment in post.Comment.get_all_comments() %}
+            <div class="card">
+                <div class="card-header">
+                    Username: <b>{{ session.username }}</b>
+                    <br>
+                    Commented on the post titled <strong>{{ post.title.title()}}</strong> on the <b>{{ comment.comment_on.strftime('%c') }}</b>
+
+                </div>
+
+                <div class="card-block">
+                    <br>
+                     <blockquote class="card-blockquote">
+                        <p class="card-text"> {{ comment.comment }} </p>
+                     </blockquote>
+
+                    {% if session.username %}
+                    <p class="float-sm-right">
+
+                        <br>
+                    <a href="#">Edit</a> |
+                    <a href="{{ url_for('comment_app.delete_comment',blog_id=comment.child_blog_id,
+                                         post_id=comment.post_id,comment_id=comment.comment_id)
+                              }}">Delete</a>
+                    </p>
+                    <br>
+                    <br>
+                    {% endif %}
+                </div>
+            </div>
+            <br><br>
+
+            {% endfor %}
 
 
         </div>
-
-      </div>
-      <!-- /.row -->
-
     </div>
-    <!-- /.container -->
 
+</div>
+<!-- /.row -->
 
+</div>
+<!-- /.container -->
 
 
 {% endblock %}

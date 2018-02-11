@@ -34,6 +34,10 @@ class Record(object):
         def delete_draft(cls, blog_id, draft_id):
             cls._delete(data={"child_blog_id": blog_id, "draft_id": draft_id})
 
+        @classmethod
+        def delete_comment(cls, blog_id, comment_id):
+            cls._delete(data={"child_blog_id": blog_id, "comment_id": comment_id})
+
         @staticmethod
         def _delete(data):
             assert type(data) == dict
@@ -60,6 +64,10 @@ class Record(object):
             @classmethod
             def filter_user_by_email(cls, email):
                 return cls._filter_query({'email': email})
+
+            @classmethod
+            def filter_user_by_id(cls, user_id):
+                return cls._filter_query({'user_id': user_id})
 
             @classmethod
             def filter_by_key_and_value(cls, query):

@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for
+from flask import Blueprint, redirect, url_for, request
 
 from users.utils.security.user_session import UserSession
 
@@ -11,4 +11,4 @@ def logout():
 
     UserSession.remove_username()
     UserSession.remove_value_by_key('admin')
-    return redirect(url_for('login_app.login'))
+    return redirect(request.referrer)

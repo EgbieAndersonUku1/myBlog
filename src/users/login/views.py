@@ -44,6 +44,7 @@ def _is_next_in_url():
         UserSession.add_next_url(request.args.get('next'))
 
 
+
 def _add_username_email_and_admin_to_secure_user_session(user, admin):
     """Adds the username and admin name to the user's secure session"""
 

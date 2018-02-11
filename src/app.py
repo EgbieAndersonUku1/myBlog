@@ -24,6 +24,7 @@ from users.registration.views import registration_app
 from users.logout.views import logout_app
 from users.passwords.views import password_app
 from users.drafts.views import drafts_app
+from users.comments.views import comment_app
 
 
 @app.before_first_request
@@ -44,6 +45,6 @@ def create_app():
     app.register_blueprint(password_app)
     app.register_blueprint(logout_app)
     app.register_blueprint(drafts_app)
-
+    app.register_blueprint(comment_app)
 
     return app

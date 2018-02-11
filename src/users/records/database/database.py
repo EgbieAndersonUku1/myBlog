@@ -66,7 +66,7 @@ class Database(object):
         :param
             `query` : A dictionary object that will be used to search the database
         """
-        return Database.DATABASE[db_name].find(query)
+        return Database.DATABASE[db_name].find(query).sort('_id', pymongo.DESCENDING)
 
     @staticmethod
     def find_one(query, db_name="blogs"):

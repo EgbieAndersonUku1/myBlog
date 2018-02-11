@@ -4,6 +4,7 @@ from users.utils.generator.date_generator import time_now as date_created
 from users.records.record import Record
 from users.utils.security.user_session import UserSession
 from users.drafts.model import Draft
+from users.comments.models import Comment
 from users.utils.html_stripper import strip_html_tags
 
 
@@ -14,9 +15,9 @@ class Post(object):
      """
     def __init__(self, user_id, child_blog_id, post_img=None):
         self._user_id = user_id
-        self.child_blog_id = child_blog_id
-        self.post_img = post_img
-        self.Draft = Draft(self.child_blog_id, self._user_id)
+        self._child_blog_id = child_blog_id
+        self._post_img = post_img
+        self.Draft = Draft(self._child_blog_id, self._user_id)
 
     @staticmethod
     def get_post_by_id(post_id):
@@ -28,7 +29,7 @@ class Post(object):
     def get_all_posts(self):
         """Returns all posts belonging to a particular blog"""
 
-        query = {"child_blog_id" : self.child_blog_id,
+        query = {"child_blog_id" : self._child_blog_id,
                  "user_id": self._user_id,"post_live": True
                  }
 
@@ -48,9 +49,9 @@ class Post(object):
 
         Record.save(child_post)
 
-        return _ChildPost(self.child_blog_id, self._user_id,
+        return _ChildPost(self._child_blog_id, self._user_id,
                           child_post_id, title, post,publish_date,
-                          self.post_img
+                          self._post_img
                          )
 
     @classmethod
@@ -75,13 +76,13 @@ class Post(object):
         """
         return {
             "user_id": self._user_id,
-            "child_blog_id": self.child_blog_id,
+            "child_blog_id": self._child_blog_id,
             "child_post_id": child_post_id,
             "title": title,
             "post": post,
             "post_live": True,
             "publish_date": publish_date,
-            "post_img": self.post_img,
+            "post_img": self._post_img,
         }
 
 
@@ -101,6 +102,7 @@ class _ChildPost(object):
         self.publish_date = publish_date
         self.author = UserSession.get_username()
         self._id = _id if _id else gen_id()
+        self.Comment = Comment(self.child_blog_id, self.user_id, child_post_id)
 
     @staticmethod
     def html_strip(text):

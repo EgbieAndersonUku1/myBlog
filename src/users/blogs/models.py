@@ -51,12 +51,13 @@ class ParentBlog(object):
         return [_ChildBlog(**blog) for blog in blogs] if blogs else None
 
     def delete_all_child_blogs(self):
-        """Deletes all blogs and all posts, drafts associated with the blogs"""
+        """Deletes all blogs and all posts, drafts and cooments associated with the blogs"""
 
         data = [{"user_id": self._user_id, "blog_live": True},
                 {"user_id": self._user_id, "post_live": True},
                 {"user_id": self._user_id, "collection_name": "draft"},
-                {"user_id": self._user_id, "post_live": True}
+                {"user_id": self._user_id, "post_live": True},
+                {"user_id": self._user_id, "comment_live":True},
                 ]
         Record.Delete.delete_all_blogs(data=data)
 

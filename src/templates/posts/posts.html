@@ -39,7 +39,7 @@
                 {% for post in posts %}
                 <tr>
                     <th scope="row">{{ loop.index }}</th>
-                    <td>{{ post.html_strip(post.title)| truncate(20) }}</td>
+                    <td><a href="{{ url_for('posts_app.post_permalink', blog_id=post.child_blog_id, post_id=post.child_post_id) }}">{{ post.html_strip(post.title)| truncate(20) }}</a></td>
                     <td>{{ post.html_strip(post.post) | truncate(30) }}</td>
                     <td>{{ post.author.title() | truncate(10) }}</td>
                     <td>{{ post.publish_date.strftime('%c') }}</td>

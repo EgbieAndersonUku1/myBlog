@@ -26,7 +26,7 @@
             {% from "__formhelpers.html" import render_field %}
 
 
-            <form role="form" action="" method="post" class="registration-form">
+            <form role="form" action="{{ url_for('login_app.login') }}" method="post" class="registration-form">
 
                 {{ form.hidden_tag() }} <!--Prevents cross site scripting -->
                 {{ render_field(form.username, class="form-control") }}

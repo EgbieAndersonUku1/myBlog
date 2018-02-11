@@ -7,23 +7,6 @@ from users.utils.security.password_implementer import PasswordImplementer
 from users.utils.security.user_session import UserSession
 
 
-class _UserSearch(object):
-    """"""
-    @classmethod
-    def get_by_username(cls, username):
-        """Searches the records by username and returns
-           the user's details if found else None.
-        """
-        return Record.Query.Filter.filter_user_by_username(username)
-
-    @classmethod
-    def get_by_email(cls, email):
-        """Searches the records by email address and returns
-           the user's details if found else None.
-        """
-        return Record.Query.Filter.filter_user_by_email(email)
-
-
 class _UserAccount(object):
     """"""
     def __init__(self, username, email, password, account_confirmed=False,
@@ -40,12 +23,16 @@ class _UserAccount(object):
     @classmethod
     def get_account_by_username(cls, username):
         """Returns an account using the username if found else None"""
-        return cls._to_class(_UserSearch.get_by_username(username))
+        return cls._to_class(query=Record.Query.Filter.filter_user_by_username(username))
 
     @classmethod
     def get_account_by_email(cls, email):
         """Returns an account using an email address if found else None"""
-        return cls._to_class(_UserSearch.get_by_email(email))
+        return cls._to_class(query=Record.Query.Filter.filter_user_by_email(email))
+
+    @classmethod
+    def get_account_by_user_id(cls, user_id):
+        return cls._to_class(query=Record.Query.Filter.filter_user_by_id(user_id))
 
     def register(self, registration_code):
         """Takes a registration code and if the code is valid registers the user to
