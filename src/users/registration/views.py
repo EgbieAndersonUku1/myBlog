@@ -16,7 +16,7 @@ def register_user():
     if form.validate_on_submit():
 
         user = User.extract_web_form(form)
-        user.register()
+        user.send_registration_code()
         return redirect(url_for('registration_app.confirm_email'))
 
     return render_template('registrations/register.html', form=form, error=error)
@@ -25,9 +25,10 @@ def register_user():
 @registration_app.route('/confirm/<username>/<code>')
 def confirm_registration(username, code):
     """"""
+    user = User.get_account_by_username(username)
 
-    if User.verify_registration_code(username, code):
-        return redirect(url_for('registration_app.confirmed_email', code=code))
+    if user and user.register(code):
+       return redirect(url_for('registration_app.confirmed_email', code=code))
     abort(404)
 
 

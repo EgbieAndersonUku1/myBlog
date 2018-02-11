@@ -22,7 +22,7 @@ In this section I am going to build a complete blog from the ground up.
  
 Technologies that will be used:
 
-1) Python 3.5
+1) Python 3.5 does not work using python 2.7x
 2) Database MongoDB
 3) Flask
 4) Pymongo (ORM)

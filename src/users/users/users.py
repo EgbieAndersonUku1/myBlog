@@ -62,7 +62,7 @@ class _UserAccount(object):
     def get_account_by_email(cls, email):
         return cls._to_class(_UserSearch.get_by_email(email))
 
-    def register(self):
+    def send_registration_code(self):
         """"""
         self._gen_user_verification_code()
         self._email_user_verification_code()
@@ -78,21 +78,21 @@ class _UserAccount(object):
         """"""
         return Record.save(self._to_json())
 
-    @classmethod
-    def verify_registration_code(cls, username, registration_code):
+    def register(self, registration_code):
         """"""
-
-        user = cls.get_account_by_username(username)
-
-        if user and user.configuration_codes.get('verification_code') == registration_code:
-            user.configuration_codes.pop('verification_code')
-            user.account_confirmed = True
-            user.update_account()
+        if self._verify_registration_code(registration_code):
+            self.configuration_codes.pop('verification_code')
+            self.account_confirmed = True
+            self.update_account()
             return True
         return False
 
+    def _verify_registration_code(self, registration_code):
+        """Verify whether registration code sent is legit"""
+        return self.configuration_codes.get('verification_code') == registration_code
+
     def update_forgotten_password(self, new_password):
-        """"""
+        """Updates the user's forgotten password with the new password"""
         self.configuration_codes.pop('forgotten_password_code')
         self.password = PasswordImplementer.hash_password(new_password)
         self.update_account()
@@ -169,7 +169,6 @@ class User(_UserAccount):
                    )
 
 
-
 class UserBlog(object):
     """The user blog class allows the user to created either a single blog,
        multiple blogs, delete blogs.
@@ -198,10 +197,6 @@ class UserBlog(object):
         """Return a list of objects that contains all the blogs created by the user"""
         return self._parent_blog.find_all_child_blogs()
 
-    def update_blog(self, blog_id, data):
-        """Takes data and a blog id and updates that blog using the data"""
-        self._parent_blog.update_child_blog(blog_id, data)
-
     def delete_blog(self, blog_id):
         """Deletes a blog by ID"""
         child_blog = self._parent_blog.find_child_blog(child_blog_id=blog_id)
@@ -215,4 +210,3 @@ class UserBlog(object):
     def _retreive_user_info():
         """A helper function that returns the user object"""
         return User.get_account_by_email(UserSession.get_value_by_key("email"))
-
