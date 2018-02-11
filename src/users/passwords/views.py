@@ -20,7 +20,7 @@ def forgotten_password():
         user = User.get_account_by_email(form.email.data)
 
         if user:
-            user.reset_forgotten_password()
+            user.send_forgotten_password_code()
             return redirect(url_for('password_app.reset_password_msg'))
     return render_template('password/forgotten_password.html', form=form)
 
@@ -32,16 +32,17 @@ def reset_password_msg():
 
 @password_app.route('/password/reset/<username>/<code>', methods=('GET', 'POST'))
 def reset_password(username, code):
-    """"""
+    """Allows the user to reset their previous password"""
 
     form = ForgottenPasswordForm()
     user = User.verify_forgotten_password_code(username, code)
-
     assert user or abort(404)
 
     if form.validate_on_submit():
-        user.update_forgotten_password(new_password=form.new_passwd.data)
-        Message.display_to_gui_screen('You have successfully changed your password.')
+        user.reset_forgotten_password(new_password=form.new_passwd.data)
+        Message.display_to_gui_screen("""You have successfully changed your password. 
+                                         Log in with your new password.
+                                      """)
         return redirect(url_for('login_app.login'))
 
     return render_template('/password/reset_password.html', form=form, username=username, code=code)

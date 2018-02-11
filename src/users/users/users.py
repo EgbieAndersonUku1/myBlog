@@ -11,12 +11,16 @@ class _UserSearch(object):
     """"""
     @classmethod
     def get_by_username(cls, username):
-        """"""
+        """Searches the records by username and returns
+           the user's details if found else None.
+        """
         return Record.Query.Filter.filter_user_by_username(username)
 
     @classmethod
     def get_by_email(cls, email):
-        """Searches the records by email address"""
+        """Searches the records by email address and returns
+           the user's details if found else None.
+        """
         return Record.Query.Filter.filter_user_by_email(email)
 
 
@@ -33,7 +37,32 @@ class _UserAccount(object):
         self.user_id = user_id if user_id else gen_id()
         self._id = _id
 
+    @classmethod
+    def get_account_by_username(cls, username):
+        """Returns an account using the username if found else None"""
+        return cls._to_class(_UserSearch.get_by_username(username))
+
+    @classmethod
+    def get_account_by_email(cls, email):
+        """Returns an account using an email address if found else None"""
+        return cls._to_class(_UserSearch.get_by_email(email))
+
+    def register(self, registration_code):
+        """Takes a registration code and if the code is valid registers the user to
+           the application. Returns True if the user was successfully registered
+           otherwise returns False.
+        """
+        if self._verify_registration_code(registration_code):
+           self.configuration_codes.pop('verification_code')
+           self.account_confirmed = True
+           self.update_account()
+           return True
+        return False
+
     def login(self, password):
+        """Takes a password and if the user's password is valid.
+           Returns True if the password is valid otherwise False.
+        """
         return PasswordImplementer.check_password(password, self.password)
 
     def is_user_email_confirmed(self):
@@ -54,44 +83,32 @@ class _UserAccount(object):
             confirmation = 'ACCOUNT_NOT_FOUND'
         return confirmation
 
-    @classmethod
-    def get_account_by_username(cls, username):
-        return cls._to_class(_UserSearch.get_by_username(username))
-
-    @classmethod
-    def get_account_by_email(cls, email):
-        return cls._to_class(_UserSearch.get_by_email(email))
-
     def send_registration_code(self):
-        """"""
+        """Sends a registration verification code to the user's email"""
         self._gen_user_verification_code()
         self._email_user_verification_code()
         self._save()
 
     def _gen_user_verification_code(self):
+        """"""
         self.configuration_codes['verification_code'] = self._gen_code()
 
     def _gen_email_change_verification_code(self):
         self.configuration_codes['email_code'] = self._gen_code()
 
+    def _gen_code(self):
+        """Generates and returns a string code"""
+        return gen_code()
+
     def _save(self):
         """"""
         return Record.save(self._to_json())
-
-    def register(self, registration_code):
-        """"""
-        if self._verify_registration_code(registration_code):
-            self.configuration_codes.pop('verification_code')
-            self.account_confirmed = True
-            self.update_account()
-            return True
-        return False
 
     def _verify_registration_code(self, registration_code):
         """Verify whether registration code sent is legit"""
         return self.configuration_codes.get('verification_code') == registration_code
 
-    def update_forgotten_password(self, new_password):
+    def reset_forgotten_password(self, new_password):
         """Updates the user's forgotten password with the new password"""
         self.configuration_codes.pop('forgotten_password_code')
         self.password = PasswordImplementer.hash_password(new_password)
@@ -99,27 +116,25 @@ class _UserAccount(object):
 
     @classmethod
     def verify_forgotten_password_code(cls, username, code):
-        """"""
+        """Takes a username and code and verifies whether the forgotten password code
+           is the one that was sent to the user.
+        """
         user = cls.get_account_by_username(username)
         return user if user and user.configuration_codes['forgotten_password_code'] == code else None
 
-    def reset_forgotten_password(self):
+    def send_forgotten_password_code(self):
         """"""
         self._gen_forgotten_password_code()
         self.update_account()
         self._email_user_verification_code(code_type='forgotten_password_code')
 
     def _gen_forgotten_password_code(self):
-        """"""
+        """generates a password reset code"""
         self.configuration_codes['forgotten_password_code'] = self._gen_code()
 
     def update_account(self):
-        """"""
+        """Updates any changes made to the user's account"""
         Record.Update.update('_id', self._id, self._to_json())
-
-    def _gen_code(self):
-        """"""
-        return gen_code()
 
     def _email_user_verification_code(self, code_type='verification_code'):
         """ """
