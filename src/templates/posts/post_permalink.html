@@ -76,27 +76,25 @@
                 <div class="card-header">
                     Username: <b>{{ session.username }}</b>
                     <br>
-                    Commented on the post titled <strong>{{ post.title.title()}}</strong> on the <b>{{ comment.comment_on.strftime('%c') }}</b>
+                    Commented on the post titled <strong>{{ post.title.title()}}</strong> on the <b>{{ comment.commented_on.strftime('%c') }}</b>
 
                 </div>
 
                 <div class="card-block">
                     <br>
-                     <blockquote class="card-blockquote">
-                        <p class="card-text"> {{ comment.comment }} </p>
-                     </blockquote>
+                        {{ comment.comment }}
 
                     {% if session.username %}
-                    <p class="float-sm-right">
+                        <p class="float-sm-right">
 
+                            <br>
+                        <a href="#">Edit</a> |
+                        <a href="{{ url_for('comment_app.delete_comment',blog_id=comment.child_blog_id,
+                                             post_id=comment.post_id,comment_id=comment.comment_id)
+                                  }}">Delete</a>
+                        </p>
                         <br>
-                    <a href="#">Edit</a> |
-                    <a href="{{ url_for('comment_app.delete_comment',blog_id=comment.child_blog_id,
-                                         post_id=comment.post_id,comment_id=comment.comment_id)
-                              }}">Delete</a>
-                    </p>
-                    <br>
-                    <br>
+                        <br>
                     {% endif %}
                 </div>
             </div>
