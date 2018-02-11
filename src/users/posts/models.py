@@ -10,7 +10,7 @@ from users.utils.html_stripper import strip_html_tags
 class Post(object):
     """The post allows the blog to create, _save and delete a post. The
         class should not be accessed directly and should only be accessed
-        from the User blog class
+        from the User blog class.
      """
     def __init__(self, user_id, child_blog_id, post_img=None):
         self._user_id = user_id
