@@ -8,7 +8,7 @@ from users.utils.security.user_session import UserSession
 
 
 class _UserSearch(object):
-
+    """"""
     @classmethod
     def get_by_username(cls, username):
         """"""
@@ -196,11 +196,6 @@ class UserBlog(object):
     def get_all_blogs(self):
         """Return a list of objects that contains all the blogs created by the user"""
         return self._parent_blog.find_all_child_blogs()
-
-    def delete_blog(self, blog_id):
-        """Deletes a blog by ID"""
-        child_blog = self._parent_blog.find_child_blog(child_blog_id=blog_id)
-        child_blog.delete_blog()
 
     def delete_all_blogs(self):
         """Deletes all blogs created by the user"""

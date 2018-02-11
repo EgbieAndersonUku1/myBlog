@@ -74,7 +74,8 @@ def blog_delete(blog_id):
     """Deletes a blog using its blog_id"""
 
     blog = UserBlog()
-    blog.delete_blog(blog_id)
+    child_blog = blog.get_blog(blog_id)
+    child_blog.delete_blog()
     Message.display_to_gui_screen("One of your blogs was deleted successfully")
     return redirect(url_for("blogs_app.blog"))
 
