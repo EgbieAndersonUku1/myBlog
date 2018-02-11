@@ -55,11 +55,11 @@ class DatabaseTest(TestCase):
         Database.remove_db(_DB_NAME)
 
     def test_can_a_single_user_details_be_saved_to_the_database__Should_save_the_user_details_to_database(self):
-        """Test whether the database can save a single user data"""
+        """Test whether the database can _save a single user data"""
         self.assertIsNotNone(Database.find_one({'first_name':'Egbie'}, db_name=_DB_NAME))
 
     def test_can_two_user_details_be_saved_to_the_database__Should_save_the_two_user_details_to_database(self):
-        """Test whether the database can save two user data"""
+        """Test whether the database can _save two user data"""
 
         user_data = _update_data(_get_test_data(), field_to_update='first_name', new_data='Egbie1')
         Database.insert_one(user_data, _DB_NAME)

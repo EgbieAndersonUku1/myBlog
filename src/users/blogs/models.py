@@ -14,10 +14,8 @@ class ParentBlog(object):
     from the user blog class and not directly.
     """
 
-    def __init__(self, user_id, blog_id, post_id):
-        self._blog_id = blog_id
+    def __init__(self, user_id):
         self._user_id = user_id
-        self._post_id = post_id
 
     def create_blog(self, blog_form):
         """create_blog(blog form object) -> returns child blog object
@@ -33,7 +31,7 @@ class ParentBlog(object):
 
         if not Record.save(blog_data):
             raise Exception('Error, The blog data was not saved on the database.')
-        return _ChildBlog(self._user_id, self._blog_id, child_blog_id, self._post_id,
+        return _ChildBlog(self._user_id, child_blog_id,
                           blog_form.blog_name.data, blog_form.title.data,
                           blog_form.description.data, _id=None, blog_live=True,
                           date_created=date_created
@@ -49,21 +47,16 @@ class ParentBlog(object):
     def find_all_child_blogs(self):
         """Returns all child blog created by this parent blog"""
 
-        blogs = Record.Query.find_all(query={"parent_blog_id": self._blog_id, "blog_live": True})
+        blogs = Record.Query.find_all(query={"user_id": self._user_id, "blog_live": True})
         return [_ChildBlog(**blog) for blog in blogs] if blogs else None
 
-    @staticmethod
-    def delete_child_blog(child_blog_id):
-        """Deletes a blog by ID"""
-        Record.Delete.delete_blog(child_blog_id)
-
     def delete_all_child_blogs(self):
-        """Deletes all blogs created by the user"""
+        """Deletes all blogs and all posts, drafts associated with the blogs"""
 
-        data = [{"parent_blog_id": self._blog_id, "blog_live": True},
-                {"post_id": self._post_id, "post_live": True},
-                {"post_id": self._post_id, "collection_name": "draft"},
-                {"parent_blog_id": self._blog_id, "post_live": True}
+        data = [{"user_id": self._user_id, "blog_live": True},
+                {"user_id": self._user_id, "post_live": True},
+                {"user_id": self._user_id, "collection_name": "draft"},
+                {"user_id": self._user_id, "post_live": True}
                 ]
         Record.Delete.delete_all_blogs(data=data)
 
@@ -71,8 +64,6 @@ class ParentBlog(object):
         """"""
         return {
                 "user_id": self._user_id,
-                "parent_blog_id": self._blog_id,
-                "post_id": self._post_id,
                 "child_blog_id": child_blog_id,
                 "blog_name": blog_form.blog_name.data,
                 "title": blog_form.title.data,
@@ -87,11 +78,10 @@ class _ChildBlog(object):
        should not be called directly. It is also a container.
     """
 
-    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id, blog_name,
+    def __init__(self, user_id, child_blog_id, blog_name,
                  title, description, _id, blog_live, date_created):
 
         self.child_blog_id = child_blog_id
-        self.post_id = post_id
         self.blog_name = blog_name
         self.title = title
         self.description = description
@@ -99,7 +89,7 @@ class _ChildBlog(object):
         self._id = _id
         self._user_id = user_id
         self._blog_live = blog_live
-        self.Post = Post(user_id, parent_blog_id, child_blog_id, post_id)
+        self.Post = Post(user_id, child_blog_id)
 
     @staticmethod
     def html_strip(text):
@@ -108,3 +98,7 @@ class _ChildBlog(object):
     def update_blog(self, data):
         """Finds a specific blog by ID and updates that blog using the new data"""
         Record.Update.update(field_name='child_blog_id', field_id=self.child_blog_id, data=data)
+
+    def delete_blog(self):
+        """Deletes a blog by ID"""
+        Record.Delete.delete_blog(self.child_blog_id)

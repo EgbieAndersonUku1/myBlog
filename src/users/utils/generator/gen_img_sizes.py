@@ -32,14 +32,14 @@ class Imager(object):
         small, medium, large and extra large.
 
         :parameter
-            - ext : The file extension to save the file as. The default file extension is png.
+            - ext : The file extension to _save the file as. The default file extension is png.
         """
 
         Imager._check_img_extension(ext)
 
         self._img = self._crop_from_center()
         file_path = self._create_file_path(self.folder_path, self._create_img_file_name('orig_image', ext))
-        self._img.save(file_path)
+        self._img._save(file_path)
         return self._gen_sizes(ext)
 
     @staticmethod
@@ -86,7 +86,7 @@ class Imager(object):
             size = img_sizes.get(size_type)
             new_img = self._resize_img(size, size)
             img_path = Imager._create_file_path(self.folder_path, self._create_img_file_name(size_type, ext))
-            new_img.save(img_path)
+            new_img._save(img_path)
         return str(time_stamp())
 
     def _resize_img(self, width, height):

@@ -21,7 +21,7 @@ class RegistrationForm(Form):
 
     def validate_email(form, field):
         """"""
-        if User.get_by_email(form.email.data):
+        if User.get_account_by_email(form.email.data):
             raise ValidationError('The email is already in use')
 
     def validate_username(form, field):
@@ -31,5 +31,5 @@ class RegistrationForm(Form):
 
         if not _match.search(username):
             raise ValidationError("Invalid username format!")
-        if User.get_by_username(username):
+        if User.get_account_by_username(username):
             raise ValidationError('The username is already in use')

@@ -32,7 +32,7 @@ class Record(object):
 
         @classmethod
         def delete_draft(cls, blog_id, draft_id):
-            cls._delete(data={"blog_id": blog_id, "draft_id": draft_id})
+            cls._delete(data={"child_blog_id": blog_id, "draft_id": draft_id})
 
         @staticmethod
         def _delete(data):

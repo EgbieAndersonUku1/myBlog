@@ -9,7 +9,7 @@ class ProfileImages(object):
         self._save()
 
     def _save(self):
-        Record.save(self._to_json())
+        Record._save(self._to_json())
 
     @cache.memoize(300)
     def get_image(self):

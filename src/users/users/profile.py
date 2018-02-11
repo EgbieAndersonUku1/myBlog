@@ -26,7 +26,7 @@ class UserProfile(object):
 
     def save(self):
         """"""
-        return Record.save(self._to_json())
+        return Record._save(self._to_json())
 
     def update(self):
         """"""
@@ -48,7 +48,7 @@ class UserProfile(object):
     @cache.memoize(600)
     def get_profile_id(self):
         """"""
-        user = User.get_by_username(UserSession.get_username())
+        user = User.get_account_by_username(UserSession.get_username())
         self.profile_id = user.profile_id
 
     @classmethod

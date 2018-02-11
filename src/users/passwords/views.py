@@ -17,7 +17,7 @@ def forgotten_password():
         return redirect(url_for("blogs_app.blog"))
     elif form.validate_on_submit():
 
-        user = User.get_by_email(form.email.data)
+        user = User.get_account_by_email(form.email.data)
 
         if user:
             user.reset_forgotten_password()
@@ -40,7 +40,7 @@ def reset_password(username, code):
     assert user or abort(404)
 
     if form.validate_on_submit():
-        user.update_forgotten_password(form)
+        user.update_forgotten_password(new_password=form.new_passwd.data)
         Message.display_to_gui_screen('You have successfully changed your password.')
         return redirect(url_for('login_app.login'))
 

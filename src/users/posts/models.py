@@ -1,5 +1,3 @@
-import os
-
 from settings import STATIC_IMAGE_URL
 from users.utils.generator.id_generator import gen_id
 from users.utils.generator.date_generator import time_now as date_created
@@ -10,17 +8,15 @@ from users.utils.html_stripper import strip_html_tags
 
 
 class Post(object):
-    """The post allows the blog to create, save and delete a post. The
+    """The post allows the blog to create, _save and delete a post. The
         class should not be accessed directly and should only be accessed
         from the User blog class
      """
-    def __init__(self, user_id, parent_blog_id, child_blog_id, post_id, post_img=None):
+    def __init__(self, user_id, child_blog_id, post_img=None):
         self._user_id = user_id
-        self._blog_id = parent_blog_id
         self.child_blog_id = child_blog_id
-        self.post_id = post_id
         self.post_img = post_img
-        self.Draft = Draft(self.child_blog_id, self.post_id)
+        self.Draft = Draft(self.child_blog_id, self._user_id)
 
     @staticmethod
     def get_post_by_id(post_id):
@@ -32,10 +28,9 @@ class Post(object):
     def get_all_posts(self):
         """Returns all posts belonging to a particular blog"""
 
-        query = {"parent_blog_id": self._blog_id,
-                 "child_blog_id" : self.child_blog_id,
-                 "user_id": self._user_id,
-                 "parent_post_id": self.post_id, "post_live": True}
+        query = {"child_blog_id" : self.child_blog_id,
+                 "user_id": self._user_id,"post_live": True
+                 }
 
         posts = Record.Query.find_all(query)
         return [_ChildPost(**post) for post in posts] if posts else None
@@ -53,11 +48,8 @@ class Post(object):
 
         Record.save(child_post)
 
-        return _ChildPost(self._blog_id, self.post_id,
-                          self.child_blog_id, self._user_id,
-                          self.post_id, child_post_id,
-                          title, post,
-                          publish_date,
+        return _ChildPost(self.child_blog_id, self._user_id,
+                          child_post_id, title, post,publish_date,
                           self.post_img
                          )
 
@@ -83,9 +75,7 @@ class Post(object):
         """
         return {
             "user_id": self._user_id,
-            "parent_blog_id": self._blog_id,
             "child_blog_id": self.child_blog_id,
-            "parent_post_id": self.post_id,
             "child_post_id": child_post_id,
             "title": title,
             "post": post,
@@ -98,9 +88,8 @@ class Post(object):
 class _ChildPost(object):
     """This _ChildPost is a container and should not be accessed directly"""
 
-    def __init__(self, parent_blog_id, parent_post_id, child_blog_id,
-                 child_post_id, user_id, title, post, publish_date,
-                 post_live, _id=None, post_img=None):
+    def __init__(self, child_blog_id, child_post_id, user_id, title,
+                 post, publish_date, post_live, _id=None, post_img=None):
 
         self.child_post_id = child_post_id
         self.child_blog_id = child_blog_id
@@ -112,8 +101,6 @@ class _ChildPost(object):
         self.publish_date = publish_date
         self.author = UserSession.get_username()
         self._id = _id if _id else gen_id()
-        self._parent_blog_id = parent_blog_id
-        self._parent_post_id = parent_post_id
 
     @staticmethod
     def html_strip(text):
