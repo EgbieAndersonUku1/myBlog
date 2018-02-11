@@ -74,7 +74,7 @@
             {% for comment in post.Comment.get_all_comments() %}
             <div class="card">
                 <div class="card-header">
-                    Username: <b>{{ session.username }}</b>
+                    Username: <b>{{ session.username }} </b>
                     <br>
                     Commented on the post titled <strong>{{ post.title.title()}}</strong> on the <b>{{ comment.commented_on.strftime('%c') }}</b>
 
