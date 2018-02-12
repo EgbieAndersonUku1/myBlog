@@ -90,6 +90,12 @@ def delete_all_blogs():
     return redirect(url_for('blogs_app.blog'))
 
 
+@blogs_app.route("/front-page")
+def blog_front_page():
+    """"""
+    return render_template("/blogs/front_page.html")
+
+
 def _get_updated_data(form, blog):
     """get_updated_data(form_obj, blog_obj) -> return dict
 
