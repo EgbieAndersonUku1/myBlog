@@ -56,7 +56,6 @@ class ParentBlog(object):
         data = [{"user_id": self._user_id, "blog_live": True},  # Delete all blogs created by the user
                 {"user_id": self._user_id, "post_live": True},  # Delete all post created by the user
                 {"user_id": self._user_id, "collection_name": "draft"}, # Delete all drafts created by the user
-                {"user_id": self._user_id, "post_live": True}, # Delete all post created by the user
                 {"user_id": self._user_id, "comment_live":True}, # Delete all comments created by the user
                 ]
         Record.Delete.delete_all_blogs(data=data)
