@@ -35,7 +35,7 @@ def login():
                 Message.display_to_gui_screen(_get_account_status(email_status))
 
             error = True
-            
+
         else:
             Message.display_to_gui_screen('Incorrect username and password!')
 
