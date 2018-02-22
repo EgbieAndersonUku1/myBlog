@@ -34,8 +34,9 @@ def login():
             else:
                 Message.display_to_gui_screen(_get_account_status(email_status))
 
-        else:
             error = True
+            
+        else:
             Message.display_to_gui_screen('Incorrect username and password!')
 
     return render_template("login/login.html", form=form, error=error)
