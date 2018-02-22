@@ -27,6 +27,7 @@ def login():
             email_status = user.is_user_email_confirmed()
 
             if email_status == 'EMAIL_CONFIRMED':
+
                 if user.login(password=form.password.data):
                     _add_username_email_and_admin_to_secure_user_session(user, admin='admin')
                     return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()

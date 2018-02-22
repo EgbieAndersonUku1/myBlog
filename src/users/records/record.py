@@ -59,11 +59,11 @@ class Record(object):
 
             @classmethod
             def filter_user_by_username(cls, username):
-                return cls._filter_query({'username': username})
+                return cls._filter_query({'username': username.lower()})
 
             @classmethod
             def filter_user_by_email(cls, email):
-                return cls._filter_query({'email': email})
+                return cls._filter_query({'email': email.lower()})
 
             @classmethod
             def filter_user_by_id(cls, user_id):
