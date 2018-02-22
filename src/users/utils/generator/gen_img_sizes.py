@@ -84,7 +84,7 @@ class Imager(object):
 
         for size_type in img_sizes:
             size = img_sizes.get(size_type)
-            new_img = self._resize_img(size, size)
+            new_img = self._resize_img(width=size, height=size)
             img_path = Imager._create_file_path(self.folder_path, self._create_img_file_name(size_type, ext))
             new_img._save(img_path)
         return str(time_stamp())

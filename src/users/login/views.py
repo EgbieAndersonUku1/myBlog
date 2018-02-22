@@ -12,7 +12,7 @@ login_app = Blueprint('login_app', __name__)
 def login():
     """Allows the user to login to the application using the GUI"""
 
-    form = LoginForm()
+    form, error = LoginForm(), False
 
     _is_next_in_url()
 
@@ -31,12 +31,14 @@ def login():
                 if user.login(password=form.password.data):
                     _add_username_email_and_admin_to_secure_user_session(user, admin='admin')
                     return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
-
-                Message.display_to_gui_screen('Incorrect username and password!')
             else:
                 Message.display_to_gui_screen(_get_account_status(email_status))
 
-    return render_template("login/login.html", form=form)
+        else:
+            error = True
+            Message.display_to_gui_screen('Incorrect username and password!')
+
+    return render_template("login/login.html", form=form, error=error)
 
 
 def _is_next_in_url():
