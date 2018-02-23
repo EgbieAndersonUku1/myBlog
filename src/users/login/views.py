@@ -43,7 +43,6 @@ def login():
 
 def _display_error_msg(error="Incorrect username and password"):
     """"""
-
     Message.display_to_gui_screen(error)
     return True
 
@@ -52,7 +51,6 @@ def _is_next_in_url():
     """"""
     if request.method == 'GET' and request.args.get('next'):
         UserSession.add_next_url(request.args.get('next'))
-
 
 
 def _add_username_email_and_admin_to_secure_user_session(user, admin):
