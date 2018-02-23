@@ -108,7 +108,6 @@ def post_permalink(blog_id, post_id):
     return render_template("posts/post_permalink.html", form=form, post=post)
 
 
-
 def _get_blog(blog_id):
     """"""
     blog = UserBlog()

@@ -34,16 +34,16 @@ class _UserAccount(object):
     def get_account_by_user_id(cls, user_id):
         return cls._to_class(query=Record.Query.Filter.filter_user_by_id(user_id))
 
+    def verify_registration_code(self, registration_code):
+        """Verify whether registration code sent is legit"""
+        return self.configuration_codes.get('verification_code') == registration_code
+
     def register(self):
         """Register the user to the application"""
 
         self.configuration_codes.pop('verification_code')
         self.account_confirmed = True
         self.update_account()
-
-    def verify_registration_code(self, registration_code):
-        """Verify whether registration code sent is legit"""
-        return self.configuration_codes.get('verification_code') == registration_code
 
     def login(self, password):
         """Takes a password and if the user's password is valid.
