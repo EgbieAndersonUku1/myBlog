@@ -23,7 +23,6 @@ def login():
         user = User.get_account_by_username(form.username.data)
 
         if user:
-
             email_status = user.is_user_email_confirmed()
 
             if email_status == 'EMAIL_CONFIRMED':
@@ -31,15 +30,22 @@ def login():
                 if user.login(password=form.password.data):
                     _add_username_email_and_admin_to_secure_user_session(user, admin='admin')
                     return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
+
+                error = _display_error_msg()
+
             else:
-                Message.display_to_gui_screen(_get_account_status(email_status))
-
-            error = True
-
+                error = _display_error_msg(_get_account_status(email_status))
         else:
-            Message.display_to_gui_screen('Incorrect username and password!')
+            error = _display_error_msg()
 
     return render_template("login/login.html", form=form, error=error)
+
+
+def _display_error_msg(error="Incorrect username and password"):
+    """"""
+
+    Message.display_to_gui_screen(error)
+    return True
 
 
 def _is_next_in_url():
