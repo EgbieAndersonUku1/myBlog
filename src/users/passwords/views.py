@@ -40,9 +40,12 @@ def reset_password(username, code):
 
     if form.validate_on_submit():
         user.reset_forgotten_password(new_password=form.new_passwd.data)
-        Message.display_to_gui_screen("""You have successfully changed your password. 
-                                         Log in with your new password.
-                                      """)
-        return redirect(url_for('login_app.login'))
+        return redirect(url_for('password_app.password_changed'))
 
     return render_template('/password/reset_password.html', form=form, username=username, code=code)
+
+
+@password_app.route("/password-changed")
+def password_changed():
+    """"""
+    return render_template("/password/password_changed_page.html")

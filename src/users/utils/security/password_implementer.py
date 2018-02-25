@@ -2,7 +2,11 @@ import bcrypt
 
 
 class PasswordImplementer(object):
-    """"""
+    """The class has two primary functions. The first is taking a plain-text password
+       and returning the hashed version of the using password.
+       The second is to check the user's password by checking if the hashed version
+       of the password belongs to the user who created it.
+    """
     @staticmethod
     def check_password(password, hashed_password):
         """check_password(str, hashed str) -> returns boolean
@@ -34,14 +38,12 @@ class PasswordImplementer(object):
 
         :param
             `password`: The plaintext password that will be turned into a hash
-
         :return:
-             Returns a hashed version of the string.
+             Returns a hashed version of the plain-text password.
 
         >>> password = 'apple'
         >>> hashed_password = PasswordImplementer.hash_password(password)
         >>> hashed_password
         >>> '$2a$12$wSblmWGu/urVJKE5H.oPheYwlzu9DlaGwTFTuVk8FbSsQXK503W3q'
         """
-        salt = bcrypt.gensalt()
-        return bcrypt.hashpw(password, salt)
+        return bcrypt.hashpw(password, salt=bcrypt.gensalt())
