@@ -13,7 +13,7 @@ def forgotten_password():
 
     form = ResetForgottenPassword()
 
-    if UserSession.get_username():
+    if UserSession.get_login_token():
         return redirect(url_for("blogs_app.blog"))
     elif form.validate_on_submit():
 
@@ -35,10 +35,12 @@ def reset_password(username, code):
     """Allows the user to reset their previous password"""
 
     form = ForgottenPasswordForm()
-    user = User.verify_forgotten_password_code(username, code)
-    assert user or abort(404)
+    user = User.get_account_by_username(username)
 
-    if form.validate_on_submit():
+    if not user and not user.verify_forgotten_password_code(code):
+       assert user or abort(404)
+
+    elif form.validate_on_submit():
         user.reset_forgotten_password(new_password=form.new_passwd.data)
         return redirect(url_for('password_app.password_changed'))
 

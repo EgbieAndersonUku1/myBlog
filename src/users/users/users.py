@@ -18,7 +18,7 @@ class _UserAccount(object):
         self.account_confirmed = account_confirmed
         self.configuration_codes = configuration_codes
         self.user_id = user_id if user_id else gen_id()
-        self._id = _id
+        self._id = _id if _id else gen_id()
 
     @classmethod
     def get_account_by_username(cls, username):
@@ -51,7 +51,7 @@ class _UserAccount(object):
         """
         return PasswordImplementer.check_password(password, self.password)
 
-    def is_user_email_confirmed(self):
+    def get_email_confirmed_status(self):
         """Checks whether the user has confirmed their email account and returns the appropriate action.
 
         Returns the appropriate status based on the user's account status:
@@ -62,11 +62,11 @@ class _UserAccount(object):
         """
 
         if not self.account_confirmed:
-            confirmation = 'NOT_CONFIRMED'
+            confirmation = 'The registered email address needs to be confirmed before login can proceed'
         elif self.account_confirmed:
             confirmation = 'EMAIL_CONFIRMED'
         else:
-            confirmation = 'ACCOUNT_NOT_FOUND'
+            confirmation = 'Incorrect password and username'
         return confirmation
 
     def send_registration_code(self):
@@ -92,17 +92,16 @@ class _UserAccount(object):
 
     def reset_forgotten_password(self, new_password):
         """Updates the user's forgotten password with the new password"""
+
         self.configuration_codes.pop('forgotten_password_code')
         self.password = PasswordImplementer.hash_password(new_password)
         self.update_account()
 
-    @classmethod
-    def verify_forgotten_password_code(cls, username, code):
+    def verify_forgotten_password_code(self, code):
         """Takes a username and code and verifies whether the forgotten password code
            is the one that was sent to the user.
         """
-        user = cls.get_account_by_username(username)
-        return user if user and user.configuration_codes['forgotten_password_code'] == code else None
+        return self.configuration_codes['forgotten_password_code'] == code
 
     def send_forgotten_password_code(self):
         """"""

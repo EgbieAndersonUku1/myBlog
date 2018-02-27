@@ -16,14 +16,15 @@ def login():
 
     _is_next_in_url()
 
-    if UserSession.get_username():  # if user is already logged in redirect them to blog/post creation page
+    if UserSession.get_login_token():
         return _redirect_user_to_blog_creation_page()
+
     elif form.validate_on_submit():
 
-        user = User.get_account_by_username(form.username.data)
+        user = User.get_account_by_username(username=form.username.data)
 
         if user:
-            email_status = user.is_user_email_confirmed()
+            email_status = user.get_email_confirmed_status()
 
             if email_status == 'EMAIL_CONFIRMED':
 
@@ -34,11 +35,14 @@ def login():
                 error = _display_error_msg()
 
             else:
-                error = _display_error_msg(_get_account_status(email_status))
+                error = _display_error_msg(email_status)
         else:
             error = _display_error_msg()
 
     return render_template("login/login.html", form=form, error=error)
+
+
+
 
 
 def _display_error_msg(error="Incorrect username and password"):
@@ -74,12 +78,3 @@ def _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page():
 def _redirect_user_to_blog_creation_page():
     """Redirects the user to the blog creation page"""
     return redirect(url_for('blogs_app.blog'))
-
-
-def _get_account_status(confirmation_status):
-    """Returns the appropriate status of the user's account"""
-
-    return {
-        'NOT_CONFIRMED': 'You need to confirm your email address before you can login',
-        'ACCOUNT_NOT_FOUND': 'Incorrect password and username'
-    }.get(confirmation_status)

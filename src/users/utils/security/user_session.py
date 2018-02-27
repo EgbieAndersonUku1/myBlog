@@ -36,6 +36,10 @@ class UserSession(object):
         session[key] = value.lower()
 
     @staticmethod
+    def get_login_token():
+        return UserSession.get_username()
+
+    @staticmethod
     def get_username():
         """Returns the username from the register's session"""
         return session.get('username')
