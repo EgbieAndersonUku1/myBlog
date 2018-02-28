@@ -32,7 +32,7 @@ class Draft(object):
     def get_all_draft_posts(self):
         """"""
 
-        drafts = Record.Query.find_all(query={"collection_name":"draft",
+        drafts = Record.Query.find_all(query={"collection_name": "draft",
                                               "child_blog_id": self.blog_id,
                                               "user_id":self.user_id
                                               }

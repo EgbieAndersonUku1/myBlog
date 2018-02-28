@@ -13,6 +13,7 @@ class Post(object):
         class should not be accessed directly and should only be accessed
         from the User blog class.
      """
+
     def __init__(self, user_id, child_blog_id, post_img=None):
         self._user_id = user_id
         self._child_blog_id = child_blog_id
@@ -23,14 +24,14 @@ class Post(object):
     def get_post_by_id(post_id):
         """Test a post ID and returns that particular post."""
 
-        post_data = Record.Query.Filter.filter_by_key_and_value({"child_post_id":post_id})
+        post_data = Record.Query.Filter.filter_by_key_and_value({"child_post_id": post_id})
         return _ChildPost(**post_data) if post_data else None
 
     def get_all_posts(self):
         """Returns all posts belonging to a particular blog"""
 
-        query = {"child_blog_id" : self._child_blog_id,
-                 "user_id": self._user_id,"post_live": True
+        query = {"child_blog_id": self._child_blog_id,
+                 "user_id": self._user_id, "post_live": True
                  }
 
         posts = Record.Query.find_all(query)
@@ -50,9 +51,9 @@ class Post(object):
         Record.save(child_post)
 
         return _ChildPost(self._child_blog_id, self._user_id,
-                          child_post_id, title, post,publish_date,
+                          child_post_id, title, post, publish_date,
                           self._post_img
-                         )
+                          )
 
     @classmethod
     def delete_post(cls, post_id):
@@ -91,7 +92,6 @@ class _ChildPost(object):
 
     def __init__(self, child_blog_id, child_post_id, user_id, title,
                  post, publish_date, post_live, _id=None, post_img=None):
-
         self.child_post_id = child_post_id
         self.child_blog_id = child_blog_id
         self.user_id = user_id

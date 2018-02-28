@@ -21,7 +21,7 @@ def forgotten_password():
 
         if user:
             user.send_forgotten_password_code()
-            return redirect(url_for('password_app.reset_password_msg'))
+        return redirect(url_for('password_app.reset_password_msg'))
     return render_template('password/forgotten_password.html', form=form)
 
 
@@ -50,4 +50,4 @@ def reset_password(username, code):
 @password_app.route("/password-changed")
 def password_changed():
     """"""
-    return render_template("/password/password_changed_page.html")
+    return render_template("password/password_changed_page.html")

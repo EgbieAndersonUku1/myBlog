@@ -91,7 +91,6 @@ def post_preview(blog_id):
     return redirect(url_for("posts_app.new_post", blog_id=blog_id))
 
 
-
 @posts_app.route("/permalink/<blog_id>/<post_id>", methods=['GET', 'POST'])
 def post_permalink(blog_id, post_id):
     """"""

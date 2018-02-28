@@ -14,10 +14,9 @@ def register_user():
 
     form, error = RegistrationForm(), False
 
-    if UserSession().get_username(): # if the user is already logged redirect to blogs page
+    if UserSession.get_login_token():
         return redirect(url_for("blogs_app.my_blog"))
     if form.validate_on_submit():
-
         user = User.extract_web_form(form)
         user.send_registration_code()
         return redirect(url_for('registration_app.confirm_email_page'))
@@ -36,8 +35,8 @@ def confirm_registration(username, code):
     user = User.get_account_by_username(username)
 
     if user and user.verify_registration_code(code):
-       user.register()
-       return redirect(url_for('registration_app.confirmed_email_page'))
+        user.register()
+        return redirect(url_for('registration_app.confirmed_email_page'))
     abort(404)
 
 
