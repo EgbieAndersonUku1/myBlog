@@ -32,31 +32,6 @@ class EmailGmail(BaseEmail):
         self.passwd = passwd
         self._msg = self._construct_email()
 
-    def _secure_and_connect(self):
-        """Creates a secure connection between the email addresses"""
-
-        assert self.passwd, 'Password cannot be empty.'
-        conn = smtplib.SMTP('smtp.gmail.com', 587)
-        conn.ehlo()
-
-        try:
-            conn.starttls()  # Uses TLS to encrypt the connection.
-        except:
-            raise Exception('Failed to connect your system does not support TLS')
-        else:
-            conn.ehlo()
-            return conn
-
-    def _login(self):
-        """Login into the email address"""
-
-        conn = self._secure_and_connect()
-        try:
-            conn.login(self.source_addr, self.passwd)
-        except ValueError:
-            raise Exception('Failed to login, check username, password or the internet connection.')
-        return conn
-
     def _construct_email(self):
         """Creates the typical stuff associated with an email,
         e.g. sender address, receiver addrss, subject, body, etc.
@@ -80,17 +55,33 @@ class EmailGmail(BaseEmail):
         Sends an email address from one email to another.
         Returns True if the email was sent or returns a dict
         containing elements of the fields that were not sent.
-
-        >>> source_addr="egbieAndersonuku1@example.com"
-        >>> receiver_addr="test@example.com"
-        >>> subject = "I am sending you an email"
-        >>> body_html = '<html> <p>Thanks, for register to the network</p></html>'
-        >>> body_text = "Thanks for registering to the network"
-        >>> email = Email(source_addr, receiver_addr, subject, body_html, body_text)
-        >>> email.send_email()
-        'True'
         """
         conn = self._login()
         res = conn.sendmail(self.source_addr, self.receiver_addr, self._msg.as_string())
         conn.quit()
         return True if not res else res
+
+    def _login(self):
+        """Login into the email address"""
+
+        conn = self._secure_and_connect()
+        try:
+            conn.login(self.source_addr, self.passwd)
+        except ValueError:
+            raise Exception('Failed to login, check username, password or the internet connection.')
+        return conn
+
+    def _secure_and_connect(self):
+        """Creates a secure connection between the email addresses"""
+
+        assert self.passwd, 'Password cannot be empty.'
+        conn = smtplib.SMTP('smtp.gmail.com', 587)
+        conn.ehlo()
+
+        try:
+            conn.starttls()  # Uses TLS to encrypt the connection.
+        except:
+            raise Exception('Failed to connect your system does not support TLS')
+        else:
+            conn.ehlo()
+            return conn
