@@ -28,8 +28,8 @@ def login():
 
             if email_status == 'EMAIL_CONFIRMED':
 
-                if user.login(password=form.password.data):
-                    _add_username_email_and_admin_to_secure_user_session(user, admin='admin')
+                if user.is_login_valid(password=form.password.data):
+                    user.login()
                     return _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page()
 
                 error = _display_error_msg()
@@ -42,9 +42,6 @@ def login():
     return render_template("login/login.html", form=form, error=error)
 
 
-
-
-
 def _display_error_msg(error="Incorrect username and password"):
     """"""
     Message.display_to_gui_screen(error)
@@ -55,14 +52,6 @@ def _is_next_in_url():
     """"""
     if request.method == 'GET' and request.args.get('next'):
         UserSession.add_next_url(request.args.get('next'))
-
-
-def _add_username_email_and_admin_to_secure_user_session(user, admin):
-    """Adds the username and admin name to the user's secure session"""
-
-    UserSession.add_username(user.username)
-    UserSession.add_value_to_session('email', user.email.lower())
-    UserSession.add_value_to_session(admin, True)
 
 
 def _redirect_user_to_url_in_next_if_found_or_to_blog_creation_page():

@@ -45,11 +45,16 @@ class _UserAccount(object):
         self.account_confirmed = True
         self.update_account()
 
-    def login(self, password):
+    def is_login_valid(self, password):
+        """Check whether the user login password is correct"""
+        return PasswordImplementer.check_password(password, self.password)
+
+    def login(self):
         """Takes a password and if the user's password is valid.
            Returns True if the password is valid otherwise False.
         """
-        return PasswordImplementer.check_password(password, self.password)
+        self._add_username_email_and_admin_to_secure_user_session()
+        self._gen_login_token()
 
     def get_email_confirmed_status(self):
         """Checks whether the user has confirmed their email account and returns the appropriate action.
@@ -71,20 +76,32 @@ class _UserAccount(object):
 
     def send_registration_code(self):
         """Sends a registration verification code to the user's email"""
-        self._gen_user_verification_code()
+        self._gen_registration_verification_code()
         self._email_user_verification_code()
         self._save()
 
-    def _gen_user_verification_code(self):
-        """"""
+    def _gen_registration_verification_code(self):
+        """Generates a registration verification code"""
         self.configuration_codes['verification_code'] = self._gen_code()
 
     def _gen_email_change_verification_code(self):
+        """Generates an email verification code"""
         self.configuration_codes['email_code'] = self._gen_code()
+
+    def _gen_login_token(self):
+        """Generate a secure login token"""
+        UserSession.add_value_to_session('login_token', gen_id())
 
     def _gen_code(self):
         """Generates and returns a string code"""
         return gen_code()
+
+    def _add_username_email_and_admin_to_secure_user_session(self):
+        """Adds the username and admin name to the user's secure session"""
+
+        UserSession.add_username(self.username)
+        UserSession.add_value_to_session('email', self.email.lower())
+        UserSession.add_value_to_session('admin', True)
 
     def _save(self):
         """"""

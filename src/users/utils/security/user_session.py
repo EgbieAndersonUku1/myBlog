@@ -37,7 +37,7 @@ class UserSession(object):
 
     @staticmethod
     def get_login_token():
-        return UserSession.get_username()
+        return session.get('login_token')
 
     @staticmethod
     def get_username():

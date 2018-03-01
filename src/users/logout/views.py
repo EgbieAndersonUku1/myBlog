@@ -11,4 +11,5 @@ def logout():
 
     UserSession.remove_username()
     UserSession.remove_value_by_key('admin')
+    UserSession.remove_value_by_key('login_token')
     return redirect(request.referrer)

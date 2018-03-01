@@ -16,7 +16,7 @@ def register_user():
 
     if UserSession.get_login_token():
         return redirect(url_for("blogs_app.my_blog"))
-    if form.validate_on_submit():
+    elif form.validate_on_submit():
         user = User.extract_web_form(form)
         user.send_registration_code()
         return redirect(url_for('registration_app.confirm_email_page'))
