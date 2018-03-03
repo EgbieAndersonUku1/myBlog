@@ -37,7 +37,7 @@ def reset_password(username, code):
     form = ForgottenPasswordForm()
     user = User.get_account_by_username(username)
 
-    if not user and not user.verify_forgotten_password_code(code):
+    if not user and not user.is_forgotten_password_code_valid(code):
        assert user or abort(404)
 
     elif form.validate_on_submit():

@@ -34,8 +34,8 @@ class _UserAccount(object):
     def get_account_by_user_id(cls, user_id):
         return cls._to_class(query=Record.Query.Filter.filter_user_by_id(user_id))
 
-    def verify_registration_code(self, registration_code):
-        """Verify whether registration code sent is legit"""
+    def is_registration_code_valid(self, registration_code):
+        """Verify whether registration code sent is legit. Returns True or False"""
         return self.configuration_codes.get('verification_code') == registration_code
 
     def register(self):
@@ -107,9 +107,9 @@ class _UserAccount(object):
         """"""
         return Record.save(self._to_json())
 
-    def verify_forgotten_password_code(self, code):
-        """Takes a username and code and verifies whether the forgotten password code
-           is the one that was sent to the user.
+    def is_forgotten_password_code_valid(self, code):
+        """Verifies whether the forgotten password code sent to the user is valid.
+           Returns True if its or False.
         """
         return self.configuration_codes['forgotten_password_code'] == code
 
