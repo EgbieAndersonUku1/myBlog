@@ -56,6 +56,17 @@ class _UserAccount(object):
         self._add_username_email_and_admin_to_secure_user_session()
         self._gen_login_token()
 
+    def _add_username_email_and_admin_to_secure_user_session(self):
+        """Adds the username and admin name to the user's secure session"""
+
+        UserSession.add_username(self.username)
+        UserSession.add_value_to_session('email', self.email.lower())
+        UserSession.add_value_to_session('admin', True)
+
+    def _gen_login_token(self):
+        """Generate a secure login token"""
+        UserSession.add_value_to_session('login_token', gen_id())
+
     def get_email_confirmed_status(self):
         """Checks whether the user has confirmed their email account and returns the appropriate action.
 
@@ -88,24 +99,19 @@ class _UserAccount(object):
         """Generates an email verification code"""
         self.configuration_codes['email_code'] = self._gen_code()
 
-    def _gen_login_token(self):
-        """Generate a secure login token"""
-        UserSession.add_value_to_session('login_token', gen_id())
-
     def _gen_code(self):
         """Generates and returns a string code"""
         return gen_code()
 
-    def _add_username_email_and_admin_to_secure_user_session(self):
-        """Adds the username and admin name to the user's secure session"""
-
-        UserSession.add_username(self.username)
-        UserSession.add_value_to_session('email', self.email.lower())
-        UserSession.add_value_to_session('admin', True)
-
     def _save(self):
         """"""
         return Record.save(self._to_json())
+
+    def verify_forgotten_password_code(self, code):
+        """Takes a username and code and verifies whether the forgotten password code
+           is the one that was sent to the user.
+        """
+        return self.configuration_codes['forgotten_password_code'] == code
 
     def reset_forgotten_password(self, new_password):
         """Updates the user's forgotten password with the new password"""
@@ -113,12 +119,6 @@ class _UserAccount(object):
         self.configuration_codes.pop('forgotten_password_code')
         self.password = PasswordImplementer.hash_password(new_password)
         self.update_account()
-
-    def verify_forgotten_password_code(self, code):
-        """Takes a username and code and verifies whether the forgotten password code
-           is the one that was sent to the user.
-        """
-        return self.configuration_codes['forgotten_password_code'] == code
 
     def send_forgotten_password_code(self):
         """"""
