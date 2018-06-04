@@ -4,7 +4,7 @@ Blog
 
 Project: To build a working blog complete with an admin section. The user of the blog will be able to create where mulitple blogs each with its own commenting and reply section.
 
-Project Status: **Pending..**
+Project Status: **Complete..**
 
 Project Description
 
